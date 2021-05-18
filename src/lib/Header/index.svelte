@@ -34,6 +34,7 @@
   header {
     display: flex;
     background: var(--primary-color);
+    box-shadow: #111 0px 1px 3px;
   }
 
   .logo {

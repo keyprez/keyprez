@@ -37,6 +37,7 @@
     align-items: center;
     padding: 40px;
     background-color: var(--primary-color);
+    box-shadow: #333 0px -1px 9px;
   }
 
   footer a {
