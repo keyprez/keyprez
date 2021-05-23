@@ -12,6 +12,7 @@
     justify-content: center;
     padding: 3rem;
     background-color: var(--darkgray-color);
+    box-shadow: #333 0px -1px 9px;
   }
 
   img {
