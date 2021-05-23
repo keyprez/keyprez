@@ -361,7 +361,7 @@ packages:
       browserslist: 4.16.6
       caniuse-lite: 1.0.30001228
       colorette: 1.2.2
-      fraction.js: 4.1.0
+      fraction.js: 4.1.1
       normalize-range: 0.1.2
       postcss: 8.3.0
       postcss-value-parser: 4.1.0
@@ -746,8 +746,8 @@ packages:
     resolution: {integrity: sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==}
     dev: true
 
-  /fraction.js/4.1.0:
-    resolution: {integrity: sha512-o9lSKpK0TDqDwTL24Hxqi6I99s942l6TYkfl6WvGWgLOIFz/YonSGKfiSeMadoiNvTfqnfOa9mjb5SGVbBK9/w==}
+  /fraction.js/4.1.1:
+    resolution: {integrity: sha512-MHOhvvxHTfRFpF1geTK9czMIZ6xclsEor2wkIGYYq+PxcQqT7vStJqjhe6S1TenZrMZzo+wlqOufBDVepUEgPg==}
     dev: true
 
   /fs.realpath/1.0.0:

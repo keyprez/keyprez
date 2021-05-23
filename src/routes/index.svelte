@@ -1,10 +1,14 @@
 <script context="module">
-  import pcb_bg from '/static/pcb_bg.jpg';
-  import case_bg from '/static/case_bg.png';
-  import plate_bg from '/static/plate_bg.png';
-  import kit_bg from '/static/kit_bg.jpg';
-  import accessories_bg from '/static/accessories_bg.png';
-  import swag_bg from '/static/swag_bg.jpg';
+  import pcb from '/static/pcb.jpg';
+  import cases from '/static/cases.png';
+  import plates from '/static/plates.png';
+  import kits from '/static/kits.jpg';
+  import accessories from '/static/accessories.png';
+  import swag from '/static/swag.jpg';
+
+  const products = [pcb, cases, plates, kits, accessories, swag];
+
+  const getTitleFromPath = (path) => path.replace(/.*\/|\..*/gi, '').toUpperCase();
 
   export const prerender = true;
 
@@ -14,84 +18,69 @@
   <title>Home</title>
 </svelte:head>
 
-<div class="content">
-  <div class="gallery">
-    <div class="image-container">
-      <a href="/products"
-        ><img src={pcb_bg} alt="PCB" />
-        <h2>PCB's</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src={case_bg} alt="Case" />
-        <div class="text"><h2>Cases</h2></div></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src={plate_bg} alt="Plate" />
-        <h2>Plates</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src={kit_bg} alt="DIY kits" />
-        <h2>DIY kits</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src={accessories_bg} alt="Accessories" />
-        <h2>Accessories</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src={swag_bg} alt="Swag" />
-        <h2>Swag</h2></a
-      >
-    </div>
-  </div>
+<img class="hero" src="keyprez_name.svg" alt="keyprez name" />
+<h2>Website for mechanical keyboards enthusiasts</h2>
+
+<div class="gallery">
+  {#each products as product}
+    <a class="image-container" href="/products">
+      <img src={product} alt={getTitleFromPath(product)} />
+      <span>{getTitleFromPath(product)}</span>
+    </a>
+  {/each}
 </div>
 
 <style>
-  .content {
-    width: 100%;
-    text-align: justify;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
+  .hero {
+    width: 80%;
+  }
+
+  @media (min-width: 720px) {
+    .hero {
+      width: 70%;
+    }
+  }
+
+  h2 {
+    color: var(--yellow-color);
+    margin-bottom: 3rem;
   }
 
   .gallery {
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
     justify-content: center;
+    gap: 1rem;
   }
 
   .image-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .image-container h2 {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 40%;
-  }
-
-  img {
-    flex: 1 1 auto;
-    margin: 1em;
+  a img {
     transition: 0.3s linear;
     opacity: 0.4;
   }
 
-  img:hover {
+  span {
+    position: absolute;
+    transition: 0.3s linear;
+    font-size: 1.5rem;
+    opacity: 1;
+    color: var(--yellow-color);
+  }
+
+  .image-container:hover > img {
     transform: scale(1.1);
     opacity: 1;
-    color: var(--accent-color);
+  }
+
+  .image-container:hover > span {
+    transform: scale(0);
+    opacity: 0.4;
   }
 
 </style>

@@ -11,7 +11,7 @@
   <title>DIY</title>
 </svelte:head>
 
-<div class="content">
+<div>
   <h1>DIY Section</h1>
   <p>
     Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis eget
@@ -42,13 +42,6 @@
 </div>
 
 <style>
-  .content {
-    width: 100%;
-    text-align: justify;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
-  }
-
   img {
     width: 100%;
     margin: 1em 0;

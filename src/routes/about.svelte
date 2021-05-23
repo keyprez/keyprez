@@ -19,7 +19,7 @@
   <title>About</title>
 </svelte:head>
 
-<div class="content">
+<div>
   <h1>About us</h1>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum elit. Nullam blandit gravida vehicula.
@@ -31,13 +31,3 @@
     risus malesuada sit amet. Integer id tempus risus.
   </p>
 </div>
-
-<style>
-  .content {
-    width: 100%;
-    text-align: justify;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
-  }
-
-</style>

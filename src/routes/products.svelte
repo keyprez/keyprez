@@ -8,9 +8,9 @@
   <title>Products</title>
 </svelte:head>
 
-<div class="content">
+<div>
   <h1>Products</h1>
-  <p class="text-blue-500">
+  <p>
     Phasellus magna velit, facilisis nec fringilla nec, molestie faucibus mi. Nulla bibendum neque nec felis interdum
     laoreet. Nullam eu urna leo. Duis suscipit a sem in sollicitudin. In hac habitasse platea dictumst. Suspendisse
     fermentum nibh ipsum, quis ultrices mi commodo congue. Suspendisse dapibus at massa ut placerat. Donec laoreet
@@ -22,13 +22,6 @@
 </div>
 
 <style>
-  .content {
-    width: 100%;
-    text-align: justify;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
-  }
-
   img {
     width: 100%;
     margin: 1em 0;
