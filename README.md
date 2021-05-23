@@ -7,7 +7,7 @@
 
 🚧 WIP
 
-Application built with SvelteKit (currently in public beta), TypeScript and Vite.
+Application built with SvelteKit (currently in public beta), TypeScript and Vite. Deployed with Netlify.
 
 For local development run:
 
