@@ -1,34 +1,33 @@
 {
   "name": "keyprez",
-  "version": "0.0.1",
-  "repository": "https://github.com/keyprez/keyprez",
+  "version": "0.0.2",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keyprez/keyprez.git"
+  },
   "scripts": {
     "dev": "svelte-kit dev --open",
     "build": "svelte-kit build",
-    "build:tailwind": "postcss ./src/tailwind.css -o ./src/app.css",
-    "watch:tailwind": "postcss ./src/tailwind.css -o ./src/app.css -w --verbose",
     "preview": "svelte-kit preview",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
+    "@sveltejs/adapter-netlify": "^1.0.0-next.14",
     "@sveltejs/kit": "next",
-    "@tailwindcss/jit": "^0.1.18",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "autoprefixer": "^10.2.5",
-    "eslint": "^7.26.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "postcss": "^8.3.0",
-    "postcss-cli": "^8.3.1",
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.3.0",
     "svelte": "^3.38.2",
     "svelte-preprocess": "^4.7.3",
-    "tailwindcss": "^2.1.2",
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
   },

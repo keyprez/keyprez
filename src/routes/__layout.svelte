@@ -1,59 +1,49 @@
 <script>
-	import '../app.css';
-	// import "../index.css"; // tailwind output file (important for hot reloading)
-	import Header from '$lib/Header.svelte';
-	import { theme } from './store';
-	import { onMount } from 'svelte';
-
-	onMount(() => {
-		if ($theme === 'dark') {
-			document.querySelector('html').classList.add('dark');
-		}
-	});
+  import '/src/app.css';
+  import Header from '$lib/Header.svelte';
+  import { onMount } from 'svelte';
+  import github_logo from '/static/github_logo.svg';
+  import instagram_logo from '/static/instagram_logo.svg';
+  import reddit_logo from '/static/reddit_logo.svg';
+  import meetup_logo from '/static/meetup_logo.svg';
 
 </script>
 
 <Header />
 
 <main>
-	<slot />
+  <slot />
 </main>
 
 <footer>
-	<p>
-		Check out the code on <a href="https://github.com/keyprez/keyprez" target="blank">GitHub</a>
-	</p>
+  <a href="https://github.com/keyprez/keyprez" target="blank"><img src={github_logo} alt="GitHub" /></a>
+  <a href="https://github.com/keyprez/keyprez" target="blank"><img src={instagram_logo} alt="Instagram" /></a>
+  <a href="https://github.com/keyprez/keyprez" target="blank"><img src={reddit_logo} alt="Reddit" /></a>
+  <a href="https://github.com/keyprez/keyprez" target="blank"><img src={meetup_logo} alt="Meetup" /></a>
 </footer>
 
 <style>
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 1024px;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
-		background-color: var(--primary-color);
-	}
+  footer {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 3rem;
+    background-color: var(--primary-color);
+  }
 
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
-		}
-	}
+  img {
+    width: 1.5rem;
+  }
 
 </style>

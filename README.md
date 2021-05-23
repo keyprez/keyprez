@@ -7,7 +7,7 @@
 
 🚧 WIP
 
-Application built with SvelteKit (currently in public beta), TypeScript, Tailwind (with just-in-time compiler and hot reloading) and Vite.
+Application built with SvelteKit (currently in public beta), TypeScript and Vite.
 
 For local development run:
 

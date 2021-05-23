@@ -3,4 +3,5 @@ node_modules
 /.svelte-kit
 /build
 /functions
-app.css
+package-lock.json
+yarn.lock
