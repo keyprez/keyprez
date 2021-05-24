@@ -9,6 +9,7 @@ specifiers:
   eslint: ^7.27.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^3.2.0
+  pnpm: ^6.4.0
   postcss: ^8.3.0
   prettier: ~2.2.1
   prettier-plugin-svelte: ^2.3.0
@@ -27,6 +28,7 @@ devDependencies:
   eslint: 7.27.0
   eslint-config-prettier: 8.3.0_eslint@7.27.0
   eslint-plugin-svelte3: 3.2.0_eslint@7.27.0+svelte@3.38.2
+  pnpm: 6.4.0
   postcss: 8.3.0
   prettier: 2.2.1
   prettier-plugin-svelte: 2.3.0_prettier@2.2.1+svelte@3.38.2
@@ -407,7 +409,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001228
       colorette: 1.2.2
-      electron-to-chromium: 1.3.735
+      electron-to-chromium: 1.3.736
       escalade: 3.1.1
       node-releases: 1.1.72
     dev: true
@@ -543,8 +545,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /electron-to-chromium/1.3.735:
-    resolution: {integrity: sha512-cp7MWzC3NseUJV2FJFgaiesdrS+A8ZUjX5fLAxdRlcaPDkaPGFplX930S5vf84yqDp4LjuLdKouWuVOTwUfqHQ==}
+  /electron-to-chromium/1.3.736:
+    resolution: {integrity: sha512-DY8dA7gR51MSo66DqitEQoUMQ0Z+A2DSXFi7tK304bdTVqczCAfUuyQw6Wdg8hIoo5zIxkU1L24RQtUce1Ioig==}
     dev: true
 
   /emoji-regex/8.0.0:
@@ -1096,6 +1098,12 @@ packages:
   /picomatch/2.3.0:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /pnpm/6.4.0:
+    resolution: {integrity: sha512-ws4OArFXDfjOrj6gk4Ded+CkbW6pRKkscnOEONetX2MV+m5fwxTIAVw2Fic4CNTKZbN4D182oPQyoMd5uGzrjw==}
+    engines: {node: '>=12.17'}
+    hasBin: true
     dev: true
 
   /postcss-value-parser/4.1.0:
