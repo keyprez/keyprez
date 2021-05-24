@@ -1,104 +1,86 @@
 <script context="module">
+  import pcb from '/static/pcb.jpg';
+  import cases from '/static/cases.png';
+  import plates from '/static/plates.png';
+  import kits from '/static/kits.jpg';
+  import accessories from '/static/accessories.png';
+  import swag from '/static/swag.jpg';
+
+  const products = [pcb, cases, plates, kits, accessories, swag];
+
+  const getTitleFromPath = (path) => path.replace(/.*\/|\..*/gi, '').toUpperCase();
+
   export const prerender = true;
+
 </script>
 
 <svelte:head>
   <title>Home</title>
 </svelte:head>
 
-<div class="content">
-  <h1>Welcome</h1>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum
-    elit. Nullam blandit gravida vehicula. Suspendisse pretium quam lectus, sed
-    elementum dolor iaculis ac. Pellentesque vel tellus sed ante euismod
-    maximus. Suspendisse pharetra ornare ex eget pellentesque. Suspendisse
-    tincidunt augue urna, quis facilisis quam bibendum eget. Nulla at eros
-    elementum, posuere mi a, suscipit dolor. Nullam lobortis vulputate dolor,
-    quis laoreet neque finibus at. Maecenas aliquam scelerisque leo, et bibendum
-    nulla consequat vitae. Suspendisse lacus sapien, auctor sed vestibulum at,
-    maximus quis eros. Etiam rhoncus elementum tempor. Suspendisse porttitor
-    nisl dolor, non euismod risus malesuada sit amet. Integer id tempus risus.
-  </p>
+<img class="hero" src="keyprez_name.svg" alt="keyprez name" />
+<h2>Website for mechanical keyboards enthusiasts</h2>
 
-  <div class="gallery">
-    <div class="image-container">
-      <a href="/products"
-        ><img src="/static/pcb_bg.jpg" alt="PCB" />
-        <h2>PCB's</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src="/static/case_bg.png" alt="Case" />
-        <div class="text"><h2>Cases</h2></div></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src="/static/plate_bg.png" alt="Plate" />
-        <h2>Plates</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src="/static/kit_bg.jpg" alt="DIY kits" />
-        <h2>DIY kits</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src="/static/accessories_bg.png" alt="Accessories" />
-        <h2>Accessories</h2></a
-      >
-    </div>
-    <div class="image-container">
-      <a href="/products"
-        ><img src="/static/swag_bg.jpg" alt="Swag" />
-        <h2>Swag</h2></a
-      >
-    </div>
-  </div>
+<div class="gallery">
+  {#each products as product}
+    <a class="image-container" href="/products">
+      <img src={product} alt={getTitleFromPath(product)} />
+      <span>{getTitleFromPath(product)}</span>
+    </a>
+  {/each}
 </div>
 
-<style style lang="postcss">
-  .content {
-    width: 100%;
-    text-align: justify;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
+<style>
+  .hero {
+    width: 80%;
+  }
+
+  @media (min-width: 720px) {
+    .hero {
+      width: 70%;
+    }
+  }
+
+  h2 {
+    color: var(--yellow-color);
+    margin-bottom: 3rem;
   }
 
   .gallery {
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
     justify-content: center;
+    gap: 1rem;
   }
 
   .image-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .image-container h2 {
-    position: absolute;
-    text-align: center;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    top: 40%;
-  }
-
-  img {
-    flex: 1 1 auto;
-    margin: 1em;
+  a img {
     transition: 0.3s linear;
     opacity: 0.4;
   }
 
-  img:hover {
+  span {
+    position: absolute;
+    transition: 0.3s linear;
+    font-size: 1.5rem;
+    opacity: 1;
+    color: var(--yellow-color);
+  }
+
+  .image-container:hover > img {
     transform: scale(1.1);
     opacity: 1;
-    color: var(--accent-color);
   }
+
+  .image-container:hover > span {
+    transform: scale(0);
+    opacity: 0.4;
+  }
+
 </style>

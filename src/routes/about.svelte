@@ -1,5 +1,5 @@
 <script context="module">
-  import { browser, dev } from "$app/env";
+  import { browser, dev } from '$app/env';
 
   // we don't need any JS on this page, though we'll load
   // it in dev so that we get hot module replacement...
@@ -12,33 +12,22 @@
   // since there's no dynamic data here, we can prerender
   // it so that it gets served as a static asset in prod
   export const prerender = true;
+
 </script>
 
 <svelte:head>
   <title>About</title>
 </svelte:head>
 
-<div class="content">
+<div>
   <h1>About us</h1>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum
-    elit. Nullam blandit gravida vehicula. Suspendisse pretium quam lectus, sed
-    elementum dolor iaculis ac. Pellentesque vel tellus sed ante euismod
-    maximus. Suspendisse pharetra ornare ex eget pellentesque. Suspendisse
-    tincidunt augue urna, quis facilisis quam bibendum eget. Nulla at eros
-    elementum, posuere mi a, suscipit dolor. Nullam lobortis vulputate dolor,
-    quis laoreet neque finibus at. Maecenas aliquam scelerisque leo, et bibendum
-    nulla consequat vitae. Suspendisse lacus sapien, auctor sed vestibulum at,
-    maximus quis eros. Etiam rhoncus elementum tempor. Suspendisse porttitor
-    nisl dolor, non euismod risus malesuada sit amet. Integer id tempus risus.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum elit. Nullam blandit gravida vehicula.
+    Suspendisse pretium quam lectus, sed elementum dolor iaculis ac. Pellentesque vel tellus sed ante euismod maximus.
+    Suspendisse pharetra ornare ex eget pellentesque. Suspendisse tincidunt augue urna, quis facilisis quam bibendum
+    eget. Nulla at eros elementum, posuere mi a, suscipit dolor. Nullam lobortis vulputate dolor, quis laoreet neque
+    finibus at. Maecenas aliquam scelerisque leo, et bibendum nulla consequat vitae. Suspendisse lacus sapien, auctor
+    sed vestibulum at, maximus quis eros. Etiam rhoncus elementum tempor. Suspendisse porttitor nisl dolor, non euismod
+    risus malesuada sit amet. Integer id tempus risus.
   </p>
 </div>
-
-<style>
-  .content {
-    width: 100%;
-    text-align: justify;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
-  }
-</style>

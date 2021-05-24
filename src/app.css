@@ -1,21 +1,39 @@
 :root {
   font-family: monospace;
-  font-size: 1.3em;
-  --primary-color: #2e3440;
-  --secondary-color: #e5e9f0;
-  --tertiary-color: #3b4252;
-  --accent-color: #bf616a;
-  --secondary-color: #e5e9f0;
-  --background-without-opacity: rgba(255, 255, 255, 0.7);
-  --column-width: 44rem;
+  font-size: 1rem;
+  --darkgray-color: #2e3440;
+  --lightgray-color: #3b4252;
+  --ivory-color: #e5e9f0;
+  --orange-color: #bf616a;
+  --green-color: #a3be8c;
+  --yellow-color: #ebcb8b;
+  --darkblue-color: #81a1c1;
+  --lightblue-color: #88c0d0;
+  --purple-color: #b48ead;
+  --column-width: 46rem;
   --column-margin-top: 2rem;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--tertiary-color);
-  overflow-y: scroll;
+  background: var(--lightgray-color);
+  background-image: url('/static/circuit_board.svg');
+  background-attachment: fixed;
+  color: var(--ivory-color);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--column-width);
+  text-align: justify;
+  margin: var(--column-margin-top) auto 0 auto;
 }
 
 #svelte {
@@ -28,34 +46,39 @@ h1,
 h2,
 p {
   font-weight: 400;
-  color: var(--secondary-color);
 }
 
 p {
   line-height: 1.5;
 }
 
-a {
-  color: var(--accent-color);
+a,
+a:visited,
+a:hover,
+a:active {
   text-decoration: none;
+  color: inherit;
 }
 
-a:hover {
-  text-decoration: underline;
+h1,
+h2 {
+  margin-bottom: 1em;
+  text-align: center;
 }
 
 h1 {
   font-size: 2rem;
-  margin-bottom: 0 0 1em 0;
-  text-align: center;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 @media (min-width: 720px) {
   h1 {
     font-size: 2.4rem;
+  }
+  h2 {
+    font-size: 1.5rem;
   }
 }
