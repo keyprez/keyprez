@@ -11,7 +11,6 @@
   const getTitleFromPath = (path) => path.replace(/.*\/|\..*/gi, '').toUpperCase();
 
   export const prerender = true;
-
 </script>
 
 <svelte:head>
@@ -30,7 +29,9 @@
   {/each}
 </div>
 
-<style>
+<style lang="scss">
+  @import 'src/variables';
+
   .hero {
     width: 80%;
   }
@@ -42,45 +43,44 @@
   }
 
   h2 {
-    color: var(--yellow-color);
+    color: $yellow-color;
     margin-bottom: 3rem;
   }
 
   .gallery {
+    align-content: center;
     display: flex;
     flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
     gap: 1rem;
+    justify-content: center;
   }
 
   .image-container {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
   }
 
   a img {
-    transition: 0.3s linear;
     opacity: 0.4;
+    transition: 0.3s linear;
   }
 
   span {
-    position: absolute;
-    transition: 0.3s linear;
+    color: $yellow-color;
     font-size: 1.5rem;
     opacity: 1;
-    color: var(--yellow-color);
+    position: absolute;
+    transition: 0.3s linear;
   }
 
   .image-container:hover > img {
-    transform: scale(1.1);
     opacity: 1;
+    transform: scale(1.1);
   }
 
   .image-container:hover > span {
-    transform: scale(0);
     opacity: 0.4;
+    transform: scale(0);
   }
-
 </style>

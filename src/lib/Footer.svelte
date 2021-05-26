@@ -5,14 +5,16 @@
   <a href="https://github.com/keyprez/keyprez" target="blank"><img src="meetup_logo.svg" alt="Meetup" /></a>
 </footer>
 
-<style>
+<style type="text/scss">
+  @import 'src/variables';
+
   footer {
+    background-color: $darkgray-color;
+    box-shadow: #333 0 -1px 9px;
     display: flex;
     gap: 1.3rem;
     justify-content: center;
     padding: 3rem;
-    background-color: var(--darkgray-color);
-    box-shadow: #333 0px -1px 9px;
   }
 
   img {
@@ -22,5 +24,4 @@
   img:hover {
     transform: scale(1.3);
   }
-
 </style>
