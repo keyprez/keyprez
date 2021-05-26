@@ -1,6 +1,5 @@
 <script>
   import { page } from '$app/stores';
-
 </script>
 
 <header>
@@ -32,12 +31,33 @@
   </nav>
 </header>
 
-<style>
+<style lang="scss">
+  @import 'src/variables';
+
   header {
+    background: $darkgray-color;
+    box-shadow: #111 0 1px 3px;
     display: flex;
-    background: var(--darkgray-color);
     padding: 0 1rem;
-    box-shadow: #111 0px 1px 3px;
+  }
+
+  nav {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  nav a {
+    align-items: center;
+    color: var(--ivory-color);
+    display: flex;
+    font-size: 0.9rem;
+    font-weight: 700;
+    height: 100%;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s linear;
   }
 
   .logo {
@@ -45,10 +65,10 @@
   }
 
   .logo a {
-    display: flex;
     align-items: center;
-    justify-content: flex-start;
+    display: flex;
     height: 100%;
+    justify-content: flex-start;
   }
 
   .logo img {
@@ -56,10 +76,10 @@
   }
 
   .name {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     flex: 1;
+    justify-content: center;
   }
 
   .name img {
@@ -72,53 +92,34 @@
     }
   }
 
-  nav {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 1;
-  }
-
   ul {
-    position: relative;
-    padding: 0;
-    margin: 0;
-    height: 5em;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
+    height: 5em;
+    justify-content: center;
     list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
   }
 
   li {
-    position: relative;
     height: 100%;
-    padding: 1rem;
     list-style-type: none;
+    padding: 1rem;
+    position: relative;
   }
 
-  li.active::before {
-    --size: 1.7rem;
+  li .active::before {
+    $size: 1.7rem;
+
+    border: $size solid transparent;
+    border-top: $size solid $orange-color;
     content: '';
-    width: 0;
     height: 0;
+    left: calc(50% - #{$size});
     position: absolute;
     top: 0;
-    left: calc(50% - var(--size));
-    border: var(--size) solid transparent;
-    border-top: var(--size) solid var(--orange-color);
+    width: 0;
   }
-
-  nav a {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    color: var(--ivory-color);
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 0.2s linear;
-  }
-
 </style>
