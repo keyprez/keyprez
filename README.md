@@ -13,18 +13,18 @@ For local development run:
 
 ```bash
 nvm use
-pnpm install
-pnpm run dev
+npm install
+npm run dev
 ```
 
 To build the application run:
 
 ```bash
-pnpm run build
+npm run build
 ```
 
 To run the production build preview locally run:
 
 ```bash
-pnpm run preview
+npm run preview
 ```
