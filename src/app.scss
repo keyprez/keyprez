@@ -28,7 +28,7 @@ main {
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin: $column-margin-top auto 0 auto;
+  margin: $column-margin-top auto;
   max-width: $column-width;
   padding: 1rem;
   text-align: justify;
@@ -75,4 +75,12 @@ h2 {
   h2 {
     font-size: 1.5rem;
   }
+}
+
+button {
+  font-family: inherit;
+}
+
+button:hover {
+  cursor: pointer;
 }
