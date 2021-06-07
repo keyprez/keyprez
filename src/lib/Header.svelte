@@ -1,5 +1,15 @@
 <script>
   import { page } from '$app/stores';
+  import { cartProducts } from '../stores/cart';
+
+  let itemsInCart;
+  $: {
+    let count = 0;
+    for (let item of $cartProducts) {
+      count += item.quantity;
+    }
+    itemsInCart = count;
+  }
 </script>
 
 <header>
@@ -26,6 +36,11 @@
       </li>
       <li class:active={$page.path === '/about'}>
         <a sveltekit:prefetch href="/about">About</a>
+      </li>
+      <li class:active={$page.path === '/cart'}>
+        <a sveltekit:prefetch href="/cart">
+          <img class="cart" src="shopping_cart.svg" alt="Shopping cart" /> ({itemsInCart})
+        </a>
       </li>
     </ul>
   </nav>
@@ -121,5 +136,10 @@
     position: absolute;
     top: 0;
     width: 0;
+  }
+
+  .cart {
+    padding-right: 0.5em;
+    width: 1.8em;
   }
 </style>

@@ -1,10 +1,6 @@
 <script context="module">
   import corgi from '/static/corgi.jpg';
   export const prerender = true;
-
-</script>
-
-<script>
 </script>
 
 <svelte:head>
@@ -43,8 +39,7 @@
 
 <style>
   img {
-    width: 100%;
     margin: 1em 0;
+    width: 100%;
   }
-
 </style>
