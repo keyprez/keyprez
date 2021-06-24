@@ -7,6 +7,7 @@
     "url": "https://github.com/keyprez/keyprez.git"
   },
   "scripts": {
+    "start": "npm run dev",
     "dev": "svelte-kit dev --open",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
