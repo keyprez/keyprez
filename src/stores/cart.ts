@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-const hasLocalStorage = () => typeof window !== 'undefined' && window.localStorage
+const hasLocalStorage = () => typeof window !== 'undefined' && window.localStorage;
 
 const createWriteableStore = (key, startValue) => {
     const { subscribe, set } = writable(startValue);
