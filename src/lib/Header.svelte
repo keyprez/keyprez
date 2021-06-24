@@ -16,13 +16,11 @@
   <div class="logo">
     <a sveltekit:prefetch href="/">
       <img src="keycap_simple.svg" alt="Keyprez logo" />
+      {#if $page.path !== '/'}
+          <img src="keyprez_name.svg" alt="keyprez name" class="nameLogoImage" />
+      {/if}
     </a>
   </div>
-  {#if $page.path !== '/'}
-    <div class="name">
-      <img src="keyprez_name.svg" alt="keyprez name" />
-    </div>
-  {/if}
   <nav>
     <ul>
       <li class:active={$page.path === '/'}>
@@ -50,14 +48,15 @@
   @import 'src/variables';
 
   header {
-    background: $darkgray-color;
+    background: rgb(15,15,15);
+    background: linear-gradient(135deg, rgba(15,15,15,1) 73%, rgba(21,18,24,1) 94%);
     box-shadow: #111 0 1px 3px;
     display: flex;
     padding: 0 1rem;
   }
 
   nav {
-    align-items: center;
+    align-items: left;
     display: flex;
     flex: 1;
     justify-content: flex-end;
@@ -94,15 +93,19 @@
     align-items: center;
     display: flex;
     flex: 1;
-    justify-content: center;
+    justify-content: left;
   }
 
   .name img {
-    height: 80%;
+    height: 60%;
+  }
+  .nameLogoImage {
+    width: 6rem!important;
+    margin-left: 15px;
   }
 
   @media (max-width: 720px) {
-    .name {
+    .name, .nameLogoImage {
       display: none;
     }
   }

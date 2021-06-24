@@ -9,8 +9,7 @@
   @import 'src/variables';
 
   footer {
-    background-color: $darkgray-color;
-    box-shadow: #333 0 -1px 9px;
+    box-shadow: #111 0 -1px 9px;
     display: flex;
     gap: 1.3rem;
     justify-content: center;
