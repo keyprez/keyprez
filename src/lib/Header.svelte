@@ -2,6 +2,8 @@
   import { page } from '$app/stores';
   import { cartProducts } from '../stores/cart';
 
+  cartProducts.useLocalStorage();
+  
   let itemsInCart;
   $: {
     let count = 0;
