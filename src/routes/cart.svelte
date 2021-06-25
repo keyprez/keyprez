@@ -2,6 +2,8 @@
   import CartProduct from '$lib/CartProduct.svelte';
   import { cartProducts } from '../stores/cart';
   export const prerender = true;
+
+  cartProducts.useLocalStorage();
 </script>
 
 <svelte:head>
