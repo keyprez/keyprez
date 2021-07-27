@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "npm run dev",
-    "dev": "svelte-kit dev --open",
+    "dev": "svelte-kit dev --open --port 8080",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "prepare": "husky install",
