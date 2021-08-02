@@ -1,5 +1,5 @@
 <script context="module">
-  import { inventory } from '../stores/inventory';
+  import { products } from '../stores/products';
   import Product from '$lib/Product.svelte';
   export const prerender = true;
 </script>
@@ -10,7 +10,8 @@
 
 <h1>Products</h1>
 <div class="products">
-  {#each $inventory as product}
+  <!-- eslint-disable-next-line no-undef -->
+  {#each $products as product}
     <Product {product} />
   {/each}
 </div>

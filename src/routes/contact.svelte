@@ -1,14 +1,13 @@
 <script context="module">
-  import corgi from '/static/corgi.jpg';
   export const prerender = true;
 </script>
 
 <svelte:head>
-  <title>DIY</title>
+  <title>Contact</title>
 </svelte:head>
 
 <div>
-  <h1>DIY Section</h1>
+  <h1>Contact us</h1>
   <p>
     Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis eget
     condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum imperdiet non.
@@ -19,7 +18,6 @@
     ante, aliquet ut semper in, sagittis pretium leo. Nam gravida pharetra ex quis gravida. Suspendisse arcu lacus,
     sodales in est sit amet, faucibus euismod enim.
   </p>
-  <img src={corgi} alt="Corgi" />
   <p>
     Integer nec odio nec mi ornare auctor in ut libero. Pellentesque vel finibus sem. Donec vel lorem lorem. Fusce eu
     purus lobortis risus sagittis rutrum. Mauris gravida efficitur posuere. Praesent a libero ex. Nunc non sodales
@@ -37,9 +35,14 @@
   </p>
 </div>
 
-<style>
-  img {
-    margin: 1em 0;
-    width: 100%;
+<style type="text/scss">
+  @import 'src/variables';
+
+  h1 {
+    color: $color-primary-dark;
+  }
+
+  p {
+    color: $color-secondary-dark;
   }
 </style>

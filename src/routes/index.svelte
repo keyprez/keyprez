@@ -1,14 +1,6 @@
 <script context="module">
-  import pcb from '/static/pcb.jpg';
-  import cases from '/static/cases.png';
-  import plates from '/static/plates.png';
-  import kits from '/static/kits.jpg';
-  import accessories from '/static/accessories.png';
-  import swag from '/static/swag.jpg';
-
-  const products = [pcb, cases, plates, kits, accessories, swag];
-
-  const getTitleFromPath = (path) => path.replace(/.*\/|\..*/gi, '').toUpperCase();
+  import { fade } from 'svelte/transition';
+  import { products } from '../stores/products';
 
   export const prerender = true;
 </script>
@@ -17,70 +9,91 @@
   <title>Home</title>
 </svelte:head>
 
-<img class="hero" src="keyprez_name.svg" alt="keyprez name" />
-<h2>Website for mechanical keyboards enthusiasts</h2>
-
-<div class="gallery">
-  {#each products as product}
-    <a class="image-container" href="/products">
-      <img src={product} alt={getTitleFromPath(product)} />
-      <span>{getTitleFromPath(product)}</span>
-    </a>
+<div class="gallery" in:fade>
+  <!-- eslint-disable-next-line -->
+  {#each $products as { name, description, price }}
+    <div class="product-container">
+      <a class="image-container" href={`/${name}`}>
+        <img class="product-image" src={`/static/${name}.jpg`} alt={name} />
+        <span><img src={`${name}.svg`} alt={name} /></span>
+      </a>
+      <p>{description.toUpperCase()}</p>
+      <h2>&#36;<span>{price}</span></h2>
+    </div>
   {/each}
 </div>
 
 <style lang="scss">
   @import 'src/variables';
 
-  .hero {
-    width: 80%;
-  }
-
-  @media (min-width: 720px) {
-    .hero {
-      width: 70%;
-    }
-  }
-
-  h2 {
-    color: $yellow-color;
-    margin-bottom: 3rem;
-  }
-
   .gallery {
     align-content: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+
+  .product-container {
+    flex: 1 0 100%;
+    text-align: center;
+    width: 100%;
   }
 
   .image-container {
     align-items: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
   }
 
-  a img {
-    opacity: 0.4;
+  .product-image {
+    height: auto;
+    object-fit: cover;
+    opacity: 1;
     transition: 0.3s linear;
+    width: 100%;
   }
 
-  span {
-    color: $yellow-color;
-    font-size: 1.5rem;
-    opacity: 1;
+  h2 {
+    color: $color-primary-dark;
+
+    span {
+      font-size: 130%;
+    }
+  }
+
+  .image-container > span {
+    opacity: 0;
     position: absolute;
     transition: 0.3s linear;
+
+    img {
+      max-width: 15rem;
+    }
   }
 
   .image-container:hover > img {
-    opacity: 1;
-    transform: scale(1.1);
+    opacity: 0.4;
   }
 
   .image-container:hover > span {
-    opacity: 0.4;
-    transform: scale(0);
+    opacity: 1;
+  }
+
+  p {
+    color: $color-secondary-dark;
+  }
+
+  @media (min-width: 768px) {
+    .product-container {
+      flex: 1 0 40%;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .product-container {
+      flex: 1 0 20%;
+    }
   }
 </style>
