@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>Home</title>
+  <title>Keyprez</title>
 </svelte:head>
 
 <div class="gallery" in:fade>
