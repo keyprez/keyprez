@@ -15,7 +15,7 @@
     <div class="product-container">
       <a class="image-container" href={`/${name}`}>
         <img class="product-image" src={`${name}.jpg`} alt={name} />
-        <span><img src={`corgi.svg`} alt={name} /></span>
+        <span><img src={`${name}.svg`} alt={name} /></span>
       </a>
       <p>{description.toUpperCase()}</p>
       <h2>&#36;<span>{price}</span></h2>
