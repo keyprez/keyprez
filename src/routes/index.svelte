@@ -69,6 +69,7 @@
     transition: 0.3s linear;
 
     img {
+      min-width: 13rem;
       max-width: 15rem;
     }
   }
