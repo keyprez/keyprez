@@ -54,14 +54,6 @@
     width: 100%;
   }
 
-  h2 {
-    color: $color-primary-dark;
-
-    span {
-      font-size: 130%;
-    }
-  }
-
   .image-container > span {
     opacity: 0;
     position: absolute;

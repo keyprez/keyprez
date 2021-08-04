@@ -37,8 +37,8 @@
       Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
       finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
     </p>
-    <h2>&#36;<span>{price}</span></h2>
     <button>BUY</button>
+    <h2>&#36;<span>{price}</span></h2>
   </div>
 </div>
 
@@ -58,7 +58,10 @@
   }
 
   .text {
+    align-items: center;
+    display: flex;
     flex: 40%;
+    flex-direction: column;
   }
 
   @media (min-width: 1400px) {

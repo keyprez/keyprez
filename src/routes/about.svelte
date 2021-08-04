@@ -1,4 +1,5 @@
 <script context="module">
+  import { fade } from 'svelte/transition';
   import { browser, dev } from '$app/env';
 
   // we don't need any JS on this page, though we'll load
@@ -18,7 +19,7 @@
   <title>About</title>
 </svelte:head>
 
-<div>
+<div in:fade>
   <h1>About us</h1>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum elit. Nullam blandit gravida vehicula.
