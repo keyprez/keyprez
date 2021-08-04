@@ -1,4 +1,6 @@
 <script context="module">
+  import { fade } from 'svelte/transition';
+
   export const prerender = true;
 </script>
 
@@ -6,7 +8,7 @@
   <title>Contact</title>
 </svelte:head>
 
-<div>
+<div in:fade>
   <h1>Contact us</h1>
   <p>
     Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis eget

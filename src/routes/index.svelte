@@ -9,7 +9,7 @@
   <title>Keyprez</title>
 </svelte:head>
 
-<div class="gallery" in:fade>
+<div class="gallery" in:fade={{ duration: 1000 }}>
   <!-- eslint-disable-next-line -->
   {#each $products as { name, description, price }}
     <div class="product-container">
@@ -48,19 +48,10 @@
   }
 
   .product-image {
-    height: auto;
     object-fit: cover;
     opacity: 1;
     transition: 0.3s linear;
     width: 100%;
-  }
-
-  h2 {
-    color: $color-primary-dark;
-
-    span {
-      font-size: 130%;
-    }
   }
 
   .image-container > span {
@@ -69,8 +60,8 @@
     transition: 0.3s linear;
 
     img {
-      min-width: 13rem;
       max-width: 15rem;
+      min-width: 13rem;
     }
   }
 

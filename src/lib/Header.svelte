@@ -1,39 +1,24 @@
-<script>
+<script context="module">
   import { page } from '$app/stores';
-  import { cartProducts } from '../stores/cart';
 
-  cartProducts.useLocalStorage();
-
-  let itemsInCart;
-  $: {
-    let count = 0;
-    for (let item of $cartProducts) {
-      count += item.quantity;
-    }
-    itemsInCart = count;
-  }
+  export const prerender = true;
 </script>
 
 <header>
-  <a sveltekit:prefetch href="/">
+  <a class="corner" sveltekit:prefetch href="/">
     <img class="logo" src="keycap_simple.svg" alt="keyprez logo" />
     <img class="name" src="keyprez_name.svg" alt="keyprez name" />
   </a>
   <nav>
     <ul>
       <li class:active={$page.path === '/'}>
-        <a class="links" sveltekit:prefetch href="/">Products</a>
+        <a class="link" sveltekit:prefetch href="/">Products</a>
       </li>
       <li class:active={$page.path === '/about'}>
-        <a class="links" sveltekit:prefetch href="/about">About</a>
+        <a class="link" sveltekit:prefetch href="/about">About</a>
       </li>
       <li class:active={$page.path === '/contact'}>
-        <a class="links" sveltekit:prefetch href="/contact">Contact</a>
-      </li>
-      <li class:active={$page.path === '/cart'}>
-        <a sveltekit:prefetch href="/cart">
-          <img class="cart" src="shopping_cart.svg" alt="Shopping cart" /> ({itemsInCart})
-        </a>
+        <a class="link" sveltekit:prefetch href="/contact">Contact</a>
       </li>
     </ul>
   </nav>
@@ -43,22 +28,15 @@
   @import 'src/variables';
 
   header {
+    background-color: $color-primary-dark;
     display: flex;
-    font-weight: 1000;
-    letter-spacing: 2px;
-    padding: 1rem 1rem 3rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
   }
 
-  a {
+  .corner {
     align-items: center;
     display: flex;
-  }
-
-  nav {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
   }
 
   .logo {
@@ -70,42 +48,38 @@
     display: none;
   }
 
-  ul {
+  nav {
     align-items: center;
+    display: flex;
+    flex: 1;
+    font-weight: 1000;
+    justify-content: flex-end;
+    letter-spacing: 2px;
+  }
+
+  ul {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    position: relative;
   }
 
-  li {
+  .link {
     font-size: 0.8rem;
-    height: 100%;
-    list-style-type: none;
     padding: 0.5rem;
-    position: relative;
-
-    .links {
-      height: 100%;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 0.2s linear;
-    }
-
-    .links:hover {
-      color: $color-tertiary;
-    }
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s linear;
   }
 
-  .cart {
-    padding-right: 0.5em;
-    width: 1.8em;
+  .link:hover {
+    color: $color-tertiary;
   }
 
   @media (min-width: 768px) {
     header {
-      padding: 3rem 3rem 10rem;
+      margin-bottom: 7rem;
+      padding: 3rem;
     }
 
     .logo {
@@ -117,9 +91,9 @@
       width: 13rem;
     }
 
-    li {
-      font-size: 1rem;
-      padding: 1rem;
+    .link {
+      font-size: inherit;
+      padding: 1.5rem;
     }
   }
 </style>
