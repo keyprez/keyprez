@@ -73,5 +73,9 @@
     h1 {
       margin-top: 0;
     }
+
+    button {
+      margin: 1.5rem;
+    }
   }
 </style>

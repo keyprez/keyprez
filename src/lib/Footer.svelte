@@ -43,6 +43,7 @@
   }
 
   input {
+    -webkit-appearance: none; // stylelint-disable property-no-vendor-prefix
     background: $color-secondary-dark;
     border: 0;
     color: $color-tertiary;
