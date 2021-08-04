@@ -48,7 +48,6 @@
   }
 
   .product-image {
-    height: auto;
     object-fit: cover;
     opacity: 1;
     transition: 0.3s linear;
