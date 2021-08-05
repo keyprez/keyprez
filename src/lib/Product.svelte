@@ -64,6 +64,10 @@
     flex-direction: column;
   }
 
+  button {
+    margin: 1.5rem;
+  }
+
   @media (min-width: 1400px) {
     .container {
       flex-direction: row;
@@ -72,10 +76,6 @@
 
     h1 {
       margin-top: 0;
-    }
-
-    button {
-      margin: 1.5rem;
     }
   }
 </style>

@@ -1,7 +1,52 @@
+<script>
+  import config from '../../config';
+  const { endpoint } = config;
+
+  let email;
+  let loading = false;
+  let showError = false;
+  let showSuccess = false;
+
+  const isValidEmail = (email) => /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
+
+  const handleSubmit = async (e) => {
+    loading = true;
+    email = e.target.email.value;
+
+    if (!isValidEmail(email)) {
+      loading = false;
+      showError = true;
+      return setTimeout(() => (showError = false), 5000);
+    }
+
+    const res = await fetch(`${endpoint}/newsletter`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+
+    if (res.status === 200) {
+      loading = false;
+      showSuccess = true;
+      e.target.email.value = '';
+
+      return setTimeout(() => (showSuccess = false), 5000);
+    }
+  };
+</script>
+
 <footer>
-  <h2><strong class="subscribe">SUBSCRIBE</strong> to latest news and updates</h2>
-  <form class="form">
-    <input type="text" placeholder="Your e-mail" />
+  {#if loading}
+    <h2>Sending subscription request...</h2>
+  {:else if showError}
+    <h2>Please provide a valid email</h2>
+  {:else if showSuccess}
+    <h2>Your email <strong class="subscribe">{email}</strong> has been subscribed to our newsletter 🎉</h2>
+  {:else}
+    <h2><strong class="subscribe">SUBSCRIBE</strong> to latest news and updates</h2>
+  {/if}
+  <form class="form" on:submit|preventDefault={handleSubmit}>
+    <input type="text" name="email" placeholder="Your email" required />
     <button>SUBSCRIBE</button>
   </form>
   <div class="links">
