@@ -43,13 +43,6 @@
   }
 
   input {
-    -webkit-appearance: none; // stylelint-disable property-no-vendor-prefix
-    background: $color-secondary-dark;
-    border: 0;
-    color: $color-tertiary;
-    font-size: inherit;
-    outline: none;
-    padding: 0 0.5rem;
     width: 20rem;
   }
 
