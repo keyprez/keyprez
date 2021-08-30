@@ -2,9 +2,10 @@
   import config from '../../config';
   const { endpoint } = config;
 
-  let email;
+  let email = '';
   let loading = false;
   let showError = false;
+  let errorMessage = '';
   let showSuccess = false;
 
   const isValidEmail = (email) => /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
@@ -15,6 +16,7 @@
 
     if (!isValidEmail(email)) {
       loading = false;
+      errorMessage = 'Please provide a valid email';
       showError = true;
       return setTimeout(() => (showError = false), 5000);
     }
@@ -25,12 +27,16 @@
       body: JSON.stringify({ email }),
     });
 
+    loading = false;
+
     if (res.status === 200) {
-      loading = false;
       showSuccess = true;
       e.target.email.value = '';
-
       return setTimeout(() => (showSuccess = false), 5000);
+    } else {
+      errorMessage = `${res.statusText}❌ Please try again later`;
+      showError = true;
+      return setTimeout(() => (showError = false), 5000);
     }
   };
 </script>
@@ -39,7 +45,7 @@
   {#if loading}
     <h2>Sending subscription request...</h2>
   {:else if showError}
-    <h2>Please provide a valid email</h2>
+    <h2>{errorMessage}</h2>
   {:else if showSuccess}
     <h2>Your email <strong class="subscribe">{email}</strong> has been subscribed to our newsletter 🎉</h2>
   {:else}
