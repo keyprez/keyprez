@@ -46,6 +46,7 @@ p {
 }
 
 p {
+  color: $color-secondary-dark;
   line-height: 1.5;
 }
 
@@ -98,14 +99,31 @@ button {
   font-size: 1rem;
   font-weight: 700;
   height: 4rem;
-  letter-spacing: inherit;
+  letter-spacing: 2px;
   transition: 0.1s linear;
   width: 10rem;
 }
 
 button:hover {
-  background: transparent;
+  background: $color-primary-dark;
   border: 1px solid $color-secondary-light;
   color: $color-secondary-light;
   cursor: pointer;
+}
+
+input {
+  background: $color-secondary-dark;
+  border: 0;
+  color: $color-tertiary;
+  font-size: inherit;
+  outline: none;
+  padding: 0 1rem;
+}
+
+textarea {
+  background: $color-secondary-dark;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1rem;
+  resize: none;
 }

@@ -2,49 +2,139 @@
   import { fade } from 'svelte/transition';
 
   export const prerender = true;
+
+  const handleSubmit = (e) => {
+    const form = new FormData(e.target);
+    const formData = Object.fromEntries(form);
+
+    // Send formData to keyprez API to handle email sendout
+  };
 </script>
 
 <svelte:head>
   <title>Contact</title>
 </svelte:head>
 
-<div in:fade>
-  <h1>Contact us</h1>
-  <p>
-    Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis eget
-    condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum imperdiet non.
-    Duis placerat aliquam justo, id sodales risus tempus eget. Quisque ornare, nunc a laoreet sagittis, diam sapien
-    varius odio, nec posuere ligula neque eu nunc. Nulla hendrerit luctus turpis, sed egestas enim iaculis sit amet. Nam
-    nec nunc quis nibh rutrum condimentum. Vestibulum risus risus, tempor in nisl sit amet, luctus gravida mauris. Donec
-    vestibulum est quis blandit tincidunt. Curabitur lorem ex, porta id pretium eu, scelerisque sit amet lacus. Sed est
-    ante, aliquet ut semper in, sagittis pretium leo. Nam gravida pharetra ex quis gravida. Suspendisse arcu lacus,
-    sodales in est sit amet, faucibus euismod enim.
-  </p>
-  <p>
-    Integer nec odio nec mi ornare auctor in ut libero. Pellentesque vel finibus sem. Donec vel lorem lorem. Fusce eu
-    purus lobortis risus sagittis rutrum. Mauris gravida efficitur posuere. Praesent a libero ex. Nunc non sodales
-    mauris. Ut commodo lectus sed est vestibulum, eu pulvinar mauris venenatis. Aenean tempor sapien blandit ex egestas
-    rhoncus. Suspendisse sagittis dui nisl, non elementum neque eleifend in. Fusce cursus neque sed arcu fringilla
-    pharetra. Fusce lacinia, augue id ultrices dictum, nibh nibh placerat mi, et tristique eros justo ut nisi. In tempus
-    pretium hendrerit. Duis ac malesuada nulla. Nullam pellentesque purus id eros sagittis, egestas mollis sapien
-    dignissim.
-  </p>
-  <p>
-    Suspendisse quis odio vel augue gravida faucibus id at eros. Donec sit amet ornare felis. Praesent dapibus nisl leo,
-    sit amet auctor lorem tincidunt eget. Aenean vestibulum pretium sapien, et pulvinar libero consequat ac. Proin
-    eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam finibus
-    leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
-  </p>
+<div class="container" in:fade>
+  <div class="form-container">
+    <h1>Contact us</h1>
+    <form class="form" method="POST" on:submit|preventDefault={handleSubmit}>
+      <textarea placeholder="Type your message..." name="message" rows="15" maxlength="1000" required />
+      <div class="inputs">
+        <input placeholder="Name" type="text" name="name" />
+        <input placeholder="Email" type="email" name="email" required />
+      </div>
+      <button type="submit">SUBMIT</button>
+    </form>
+  </div>
+  <div class="faq">
+    <h1>FAQ</h1>
+    <ul>
+      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.?</li>
+      <p>
+        Suspendisse quis odio vel augue gravida faucibus id at eros. Donec sit amet ornare felis. Praesent dapibus nisl
+        leo, sit amet auctor lorem tincidunt eget. Aenean vestibulum pretium sapien, et pulvinar libero consequat ac.
+        Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
+        finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
+      </p>
+      <li>
+        Morbi eget bibendum elit. Nullam blandit gravida vehicula. Suspendisse pretium quam lectus, sed elementum dolor
+        iaculis ac?
+      </li>
+      <p>
+        Suspendisse quis odio vel augue gravida faucibus id at eros. Donec sit amet ornare felis. Praesent dapibus nisl
+        leo, sit amet auctor lorem tincidunt eget. Aenean vestibulum pretium sapien, et pulvinar libero consequat ac.
+        Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
+        finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
+      </p>
+      <li>Pellentesque vel tellus sed ante euismod maximus. Suspendisse pharetra ornare ex eget pellentesque?</li>
+      <p>
+        Suspendisse quis odio vel augue gravida faucibus id at eros. Donec sit amet ornare felis. Praesent dapibus nisl
+        leo, sit amet auctor lorem tincidunt eget. Aenean vestibulum pretium sapien, et pulvinar libero consequat ac.
+        Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
+        finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
+      </p>
+    </ul>
+  </div>
 </div>
 
 <style type="text/scss">
   @import 'src/variables';
 
-  h1 {
-    color: $color-primary-dark;
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .form-container {
+    flex: 40%;
+  }
+
+  .form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  input {
+    box-sizing: border-box;
+    font-size: inherit;
+    height: 4rem;
+    width: 100%;
+  }
+
+  fieldset {
+    border: 0;
+  }
+
+  textarea {
+    border: 0;
+    box-sizing: border-box;
+    outline: none;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  button {
+    margin: 1rem;
+  }
+
+  .faq {
+    flex: 60%;
+  }
+
+  ul {
+    margin: 0;
+  }
+
+  li {
+    color: $color-tertiary;
+    font-size: 150%;
   }
 
   p {
-    color: $color-secondary-dark;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .inputs {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      flex-direction: row;
+    }
   }
 </style>
