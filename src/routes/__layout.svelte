@@ -4,10 +4,10 @@
   import Footer from '$lib/Footer.svelte';
 </script>
 
-<Header />
+<Header hideMenu={true} />
 
 <main>
   <slot />
 </main>
 
-<Footer />
+<Footer hideContent={true} />

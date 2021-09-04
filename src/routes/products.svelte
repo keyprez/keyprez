@@ -10,7 +10,17 @@
 </svelte:head>
 
 <div class="gallery" in:fade={{ duration: 1000 }}>
-  New keyboard shop in progress
+  <!-- eslint-disable-next-line -->
+  {#each $products as { name, description, price }}
+    <div class="product-container">
+      <a class="image-container" href={`/${name}`}>
+        <img class="product-image" src={`${name}.jpg`} alt={name} />
+        <span><img src={`${name}.svg`} alt={name} /></span>
+      </a>
+      <p>{description.toUpperCase()}</p>
+      <h2>&#36;<span>{price}</span></h2>
+    </div>
+  {/each}
 </div>
 
 <style lang="scss">
