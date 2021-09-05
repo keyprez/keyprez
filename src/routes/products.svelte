@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>Keyprez</title>
+  <title>keyprez</title>
 </svelte:head>
 
 <div class="gallery" in:fade={{ duration: 1000 }}>

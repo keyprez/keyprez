@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Rhino</title>
+  <title>rhino</title>
 </svelte:head>
 
 <Product />
