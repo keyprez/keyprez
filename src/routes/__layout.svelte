@@ -1,13 +1,25 @@
 <script>
+  import { onMount } from 'svelte';
   import '/src/app.scss';
   import Header from '$lib/Header.svelte';
   import Footer from '$lib/Footer.svelte';
+
+  let hideContent = true;
+
+  onMount(() => (hideContent = location.hostname !== 'localhost'));
 </script>
 
-<Header hideMenu={true} />
+{#if hideContent}
+  <div style="text-align: center;">
+    <img src="keyprez_name.svg" alt="keyprez name" />
+    <h1>New keyboard shop in progress...</h1>
+  </div>
+{:else}
+  <Header />
 
-<main>
-  <slot />
-</main>
+  <main>
+    <slot />
+  </main>
 
-<Footer hideContent={true} />
+  <Footer />
+{/if}
