@@ -86,10 +86,6 @@
     width: 100%;
   }
 
-  fieldset {
-    border: 0;
-  }
-
   textarea {
     border: 0;
     box-sizing: border-box;
