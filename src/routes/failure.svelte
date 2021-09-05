@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Completion failed</title>
+  <title>completion failed</title>
 </svelte:head>
 
 <div>

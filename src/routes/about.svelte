@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>About</title>
+  <title>about</title>
 </svelte:head>
 
 <div in:fade>

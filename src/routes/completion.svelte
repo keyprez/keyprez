@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Success</title>
+  <title>success</title>
 </svelte:head>
 
 <div>

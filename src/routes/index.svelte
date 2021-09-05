@@ -6,11 +6,10 @@
 </script>
 
 <svelte:head>
-  <title>Keyprez</title>
+  <title>keyprez</title>
 </svelte:head>
 
 <div class="gallery" in:fade={{ duration: 1000 }}>
-  <!-- eslint-disable-next-line -->
   {#each $products as { name, description, price }}
     <div class="product-container">
       <a class="image-container" href={`/${name}`}>

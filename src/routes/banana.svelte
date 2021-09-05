@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Banana</title>
+  <title>banana</title>
 </svelte:head>
 
 <Product />

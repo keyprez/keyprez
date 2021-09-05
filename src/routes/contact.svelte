@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-  <title>Contact</title>
+  <title>contact</title>
 </svelte:head>
 
 <div class="container" in:fade>

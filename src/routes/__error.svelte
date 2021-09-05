@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Not found</title>
+  <title>not found</title>
 </svelte:head>
 
 <div>
