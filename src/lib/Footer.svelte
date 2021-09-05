@@ -2,8 +2,6 @@
   import config from '../../config';
   const { endpoint } = config;
 
-  export let hideContent = false
-
   let email = '';
   let loading = false;
   let showError = false;
@@ -44,27 +42,25 @@
 </script>
 
 <footer>
-  {#if !hideContent}
-    {#if loading}
-      <h2>Sending subscription request...</h2>
-    {:else if showError}
-      <h2>{errorMessage}</h2>
-    {:else if showSuccess}
-      <h2>Your email <strong class="subscribe">{email}</strong> has been subscribed to our newsletter 🎉</h2>
-    {:else}
-      <h2><strong class="subscribe">SUBSCRIBE</strong> to latest news and updates</h2>
-    {/if}
-    <form class="form" on:submit|preventDefault={handleSubmit}>
-      <input type="text" name="email" placeholder="Your email" required />
-      <button>SUBSCRIBE</button>
-    </form>
-    <div class="links">
-      <a href="https://github.com/keyprez/keyprez" target="blank"><img src="github_logo.svg" alt="GitHub" /></a>
-      <a href="https://github.com/keyprez/keyprez" target="blank"><img src="instagram_logo.svg" alt="Instagram" /></a>
-      <a href="https://github.com/keyprez/keyprez" target="blank"><img src="reddit_logo.svg" alt="Reddit" /></a>
-      <a href="https://github.com/keyprez/keyprez" target="blank"><img src="meetup_logo.svg" alt="Meetup" /></a>
-    </div>
+  {#if loading}
+    <h2>Sending subscription request...</h2>
+  {:else if showError}
+    <h2>{errorMessage}</h2>
+  {:else if showSuccess}
+    <h2>Your email <strong class="subscribe">{email}</strong> has been subscribed to our newsletter 🎉</h2>
+  {:else}
+    <h2><strong class="subscribe">SUBSCRIBE</strong> to latest news and updates</h2>
   {/if}
+  <form class="form" on:submit|preventDefault={handleSubmit}>
+    <input type="text" name="email" placeholder="Your email" required />
+    <button>SUBSCRIBE</button>
+  </form>
+  <div class="links">
+    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="github_logo.svg" alt="GitHub" /></a>
+    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="instagram_logo.svg" alt="Instagram" /></a>
+    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="reddit_logo.svg" alt="Reddit" /></a>
+    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="meetup_logo.svg" alt="Meetup" /></a>
+  </div>
 </footer>
 
 <style type="text/scss">

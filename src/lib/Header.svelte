@@ -4,20 +4,15 @@
   export const prerender = true;
 </script>
 
-<script>
-export let hideMenu = false
-</script>
-
 <header>
   <a class="corner" sveltekit:prefetch href="/">
     <img class="logo" src="keycap_simple.svg" alt="keyprez logo" />
     <img class="name" src="keyprez_name.svg" alt="keyprez name" />
   </a>
-  {#if !hideMenu}
   <nav>
     <ul>
-      <li class:active={$page.path === '/products'}>
-        <a class="link" sveltekit:prefetch href="/products">Products</a>
+      <li class:active={$page.path === '/'}>
+        <a class="link" sveltekit:prefetch href="/">Products</a>
       </li>
       <li class:active={$page.path === '/about'}>
         <a class="link" sveltekit:prefetch href="/about">About</a>
@@ -27,7 +22,6 @@ export let hideMenu = false
       </li>
     </ul>
   </nav>
-  {/if}
 </header>
 
 <style lang="scss">
