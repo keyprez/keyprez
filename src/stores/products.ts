@@ -2,27 +2,31 @@ import { writable } from 'svelte/store';
 
 export const products = writable([
   {
-    id: 1,
+    id: 'prod_JcV2IweFo7qp0f',
     name: 'corgi',
     description: 'Corgi 40% DIY keyboard kit',
     price: 50,
+    priceId: 'price_1IzG29LwcEKoBoonQ2TNebjk',
   },
   {
-    id: 2,
+    id: 'prod_KAylY6ACD7rqqw',
     name: 'eagle',
-    description: 'eagle 70% DIY keyboard kit',
+    description: 'Eagle 70% DIY keyboard kit',
     price: 80,
+    priceId: 'price_1JWcntLwcEKoBoonwBfBkUxE',
   },
   {
-    id: 3,
+    id: 'prod_KAykJBlhOwoZPK',
     name: 'banana',
-    description: 'banana 60% DIY keyboard kit',
+    description: 'Banana 60% DIY keyboard kit',
     price: 70,
+    priceId: 'price_1JWcmqLwcEKoBoonAGneuc1z',
   },
   {
-    id: 4,
+    id: 'prod_JcV29KtITDuGVu',
     name: 'rhino',
-    description: 'rhino 50% DIY keyboard kit',
+    description: 'Rhino 50% DIY keyboard kit',
     price: 60,
+    priceId: 'price_1JWcjYLwcEKoBoonn34ntol9',
   },
 ]);

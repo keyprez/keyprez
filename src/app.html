@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- It is recommended to load Stripe on every page, not just the checkout page,
+      to best leverage Stripe’s advanced fraud functionality. 
+      See https://stripe.com/docs/js/including for more details. -->
+    <script src="https://js.stripe.com/v3" async></script>
     %svelte.head%
   </head>
   <body>
