@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b59efccf-cd89-4ce3-ac84-fde63d80c1d3/deploy-status)](https://app.netlify.com/sites/keyprez/deploys)
       _
      | | _____ _   _ _ __  _ __ ___ ____
      | |/ / _ \ | | | '_ \| '__/ _ \_  /
@@ -14,7 +15,7 @@ For local development run:
 ```bash
 nvm use
 npm install
-npm run dev
+npm start
 ```
 
 To build the application run:
