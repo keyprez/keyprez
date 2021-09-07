@@ -16,6 +16,7 @@
     try {
       const res = await fetch(`${endpoint}/checkout?id=${sessionId}`);
       const data = await res.json();
+      if (data.error) throw new Error(data.error);
       productName = data.line_items.data[0].description;
       email = data.customer_details.email;
       loading = false;

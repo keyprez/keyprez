@@ -5,18 +5,14 @@
   import { products } from '../stores/products';
   import config from '../../config';
 
-  const { endpoint } = config;
+  const { endpoint, stripePublishableKey } = config;
 
   const productName = $page.path.replace('/', '');
   const { name, description, price, priceId } = $products.find((product) => product.name === productName);
   let submitting = false;
 
-  // Create an instance of the Stripe object by providing the publishable key.
-  // The key needs to be replaced with a production one once we go live.
   /* global Stripe */
-  const stripe = Stripe(
-    'pk_test_51IzFveLwcEKoBoonzTPmtwFhbwqix42XQtnxeHPtDb2IutljsV75FQI9jVi9JOCxBHYxQLvy3eVwpTWXYpmVDplN00ZeSz3HSi',
-  );
+  const stripe = Stripe(stripePublishableKey);
 
   const handleRedirect = async () => {
     submitting = true;
@@ -27,6 +23,7 @@
         body: JSON.stringify({ name, priceId }),
       });
       const data = await res.json();
+      if (data.error) throw new Error(data.error);
       await stripe.redirectToCheckout({ sessionId: data.id });
     } catch (err) {
       console.error(`Error creating Stripe checkout session: ${err}`);
