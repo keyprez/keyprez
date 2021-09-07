@@ -94,7 +94,7 @@
   }
 
   input {
-    width: 20rem;
+    width: 12rem;
   }
 
   .links {
@@ -110,5 +110,11 @@
 
   img:hover {
     transform: scale(1.3);
+  }
+
+  @media (min-width: 768px) {
+    input {
+      width: 20rem;
+    }
   }
 </style>
