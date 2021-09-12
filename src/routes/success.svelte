@@ -1,9 +1,7 @@
 <script>
   import { onMount } from 'svelte';
 
-  import config from '../../config';
-
-  const { endpoint } = config;
+  import { endpoint } from '../../config';
 
   let productName = '';
   let email = '';
