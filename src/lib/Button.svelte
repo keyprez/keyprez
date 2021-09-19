@@ -4,7 +4,7 @@
 
   let loading = false;
 
-  const promiser = async (promise, loading) => {
+  const resolver = async (promise, loading) => {
     loading(true);
     await promise;
     loading(false);
@@ -14,7 +14,7 @@
 <button
   type="button"
   class={loading ? 'button-loading' : ''}
-  on:click|preventDefault={() => promiser(onClick(), (status) => (loading = status))}><span>{text}</span></button
+  on:click|preventDefault={() => resolver(onClick(), (status) => (loading = status))}><span>{text}</span></button
 >
 
 <style type="text/scss">
