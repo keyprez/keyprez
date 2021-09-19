@@ -101,15 +101,18 @@ button {
   font-weight: 700;
   height: 4rem;
   letter-spacing: 2px;
+  position: relative;
   transition: 0.1s linear;
   width: 10rem;
 }
 
-button:hover {
+button:hover,
+button:active {
   background: $color-primary-dark;
   border: 1px solid $color-secondary-light;
   color: $color-secondary-light;
   cursor: pointer;
+  outline: none;
 }
 
 input {
