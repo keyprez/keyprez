@@ -19,7 +19,11 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
   // Fetch products from the server and save in localStorage
   const res = await fetch(`${endpoint}/products`);
-  products = await res.json();
+  const data = await res.json();
+
+  if (data.error) throw new Error(data.error);
+
+  products = data;
   const json = { products, cacheTime: Math.floor(Date.now() / 1000) };
   localStorage.setItem('products', JSON.stringify(json));
   return products;
