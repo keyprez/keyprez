@@ -24,9 +24,13 @@
   });
 </script>
 
-<svelte:head>
-  <title>success</title>
-</svelte:head>
+<script>
+  import SvelteSeo from "svelte-seo";
+</script>
+
+<SvelteSeo
+  title="Keyprez - Success"
+/>
 
 {#if loading}
   <div><h1>Processing...</h1></div>
