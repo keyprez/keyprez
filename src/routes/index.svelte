@@ -7,10 +7,6 @@
   const response = fetchProducts();
 </script>
 
-<svelte:head>
-  <title>keyprez</title>
-</svelte:head>
-
 <div class="gallery" in:fade={{ duration: 1000 }}>
   {#await response}
     <h1>LOADING...</h1>

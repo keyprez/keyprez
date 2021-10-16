@@ -2,10 +2,10 @@
   import { page } from '$app/stores';
 
   import Button from '$lib/Button.svelte';
-  import { redirectToCheckout } from '../utils/redirectToCheckout';
-  import { getProductByName } from '../utils/getProductByName';
+  import { redirectToCheckout } from '../../utils/redirectToCheckout';
+  import { getProductByName } from '../../utils/getProductByName';
 
-  const productName = $page.path.replace('/', '');
+  const productName = $page.path.replace('/product/', '');
 </script>
 
 <svelte:head>
@@ -16,7 +16,7 @@
   {#await getProductByName(productName)}
     <h1>LOADING...</h1>
   {:then { description, price, priceId }}
-    <img src={`${productName}.jpg`} alt={productName} />
+    <img src={`/${productName}.jpg`} alt={productName} />
     <div class="text">
       <h1>{description.toUpperCase()}</h1>
       <p>
