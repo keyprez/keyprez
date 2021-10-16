@@ -1,21 +1,23 @@
 <script>
+import SvelteSeo from "svelte-seo";
   import { page } from '$app/stores';
 
   import Button from '$lib/Button.svelte';
   import { redirectToCheckout } from '../../utils/redirectToCheckout';
   import { getProductByName } from '../../utils/getProductByName';
+  import { capitalize } from '../../utils/capitalize';
 
   const productName = $page.path.replace('/product/', '');
 </script>
 
-<svelte:head>
-  <title>{productName}</title>
-</svelte:head>
-
 <div class="container">
   {#await getProductByName(productName)}
     <h1>LOADING...</h1>
-  {:then { description, price, priceId }}
+  {:then { name,description, price, priceId }}
+    <SvelteSeo
+      title={`Keyprez - ${capitalize(name)}`}
+      description={description}
+    />
     <img src={`/${productName}.jpg`} alt={productName} />
     <div class="text">
       <h1>{description.toUpperCase()}</h1>

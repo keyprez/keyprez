@@ -1,11 +1,11 @@
-<script>
-  import SvelteSeo from "svelte-seo";
-</script>
-
 <script context="module">
   import { page } from '$app/stores';
 
   export const prerender = true;
+</script>
+
+<script>
+  import SvelteSeo from "svelte-seo";
 </script>
 
 <SvelteSeo
