@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -26,10 +27,16 @@ type Comment struct {
 	MovieId primitive.ObjectID `bson:"movie_id,omitempty"`
 }
 
-func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	godotenv.Load("../../.env")
+func getEnvVar(key string) string {
+	if strings.HasSuffix(os.Args[0], ".test") {
+		godotenv.Load("../../.env")
+	}
+	return os.Getenv(key)
+}
 
-	atlasUri := os.Getenv("ATLAS_URI")
+func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+
+	atlasUri := getEnvVar("ATLAS_URI")
 	client, err := mongo.NewClient(options.Client().ApplyURI(atlasUri))
 	if err != nil {
 		log.Fatal(err)
@@ -48,7 +55,7 @@ func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 		log.Fatal(err)
 	}
 
-	db := os.Getenv("ATLAS_DB")
+	db := getEnvVar("ATLAS_DB")
 	commentsCollection := client.Database(db).Collection("comments")
 
 	var comments []Comment
@@ -58,11 +65,12 @@ func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 
 	cursor, err := commentsCollection.Find(ctx, bson.M{"email": "john_bishop@fakegmail.com"}, selectOpts)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	if err = cursor.All(ctx, &comments); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+
 	data, _ := json.Marshal(comments)
 	return &events.APIGatewayProxyResponse{
 		StatusCode:        200,
