@@ -1,16 +1,15 @@
-package main
+package products
 
 import (
 	"context"
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
-	"strings"
 	"time"
 
+	"github.com/keyprez/keyprez/go-src/utils"
+
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -27,16 +26,8 @@ type Comment struct {
 	MovieId primitive.ObjectID `bson:"movie_id,omitempty"`
 }
 
-func getEnvVar(key string) string {
-	if strings.HasSuffix(os.Args[0], ".test") {
-		godotenv.Load("../../.env")
-	}
-	return os.Getenv(key)
-}
-
-func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-
-	atlasUri := getEnvVar("ATLAS_URI")
+func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+	atlasUri := utils.GetEnvVar("ATLAS_URI")
 	client, err := mongo.NewClient(options.Client().ApplyURI(atlasUri))
 	if err != nil {
 		log.Fatal(err)
@@ -55,7 +46,7 @@ func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 		log.Fatal(err)
 	}
 
-	db := getEnvVar("ATLAS_DB")
+	db := utils.GetEnvVar("ATLAS_DB")
 	commentsCollection := client.Database(db).Collection("comments")
 
 	var comments []Comment
