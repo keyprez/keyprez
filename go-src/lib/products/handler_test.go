@@ -22,7 +22,7 @@ func TestProductsHandler(t *testing.T) {
 	request := events.APIGatewayProxyRequest{
 		Body: "{}",
 	}
-	msg, _ := productsHandler(request)
+	msg, _ := ProductsHandler(request)
 
 	var comments []CommentResponse
 	json.Unmarshal([]byte(msg.Body), &comments)

@@ -7,24 +7,16 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/keyprez/keyprez/go-src/lib/models"
+
 	"github.com/keyprez/keyprez/go-src/utils"
 
 	"github.com/aws/aws-lambda-go/events"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
-
-type Comment struct {
-	ID      primitive.ObjectID `bson:"_id,omitempty"`
-	Date    time.Time          `bson:"date,omitempty"`
-	Name    string             `bson:"name,omitempty"`
-	Email   string             `bson:"email,omitempty"`
-	Text    string             `bson:"text,omitempty"`
-	MovieId primitive.ObjectID `bson:"movie_id,omitempty"`
-}
 
 func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	atlasUri := utils.GetEnvVar("ATLAS_URI")
@@ -49,7 +41,7 @@ func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 	db := utils.GetEnvVar("ATLAS_DB")
 	commentsCollection := client.Database(db).Collection("comments")
 
-	var comments []Comment
+	var comments []models.Comment
 
 	selectOpts := options.Find()
 	selectOpts.SetLimit(3)
