@@ -1,4 +1,4 @@
-package products
+package main
 
 import (
 	"encoding/json"
@@ -22,7 +22,7 @@ func TestProductsHandler(t *testing.T) {
 	request := events.APIGatewayProxyRequest{
 		Body: "{}",
 	}
-	msg, _ := handler(request)
+	msg, _ := productsHandler(request)
 
 	var comments []CommentResponse
 	json.Unmarshal([]byte(msg.Body), &comments)

@@ -1,4 +1,4 @@
-package products
+package main
 
 import (
 	"context"
@@ -26,7 +26,7 @@ type Comment struct {
 	MovieId primitive.ObjectID `bson:"movie_id,omitempty"`
 }
 
-func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+func productsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	godotenv.Load("../../.env")
 
 	atlasUri := os.Getenv("ATLAS_URI")
