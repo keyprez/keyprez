@@ -1,56 +1,18 @@
 package products
 
 import (
-	"context"
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/keyprez/keyprez/go-src/lib/models"
 
-	"github.com/keyprez/keyprez/go-src/utils"
-
 	"github.com/aws/aws-lambda-go/events"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	atlasUri := utils.GetEnvVar("ATLAS_URI")
-	client, err := mongo.NewClient(options.Client().ApplyURI(atlasUri))
+	comments, err := models.GetProducts()
 	if err != nil {
-		log.Fatal(err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	err = client.Connect(ctx)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer client.Disconnect(ctx)
-
-	err = client.Ping(ctx, readpref.Primary())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	db := utils.GetEnvVar("ATLAS_DB")
-	commentsCollection := client.Database(db).Collection("comments")
-
-	var comments []models.Comment
-
-	selectOpts := options.Find()
-	selectOpts.SetLimit(3)
-
-	cursor, err := commentsCollection.Find(ctx, bson.M{"email": "john_bishop@fakegmail.com"}, selectOpts)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err = cursor.All(ctx, &comments); err != nil {
 		log.Fatal(err)
 	}
 
