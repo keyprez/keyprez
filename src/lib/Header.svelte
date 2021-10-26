@@ -4,15 +4,6 @@
   export const prerender = true;
 </script>
 
-<script>
-  import SvelteSeo from "svelte-seo";
-</script>
-
-<SvelteSeo
-  title="Keyprez"
-  description="New keyboard shop in progress..."
-/>
-
 <header>
   <a class="corner" sveltekit:prefetch href="/">
     <img class="logo" src="/keycap_simple.svg" alt="keyprez logo" />
