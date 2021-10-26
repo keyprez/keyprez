@@ -12,7 +12,8 @@
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "api": "go run ./go-src/devServer.go"
   },
   "devDependencies": {
     "@sveltejs/adapter-netlify": "^1.0.0-next.33",
