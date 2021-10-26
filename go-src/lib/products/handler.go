@@ -2,7 +2,6 @@ package products
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/keyprez/keyprez/go-src/lib/models"
@@ -13,7 +12,7 @@ import (
 func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	products, err := models.GetProducts()
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	data, _ := json.Marshal(products)

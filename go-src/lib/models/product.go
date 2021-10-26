@@ -23,7 +23,12 @@ type product struct {
 
 func GetProducts() ([]product, error) {
 	ctx := context.TODO()
-	productCollection := GetMongoCollection(COLLECTION)
+	mongoClient, err := GetMongoClient()
+	if err != nil {
+		return nil, err
+	}
+
+	productCollection := GetMongoCollection(mongoClient, COLLECTION)
 	var products []product
 
 	selectOpts := options.Find()

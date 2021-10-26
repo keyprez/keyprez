@@ -41,12 +41,7 @@ func GetMongoClient() (*mongo.Client, error) {
 	return clientInstance, clientInstanceError
 }
 
-func GetMongoCollection(collection string) *mongo.Collection {
-	client, err := GetMongoClient()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func GetMongoCollection(mongoClient *mongo.Client, collection string) *mongo.Collection {
 	db := utils.GetEnvVar("ATLAS_DB")
-	return client.Database(db).Collection(collection)
+	return mongoClient.Database(db).Collection(collection)
 }
