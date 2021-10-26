@@ -12,12 +12,10 @@
 </script>
 
 <script>
-  import SvelteSeo from "svelte-seo";
+  import SvelteSeo from 'svelte-seo';
 </script>
 
-<SvelteSeo
-  title="Keyprez - Contact"
-/>
+<SvelteSeo title="Keyprez - Contact" />
 
 <div class="container" in:fade>
   <div class="form-container">

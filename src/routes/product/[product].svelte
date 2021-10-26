@@ -1,5 +1,5 @@
 <script>
-import SvelteSeo from "svelte-seo";
+  import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
 
   import Button from '$lib/Button.svelte';
@@ -13,11 +13,8 @@ import SvelteSeo from "svelte-seo";
 <div class="container">
   {#await getProductByName(productName)}
     <h1>LOADING...</h1>
-  {:then { name,description, price, priceId }}
-    <SvelteSeo
-      title={`Keyprez - ${capitalize(name)}`}
-      description={description}
-    />
+  {:then { name, description, price, priceId }}
+    <SvelteSeo title={`Keyprez - ${capitalize(name)}`} {description} />
     <img src={`/${productName}.jpg`} alt={productName} />
     <div class="text">
       <h1>{description.toUpperCase()}</h1>
@@ -72,10 +69,6 @@ import SvelteSeo from "svelte-seo";
     display: flex;
     flex: 40%;
     flex-direction: column;
-  }
-
-  button {
-    margin: 1.5rem;
   }
 
   @media (min-width: 1400px) {
