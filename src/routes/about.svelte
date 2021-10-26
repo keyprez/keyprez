@@ -16,12 +16,10 @@
 </script>
 
 <script>
-  import SvelteSeo from "svelte-seo";
+  import SvelteSeo from 'svelte-seo';
 </script>
 
-<SvelteSeo
-  title="Keyprez - About us"
-/>
+<SvelteSeo title="Keyprez - About us" />
 
 <div in:fade>
   <h1>About us</h1>
