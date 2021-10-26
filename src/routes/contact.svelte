@@ -11,9 +11,13 @@
   };
 </script>
 
-<svelte:head>
-  <title>contact</title>
-</svelte:head>
+<script>
+  import SvelteSeo from "svelte-seo";
+</script>
+
+<SvelteSeo
+  title="Keyprez - Contact"
+/>
 
 <div class="container" in:fade>
   <div class="form-container">

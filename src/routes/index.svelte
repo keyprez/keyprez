@@ -1,4 +1,5 @@
 <script>
+  import SvelteSeo from 'svelte-seo';
   import { fade } from 'svelte/transition';
   import Product from '$lib/Product.svelte';
 
@@ -7,9 +8,7 @@
   const response = fetchProducts();
 </script>
 
-<svelte:head>
-  <title>keyprez</title>
-</svelte:head>
+<SvelteSeo title="Keyprez" description="New keyboard shop in progress..." />
 
 <div class="gallery" in:fade={{ duration: 1000 }}>
   {#await response}

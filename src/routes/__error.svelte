@@ -1,10 +1,14 @@
+<script>
+  import SvelteSeo from "svelte-seo";
+</script>
+
 <script context="module">
   export const prerender = true;
 </script>
 
-<svelte:head>
-  <title>not found</title>
-</svelte:head>
+<SvelteSeo
+  title="Keyprez - Not found"
+/>
 
 <div>
   <img src="404.png" alt="404 keycap" />
