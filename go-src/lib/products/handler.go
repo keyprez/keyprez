@@ -11,12 +11,12 @@ import (
 )
 
 func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	comments, err := models.GetProducts()
+	products, err := models.GetProducts()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	data, _ := json.Marshal(comments)
+	data, _ := json.Marshal(products)
 	return &events.APIGatewayProxyResponse{
 		StatusCode:        200,
 		Headers:           map[string]string{"Content-Type": "application/json"},
