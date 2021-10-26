@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/keyprez/keyprez/go-src/utils"
+	"github.com/keyprez/keyprez/go-src/lib/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
