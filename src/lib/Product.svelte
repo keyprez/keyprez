@@ -4,9 +4,9 @@
 </script>
 
 <div class="product-container">
-  <a class="image-container" sveltekit:prefetch href={`/${Name}`}>
+  <a class="image-container" sveltekit:prefetch href={`/product/${Name}`}>
     <img class="product-image" src={`${Name.toLowerCase()}.jpg`} alt={Name} />
-    <span><img src={`${Name.toLowerCase()}.svg`} alt={Name} /></span>
+    <span><img src={`/${Name.toLowerCase()}.svg`} alt={Name} /></span>
   </a>
   <p>{Description.toUpperCase()}</p>
   <h2>&#36;<span>{Price}</span></h2>

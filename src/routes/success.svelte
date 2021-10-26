@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import SvelteSeo from 'svelte-seo';
 
   import { endpoint } from '../../config';
 
@@ -24,9 +25,7 @@
   });
 </script>
 
-<svelte:head>
-  <title>success</title>
-</svelte:head>
+<SvelteSeo title="Keyprez - Success" />
 
 {#if loading}
   <div><h1>Processing...</h1></div>

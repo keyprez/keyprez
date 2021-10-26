@@ -6,8 +6,8 @@
 
 <header>
   <a class="corner" sveltekit:prefetch href="/">
-    <img class="logo" src="keycap_simple.svg" alt="keyprez logo" />
-    <img class="name" src="keyprez_name.svg" alt="keyprez name" />
+    <img class="logo" src="/keycap_simple.svg" alt="keyprez logo" />
+    <img class="name" src="/keyprez_name.svg" alt="keyprez name" />
   </a>
   <nav>
     <ul>

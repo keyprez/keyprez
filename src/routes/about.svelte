@@ -15,9 +15,11 @@
   export const prerender = true;
 </script>
 
-<svelte:head>
-  <title>about</title>
-</svelte:head>
+<script>
+  import SvelteSeo from 'svelte-seo';
+</script>
+
+<SvelteSeo title="Keyprez - About us" />
 
 <div in:fade>
   <h1>About us</h1>
