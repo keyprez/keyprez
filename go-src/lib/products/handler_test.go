@@ -3,19 +3,18 @@ package products
 import (
 	"encoding/json"
 	"testing"
-	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type CommentResponse struct {
-	ID      primitive.ObjectID `json:"ID"`
-	Date    time.Time          `json:"Date"`
-	Name    string             `json:"Name"`
-	Email   string             `json:"Email"`
-	Text    string             `json:"Text"`
-	MovieId primitive.ObjectID `json:"MovieId"`
+type ProductsResponse struct {
+	ID          primitive.ObjectID `json:"ID"`
+	Name        string             `json:"Name"`
+	Description string             `json:"Description"`
+	Price       int32              `json:"Price"`
+	PriceID     string             `json:"PriceID"`
+	Stock       int32              `json:"Stock"`
 }
 
 func TestProductsHandler(t *testing.T) {
@@ -24,10 +23,10 @@ func TestProductsHandler(t *testing.T) {
 	}
 	msg, _ := ProductsHandler(request)
 
-	var comments []CommentResponse
-	json.Unmarshal([]byte(msg.Body), &comments)
+	var response []ProductsResponse
+	json.Unmarshal([]byte(msg.Body), &response)
 
-	if len(comments) == 0 {
+	if len(response) == 0 {
 		t.Fatal("Comments should not be empty")
 	}
 }
