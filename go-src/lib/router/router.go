@@ -25,6 +25,24 @@ func (r *Route) GetMatcher() string {
 	return "^" + matcher + "$"
 }
 
+func (r *Route) SetUrlParameters(url string, request *events.APIGatewayProxyRequest) {
+	m := regexp.MustCompile(`\{[a-z]+\}`)
+	parameters := make(map[string]string)
+	urlChunks := strings.Split(url, "/")
+	pathChunks := strings.Split(r.path, "/")
+
+	for index, value := range pathChunks {
+		if !m.Match([]byte(value)) {
+			continue
+		}
+
+		key := value[1 : len(value)-1]
+		parameters[key] = urlChunks[index]
+	}
+
+	request.PathParameters = parameters
+}
+
 type Router struct {
 	getRoutes  []*Route
 	postRoutes []*Route
@@ -59,6 +77,7 @@ func (r *Router) GetHandler() lambdaHandler {
 			for _, route := range potentialRoutes {
 				checkMatch := regexp.MustCompile(route.GetMatcher())
 				if checkMatch.Match(uriWithoutQuery) {
+					route.SetUrlParameters(request.Path, &request)
 					return route.handler(request)
 				}
 			}
