@@ -17,6 +17,7 @@ type ProductRequestPost struct {
 }
 
 func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
+	fmt.Println(req.RequestURI)
 	pathParams := mux.Vars(req)
 	defer req.Body.Close()
 
@@ -66,7 +67,8 @@ func headers(req *http.Request) map[string]string {
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/products", productsHandle)
+	r.HandleFunc("/.netlify/functions/products", productsHandle)
+	r.HandleFunc("/.netlify/functions/products/{key}", productsHandle)
 
 	fmt.Println("Listening on port 8090")
 	err := http.ListenAndServe(":8090", r)

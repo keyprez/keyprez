@@ -7,5 +7,6 @@ import (
 
 func main() {
 	// Make the handler available for Remote Procedure Call by AWS Lambda
-	lambda.Start(products.ProductsHandler)
+	productRouter := products.SetupRouter()
+	lambda.Start(productRouter.GetHandler())
 }
