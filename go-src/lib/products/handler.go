@@ -11,21 +11,13 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-type getResponse struct {
-	Data []models.Product
-	Path string
-}
-
 func ProductHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	products, err := models.GetProducts()
+	products, err := models.GetProduct()
 	if err != nil {
 		return nil, err
 	}
 
-	data, err := json.Marshal(getResponse{
-		Data: products,
-		Path: request.Path,
-	})
+	data, err := json.Marshal(products)
 
 	return &events.APIGatewayProxyResponse{
 		StatusCode:        200,
@@ -42,10 +34,7 @@ func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 		return nil, err
 	}
 
-	data, err := json.Marshal(getResponse{
-		Data: products,
-		Path: request.Path,
-	})
+	data, err := json.Marshal(products)
 
 	return &events.APIGatewayProxyResponse{
 		StatusCode:        200,

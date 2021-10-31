@@ -1,7 +1,8 @@
 package router
 
 import (
-	"net/http"
+	"regexp"
+	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
 )
@@ -18,24 +19,56 @@ func (r *Route) SetHandler(handler lambdaHandler) *Route {
 	return r
 }
 
+func (r *Route) GetMatcher() string {
+	m := regexp.MustCompile(`\{[a-z]+\}`)
+	matcher := m.ReplaceAllString(r.path, "([a-z0-9-]+)")
+	return "^" + matcher + "$"
+}
+
 type Router struct {
-	routes []*Route
+	getRoutes  []*Route
+	postRoutes []*Route
 }
 
 func (r *Router) Get(path string, handler lambdaHandler) *Route {
-	route := &Route{}
-	r.routes = append(r.routes, route)
+	route := &Route{path: path}
+	r.getRoutes = append(r.getRoutes, route)
+	return route.SetHandler(handler)
+}
+
+func (r *Router) Post(path string, handler lambdaHandler) *Route {
+	route := &Route{path: path}
+	r.postRoutes = append(r.postRoutes, route)
 	return route.SetHandler(handler)
 }
 
 func (r *Router) GetHandler() lambdaHandler {
 	return func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+		var potentialRoutes []*Route
+		switch request.HTTPMethod {
+		case "GET":
+			potentialRoutes = r.getRoutes
+			break
+		case "POST":
+			potentialRoutes = r.postRoutes
+			break
+		}
+
+		if len(potentialRoutes) >= 0 {
+			uriWithoutQuery := []byte(strings.Split(request.Path, "?")[0])
+			for _, route := range potentialRoutes {
+				checkMatch := regexp.MustCompile(route.GetMatcher())
+				if checkMatch.Match(uriWithoutQuery) {
+					return route.handler(request)
+				}
+			}
+		}
+
 		return &events.APIGatewayProxyResponse{
-			StatusCode:        200,
-			Headers:           map[string]string{"Content-Type": "application/json"},
-			MultiValueHeaders: http.Header{"Set-Cookie": {"Ding", "Ping"}},
-			Body:              "Hello",
-			IsBase64Encoded:   false,
+			StatusCode:      404,
+			Headers:         map[string]string{"Content-Type": "application/json"},
+			Body:            "",
+			IsBase64Encoded: false,
 		}, nil
 	}
 }

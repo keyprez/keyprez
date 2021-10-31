@@ -17,6 +17,30 @@ type Product struct {
 	Stock       int32              `bson:"stock,omitempty"`
 }
 
+func GetProduct() ([]Product, error) {
+	ctx := context.TODO()
+	mongoClient, err := GetMongoClient()
+	if err != nil {
+		return nil, err
+	}
+
+	productCollection := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
+	var products []Product
+
+	selectOpts := options.Find()
+	selectOpts.SetLimit(1)
+
+	cursor, err := productCollection.Find(ctx, bson.M{}, selectOpts)
+	if err != nil {
+		return nil, err
+	}
+	if err = cursor.All(ctx, &products); err != nil {
+		return nil, err
+	}
+
+	return products, nil
+}
+
 func GetProducts() ([]Product, error) {
 	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()

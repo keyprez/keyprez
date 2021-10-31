@@ -17,7 +17,6 @@ type ProductRequestPost struct {
 }
 
 func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
-	fmt.Println(req.RequestURI)
 	pathParams := mux.Vars(req)
 	defer req.Body.Close()
 
@@ -40,12 +39,14 @@ func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
 		PathParameters:                  pathParams,
 		QueryStringParameters:           queryStringParams,
 		MultiValueQueryStringParameters: multiValueQueryStringParams,
+		Path:                            req.RequestURI,
 	}
 }
 
 func productsHandle(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Received request")
-	response, err := products.ProductsHandler(transformRequest(req))
+	productsRouter := products.SetupRouter()
+	response, err := productsRouter.GetHandler()(transformRequest(req))
 	if err != nil {
 		fmt.Println(err)
 	}
