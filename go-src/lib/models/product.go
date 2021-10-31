@@ -8,11 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const COLLECTION = "products"
-
-// This will be a product struct when we add such a collection.
-// Test data only for now
-type product struct {
+type Product struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty"`
 	Name        string             `bson:"name,omitempty"`
 	Description string             `bson:"description,omitempty"`
@@ -21,15 +17,15 @@ type product struct {
 	Stock       int32              `bson:"stock,omitempty"`
 }
 
-func GetProducts() ([]product, error) {
+func GetProducts() ([]Product, error) {
 	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
 
-	productCollection := GetMongoCollection(mongoClient, COLLECTION)
-	var products []product
+	productCollection := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
+	var products []Product
 
 	selectOpts := options.Find()
 	selectOpts.SetLimit(3)
