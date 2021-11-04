@@ -4,7 +4,7 @@ export const redirectToCheckout = async (productName: string, priceId: string): 
   /* global Stripe */
   const stripe = Stripe(stripePublishableKey);
   try {
-    const res = await fetch(`${endpoint}/checkout`, {
+    const res = await fetch(`${endpoint}/orders/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ productName, priceId }),

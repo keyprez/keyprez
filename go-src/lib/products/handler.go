@@ -37,18 +37,17 @@ func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 	data, err := json.Marshal(products)
 
 	return &events.APIGatewayProxyResponse{
-		StatusCode:        200,
-		Headers:           map[string]string{"Content-Type": "application/json"},
-		MultiValueHeaders: http.Header{"Set-Cookie": {"Ding", "Ping"}},
-		Body:              string(data),
-		IsBase64Encoded:   false,
+		StatusCode:      200,
+		Headers:         map[string]string{"Content-Type": "application/json"},
+		Body:            string(data),
+		IsBase64Encoded: false,
 	}, nil
 }
 
 func SetupRouter() router.Router {
 	r := router.Router{}
 	r.Get("/.netlify/functions/products", ProductsHandler)
-	r.Get("/.netlify/functions/products/{id}", ProductHandler)
+	r.Get("/.netlify/functions/products/{name}", ProductHandler)
 
 	return r
 }

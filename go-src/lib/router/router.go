@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -63,6 +64,7 @@ func (r *Router) Post(path string, handler lambdaHandler) *Route {
 func (r *Router) GetHandler() lambdaHandler {
 	return func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 		var potentialRoutes []*Route
+		fmt.Println(request.HTTPMethod)
 		switch request.HTTPMethod {
 		case "GET":
 			potentialRoutes = r.getRoutes
@@ -70,6 +72,18 @@ func (r *Router) GetHandler() lambdaHandler {
 		case "POST":
 			potentialRoutes = r.postRoutes
 			break
+		case "OPTIONS":
+			return &events.APIGatewayProxyResponse{
+				StatusCode: 200,
+				Headers: map[string]string{
+					"Content-Type":                 "application/json",
+					"Access-Control-Allow-Methods": "HEAD,GET,PUT,DELETE,OPTIONS",
+					"Access-Control-Allow-Origin":  "*",
+					"Access-Control-Allow-Headers": "*",
+				},
+				Body:            "",
+				IsBase64Encoded: false,
+			}, nil
 		}
 
 		if len(potentialRoutes) >= 0 {
