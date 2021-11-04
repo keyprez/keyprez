@@ -1,4 +1,4 @@
-import { endpoint, stripePublishableKey } from '../../config';
+import { endpoint, stripePublishableKey } from '../config';
 
 export const redirectToCheckout = async (productName: string, priceId: string): Promise<void> => {
   /* global Stripe */
