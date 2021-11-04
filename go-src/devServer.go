@@ -9,7 +9,9 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
+	"github.com/keyprez/keyprez/go-src/lib/orders"
 	"github.com/keyprez/keyprez/go-src/lib/products"
+	"github.com/keyprez/keyprez/go-src/lib/router"
 )
 
 type ProductRequestPost struct {
@@ -43,17 +45,28 @@ func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
 	}
 }
 
-func productsHandle(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("Received request")
-	productsRouter := products.SetupRouter()
-	response, err := productsRouter.GetHandler()(transformRequest(req))
+func setupAndRespond(w http.ResponseWriter, req *http.Request, setupRouter func() router.Router, log string) {
+	fmt.Println(log)
+	router := setupRouter()
+	response, err := router.GetHandler()(transformRequest(req))
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(response)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "HEAD,GET,PUT,DELETE,OPTIONS")
 	w.Write([]byte(response.Body))
+}
+
+func productsHandle(w http.ResponseWriter, req *http.Request) {
+	setupAndRespond(w, req, products.SetupRouter, "Received product request")
+}
+
+func ordersHandle(w http.ResponseWriter, req *http.Request) {
+	setupAndRespond(w, req, orders.SetupRouter, "Received order request")
 }
 
 func headers(req *http.Request) map[string]string {
@@ -68,8 +81,10 @@ func headers(req *http.Request) map[string]string {
 
 func main() {
 	r := mux.NewRouter()
+	// Todo: Use the routers to create the handlers for mux
 	r.HandleFunc("/.netlify/functions/products", productsHandle)
 	r.HandleFunc("/.netlify/functions/products/{key}", productsHandle)
+	r.HandleFunc("/.netlify/functions/orders/checkout", ordersHandle)
 
 	fmt.Println("Listening on port 8090")
 	err := http.ListenAndServe(":8090", r)
