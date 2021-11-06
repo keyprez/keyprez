@@ -61,12 +61,14 @@ func setupAndRespond(w http.ResponseWriter, req *http.Request, setupRouter func(
 	w.Write([]byte(response.Body))
 }
 
-func productsHandle(w http.ResponseWriter, req *http.Request) {
-	setupAndRespond(w, req, products.SetupRouter, "Received product request")
-}
-
-func ordersHandle(w http.ResponseWriter, req *http.Request) {
-	setupAndRespond(w, req, orders.SetupRouter, "Received order request")
+func routerToMux(setupRouter func() router.Router, muxRouter *mux.Router) {
+	router := setupRouter()
+	allRoutes := router.GetAllRoutes()
+	for _, route := range allRoutes {
+		muxRouter.HandleFunc(route.GetPath(), func(rw http.ResponseWriter, r *http.Request) {
+			setupAndRespond(rw, r, setupRouter, "Received request")
+		})
+	}
 }
 
 func headers(req *http.Request) map[string]string {
@@ -81,10 +83,8 @@ func headers(req *http.Request) map[string]string {
 
 func main() {
 	r := mux.NewRouter()
-	// Todo: Use the routers to create the handlers for mux
-	r.HandleFunc("/.netlify/functions/products", productsHandle)
-	r.HandleFunc("/.netlify/functions/products/{key}", productsHandle)
-	r.HandleFunc("/.netlify/functions/orders/checkout", ordersHandle)
+	routerToMux(products.SetupRouter, r)
+	routerToMux(orders.SetupRouter, r)
 
 	fmt.Println("Listening on port 8090")
 	err := http.ListenAndServe(":8090", r)

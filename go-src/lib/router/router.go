@@ -15,6 +15,10 @@ type Route struct {
 	handler lambdaHandler
 }
 
+func (r *Route) GetPath() string {
+	return r.path
+}
+
 func (r *Route) SetHandler(handler lambdaHandler) *Route {
 	r.handler = handler
 	return r
@@ -59,6 +63,11 @@ func (r *Router) Post(path string, handler lambdaHandler) *Route {
 	route := &Route{path: path}
 	r.postRoutes = append(r.postRoutes, route)
 	return route.SetHandler(handler)
+}
+
+func (r *Router) GetAllRoutes() []*Route {
+	combinedRoutes := append(r.getRoutes, r.postRoutes...)
+	return combinedRoutes
 }
 
 func (r *Router) GetHandler() lambdaHandler {
