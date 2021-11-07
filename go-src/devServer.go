@@ -22,8 +22,10 @@ func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
 	pathParams := mux.Vars(req)
 	defer req.Body.Close()
 
-	var mapInterface ProductRequestPost
-	_ = json.NewDecoder(req.Body).Decode(&mapInterface)
+	var mapInterface interface{}
+	json.NewDecoder(req.Body).Decode(&mapInterface)
+
+	bodyString, _ := json.Marshal(mapInterface)
 
 	queryStringParams := make(map[string]string)
 	multiValueQueryStringParams := make(map[string][]string)
@@ -42,6 +44,7 @@ func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
 		QueryStringParameters:           queryStringParams,
 		MultiValueQueryStringParameters: multiValueQueryStringParams,
 		Path:                            req.RequestURI,
+		Body:                            string(bodyString),
 	}
 }
 
