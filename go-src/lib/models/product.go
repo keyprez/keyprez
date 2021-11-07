@@ -15,6 +15,8 @@ type Product struct {
 	Price       int32              `bson:"price,omitempty"`
 	PriceID     string             `bson:"price_id,omitempty"`
 	Stock       int32              `bson:"stock,omitempty"`
+	Slug        string             `bson:"slug,omitempty"`
+	Active      bool               `bson:"active,omitempty"`
 }
 
 func GetProduct() ([]Product, error) {
