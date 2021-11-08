@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-netlify": "^1.0.0-next.35",
-    "@sveltejs/kit": "^1.0.0-next.191",
+    "@sveltejs/kit": "^1.0.0-next.195",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^10.4.0",
