@@ -4,20 +4,20 @@
 
   import Button from '$lib/Button.svelte';
   import { redirectToCheckout } from '../../utils/redirectToCheckout';
-  import { getProductByName } from '../../utils/getProductByName';
+  import { getProductBySlug } from '../../utils/getProductBySlug';
   import { capitalize } from '../../utils/capitalize';
 
-  const productName = $page.path.replace('/product/', '');
+  const productSlug = $page.path.replace('/product/', '');
 </script>
 
 <div class="container">
-  {#await getProductByName(productName)}
+  {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
-  {:then { name, description, price, priceId }}
-    <SvelteSeo title={`Keyprez - ${capitalize(name)}`} {description} />
-    <img src={`/${productName}.jpg`} alt={productName} />
+  {:then { Name, Description, Price, PriceID }}
+    <SvelteSeo title={`Keyprez - ${capitalize(Name)}`} {Description} />
+    <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
     <div class="text">
-      <h1>{description.toUpperCase()}</h1>
+      <h1>{Description.toUpperCase()}</h1>
       <p>
         Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis
         eget condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum
@@ -43,8 +43,8 @@
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <Button text="BUY" onClick={() => redirectToCheckout(productName, priceId)} />
-      <h2>&#36;<span>{price}</span></h2>
+      <Button text="BUY" onClick={() => redirectToCheckout(productName, PriceID)} />
+      <h2>&#36;<span>{Price}</span></h2>
     </div>
   {/await}
 </div>

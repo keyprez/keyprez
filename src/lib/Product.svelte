@@ -1,15 +1,15 @@
 <script>
   export let product;
-  $: ({ name, description, price } = product);
+  $: ({ Name, Description, Price, Slug } = product);
 </script>
 
 <div class="product-container">
-  <a class="image-container" sveltekit:prefetch href={`/product/${name}`}>
-    <img class="product-image" src={`/${name}.jpg`} alt={name} />
-    <span><img src={`/${name}.svg`} alt={name} /></span>
+  <a class="image-container" sveltekit:prefetch href={`/product/${Slug}`}>
+    <img class="product-image" src={`${Name.toLowerCase()}.jpg`} alt={Name} />
+    <span><img src={`/${Name.toLowerCase()}.svg`} alt={Name} /></span>
   </a>
-  <p>{description.toUpperCase()}</p>
-  <h2>&#36;<span>{price}</span></h2>
+  <p>{Description.toUpperCase()}</p>
+  <h2>&#36;<span>{Price}</span></h2>
 </div>
 
 <style lang="scss">

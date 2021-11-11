@@ -6,7 +6,7 @@
 
   let hideContent = true;
 
-  onMount(() => (hideContent = location.hostname !== 'localhost'));
+  onMount(() => (hideContent = !location.hostname.match(/localhost|deploy-preview/g)));
 </script>
 
 {#if hideContent}

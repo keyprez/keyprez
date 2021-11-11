@@ -1,5 +1,5 @@
 <script>
-  import { endpoint } from '../../config';
+  import { endpoint } from '../config';
 
   let email = '';
   let loading = false;

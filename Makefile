@@ -1,0 +1,3 @@
+build:
+	npm run build
+	GOBIN=${PWD}/functions go install ./...
