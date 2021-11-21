@@ -11,6 +11,6 @@
 />
 
 <div>
-  <img src="404.png" alt="404 keycap" />
+  <img src="/404.png" alt="404 keycap" />
   <h2><a href="/">Home</a></h2>
 </div>
