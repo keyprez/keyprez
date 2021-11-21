@@ -92,27 +92,25 @@ h2 {
   }
 }
 
-button {
+button, .anchorButton {
   background: $color-tertiary;
-  border: 0;
+  border: 1px solid transparent;
   color: $color-secondary-light;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
-  height: 4rem;
   letter-spacing: 2px;
   position: relative;
   transition: 0.1s linear;
-  width: 10rem;
-}
+  padding: 2rem 5rem;
 
-button:hover,
-button:active {
-  background: $color-primary-dark;
-  border: 1px solid $color-secondary-light;
-  color: $color-secondary-light;
-  cursor: pointer;
-  outline: none;
+  &:hover, &:active {
+    background: $color-primary-dark;
+    border: 1px solid $color-secondary-light;
+    color: $color-secondary-light;
+    cursor: pointer;
+    outline: none;
+  }
 }
 
 input {

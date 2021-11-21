@@ -13,7 +13,7 @@
 <div class="container">
   {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
-  {:then { Name, Description, Price, PriceID }}
+  {:then { Name, Description, Price, PriceID, Slug }}
     <SvelteSeo title={`Keyprez - ${capitalize(Name)}`} {Description} />
     <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
     <div class="text">
@@ -43,7 +43,7 @@
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <Button text="BUY" onClick={() => redirectToCheckout(productName, PriceID)} />
+      <a class="anchorButton" href={'/checkout/' + Slug}>Buy</a>
       <h2>&#36;<span>{Price}</span></h2>
     </div>
   {/await}
