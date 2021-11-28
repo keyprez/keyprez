@@ -54,7 +54,7 @@ func GetProducts() ([]Product, error) {
 	var products []Product
 
 	selectOpts := options.Find()
-	selectOpts.SetLimit(3)
+	selectOpts.SetLimit(4)
 
 	cursor, err := productCollection.Find(ctx, bson.M{}, selectOpts)
 	if err != nil {
