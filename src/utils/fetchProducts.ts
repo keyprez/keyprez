@@ -1,4 +1,4 @@
-import { endpoint } from '../../config';
+import { endpoint } from '../config';
 import type { Product, Cache } from './interfaces';
 
 export const fetchProducts = async (): Promise<Product[]> => {

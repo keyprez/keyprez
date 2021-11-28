@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import SvelteSeo from 'svelte-seo';
 
-  import { endpoint } from '../../config';
+  import { endpoint } from '../config';
 
   let productName = '';
   let email = '';
