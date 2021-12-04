@@ -1,5 +1,6 @@
 <script>
   export let text;
+  export let type;
   export let onClick;
 
   let loading = false;
@@ -11,11 +12,22 @@
   };
 </script>
 
-<button
-  type="button"
-  class={loading ? 'button-loading' : ''}
-  on:click|preventDefault={() => resolver(onClick(), (status) => (loading = status))}><span>{text}</span></button
->
+{#if typeof onClick !== "undefined"}
+  <button
+    type={type || "button"}
+    class={loading ? 'button-loading' : ''}
+    on:click|preventDefault={() => resolver(onClick(), (status) => (loading = status))}
+  >
+    <span>{text}</span>
+  </button>
+{:else}
+  <button
+    type={type || "button"}
+    class={loading ? 'button-loading' : ''}
+  >
+    <span>{text}</span>
+  </button>
+{/if}
 
 <style type="text/scss">
   @import 'src/variables';
