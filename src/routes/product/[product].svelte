@@ -2,8 +2,6 @@
   import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
 
-  import Button from '$lib/Button.svelte';
-  import { redirectToCheckout } from '../../utils/redirectToCheckout';
   import { getProductBySlug } from '../../utils/getProductBySlug';
   import { capitalize } from '../../utils/capitalize';
 

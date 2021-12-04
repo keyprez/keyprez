@@ -6,7 +6,6 @@
   import Button from '$lib/Button.svelte';
   import Checkbox from '$lib/Checkbox.svelte';
   import {capitalize} from '../../utils/capitalize';
-  import { redirectToCheckout } from '../../utils/redirectToCheckout';
   import { getProductBySlug } from '../../utils/getProductBySlug';
 
   const productSlug = $page.path.replace('/checkout/', '');
