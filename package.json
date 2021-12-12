@@ -19,8 +19,8 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-netlify": "^1.0.0-next.35",
-    "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@sveltejs/kit": "^1.0.0-next.195",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.1.0",
@@ -37,6 +37,7 @@
     "stylelint": "^14.0.1",
     "stylelint-config-sass-guidelines": "^9.0.0",
     "stylelint-config-standard": "^22.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
     "svelte": "^3.44.1",
     "svelte-preprocess": "^4.9.8",
     "tslib": "^2.3.1",
@@ -47,7 +48,7 @@
       "eslint --quiet"
     ],
     "*.scss": [
-      "stylelint --syntax=scss"
+      "stylelint"
     ]
   },
   "type": "module",
