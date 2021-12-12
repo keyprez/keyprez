@@ -1,11 +1,11 @@
 <script>
   import SvelteSeo from 'svelte-seo';
-  import validate from 'validate.js'
+  import validate from 'validate.js';
   import { page } from '$app/stores';
 
   import Button from '$lib/Button.svelte';
   import Checkbox from '$lib/Checkbox.svelte';
-  import {capitalize} from '../../utils/capitalize';
+  import { capitalize } from '../../utils/capitalize';
   import { getProductBySlug } from '../../utils/getProductBySlug';
 
   const productSlug = $page.path.replace('/checkout/', '');
@@ -36,7 +36,7 @@
       presence: {
         allowEmpty: false,
       },
-      numericality: true
+      numericality: true,
     },
     city: {
       presence: {
@@ -48,23 +48,25 @@
         allowEmpty: false,
       },
     },
-  }
+  };
 
   const handleSubmit = (event) => {
-    const form = Array.from(new FormData(event.target).entries())
-      .reduce((acc, [key, value]) => ({...acc, [key]: value}), {})
-    
+    const form = Array.from(new FormData(event.target).entries()).reduce(
+      (acc, [key, value]) => ({ ...acc, [key]: value }),
+      {},
+    );
+
     if (form.terms !== 'on') {
       // TODO: Display error message for user here
-      return
+      return;
     }
 
-    const validation = validate(form, formConstraints)
+    const validation = validate(form, formConstraints);
 
     // TODO: Display error messages for user here
 
     // Do form submit here
-  }
+  };
 </script>
 
 <div class="container">
@@ -74,35 +76,33 @@
     <SvelteSeo title={`Keyprez - Checkout - ${capitalize(Name)}`} {Description} />
 
     <div class="grid">
-        <div class="checkoutPersonalia">
-            <h1>Order {Name}</h1>
-            <form action="#" id="checkoutForm" on:submit|preventDefault={handleSubmit}>
-                <input type="text" name="firstname" placeholder="Firstname" />
-                <input type="text" name="lastname" placeholder="Lastname" />
-                <input type="email" name="email" placeholder="Email address" />
-                <input type="text" name="address" placeholder="Address" />
-                <input type="text" name="zip" placeholder="Zip code" />
-                <input type="text" name="city" placeholder="City" />
-                <input type="text" name="country" placeholder="Country" />
-                <input type="phone" name="phone" placeholder="Phone number" />
-                <Checkbox name="terms" label="I accept terms of agreement" />
-                <Checkbox name="subscribe" label="Subscribe to newsletter" />
+      <div class="checkoutPersonalia">
+        <h1>Order {Name}</h1>
+        <form action="#" id="checkoutForm" on:submit|preventDefault={handleSubmit}>
+          <input type="text" name="firstname" placeholder="Firstname" />
+          <input type="text" name="lastname" placeholder="Lastname" />
+          <input type="email" name="email" placeholder="Email address" />
+          <input type="text" name="address" placeholder="Address" />
+          <input type="text" name="zip" placeholder="Zip code" />
+          <input type="text" name="city" placeholder="City" />
+          <input type="text" name="country" placeholder="Country" />
+          <input type="phone" name="phone" placeholder="Phone number" />
+          <Checkbox name="terms" label="I accept terms of agreement" />
+          <Checkbox name="subscribe" label="Subscribe to newsletter" />
 
-                <div class="buyButtonContainer">
-                    <Button type="submit" class="buyButton" text={"Buy"} />
-                </div>
-            </form>
-        </div>
-        <div class="product">
-            <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
-            <h2>{Description.toUpperCase()}</h2>
-            <h3>&#36;<span>{Price}</span></h3>
-        </div>
+          <div class="buyButtonContainer">
+            <Button type="submit" class="buyButton" text={'Buy'} />
+          </div>
+        </form>
+      </div>
+      <div class="product">
+        <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
+        <h2>{Description.toUpperCase()}</h2>
+        <h3>&#36;<span>{Price}</span></h3>
+      </div>
     </div>
-    
   {/await}
 </div>
-
 
 <style type="text/scss">
   @import 'src/variables';
@@ -128,13 +128,13 @@
     text-align: center;
 
     input {
-        display: block;
-        padding: 10px 25px;
-        margin: 1rem auto;
+      display: block;
+      padding: 10px 25px;
+      margin: 1rem auto;
     }
 
     .buyButtonContainer {
-        margin-top: 2rem;
+      margin-top: 2rem;
     }
   }
 

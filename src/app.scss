@@ -92,7 +92,8 @@ h2 {
   }
 }
 
-button, .anchorButton {
+button,
+.anchor-button {
   background: $color-tertiary;
   border: 1px solid transparent;
   color: $color-secondary-light;
@@ -100,11 +101,12 @@ button, .anchorButton {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 2px;
+  padding: 2rem 5rem;
   position: relative;
   transition: 0.1s linear;
-  padding: 2rem 5rem;
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     background: $color-primary-dark;
     border: 1px solid $color-secondary-light;
     color: $color-secondary-light;

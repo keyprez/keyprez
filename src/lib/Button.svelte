@@ -12,19 +12,16 @@
   };
 </script>
 
-{#if typeof onClick !== "undefined"}
+{#if typeof onClick !== 'undefined'}
   <button
-    type={type || "button"}
+    type={type || 'button'}
     class={loading ? 'button-loading' : ''}
     on:click|preventDefault={() => resolver(onClick(), (status) => (loading = status))}
   >
     <span>{text}</span>
   </button>
 {:else}
-  <button
-    type={type || "button"}
-    class={loading ? 'button-loading' : ''}
-  >
+  <button type={type || 'button'} class={loading ? 'button-loading' : ''}>
     <span>{text}</span>
   </button>
 {/if}
