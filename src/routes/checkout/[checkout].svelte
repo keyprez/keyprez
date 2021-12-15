@@ -6,6 +6,7 @@
   import Button from '$lib/Button.svelte';
   import Checkbox from '$lib/Checkbox.svelte';
   import { capitalize } from '../../utils/capitalize';
+  import { redirectToCheckout } from '../../utils/redirectToCheckout';
   import { getProductBySlug } from '../../utils/getProductBySlug';
 
   const productSlug = $page.path.replace('/checkout/', '');
@@ -91,7 +92,7 @@
           <Checkbox name="subscribe" label="Subscribe to newsletter" />
 
           <div class="buyButtonContainer">
-            <Button type="submit" class="buyButton" text={'Buy'} />
+            <Button type="submit" text="BUY" onClick={() => redirectToCheckout(Name, PriceID)} />
           </div>
         </form>
       </div>
