@@ -43,6 +43,7 @@
     img {
       max-width: 15rem;
       min-width: 13rem;
+      max-height: 10rem;
     }
   }
 
