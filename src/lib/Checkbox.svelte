@@ -18,10 +18,7 @@
 
   .checkboxWrapper {
     display: flex;
-    gap: 2rem;
-  }
-
-  :global(.checkbox) {
-    margin: 0.15rem;
+    gap: 1.5rem;
+    align-items: center;
   }
 </style>

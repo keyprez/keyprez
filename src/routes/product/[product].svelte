@@ -41,7 +41,7 @@
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <a class="anchor-button" href={'/checkout/' + Slug}>Buy</a>
+      <a class="anchor-button" href={'/checkout/' + Slug}>BUY</a>
       <h2>&#36;<span>{Price}</span></h2>
     </div>
   {/await}

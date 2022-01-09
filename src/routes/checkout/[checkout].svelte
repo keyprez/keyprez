@@ -51,7 +51,8 @@
     },
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    const { Name, PriceID } = await getProductBySlug(productSlug);
     const form = Array.from(new FormData(event.target).entries()).reduce(
       (acc, [key, value]) => ({ ...acc, [key]: value }),
       {},
@@ -67,6 +68,7 @@
     // TODO: Display error messages for user here
 
     // Do form submit here
+    redirectToCheckout(Name, PriceID);
   };
 </script>
 
@@ -76,32 +78,30 @@
   {:then { Name, Description, Price, PriceID, Slug }}
     <SvelteSeo title={`Keyprez - Checkout - ${capitalize(Name)}`} {Description} />
 
-    <div class="grid">
-      <div class="checkoutPersonalia">
-        <h1>Order {Name}</h1>
-        <form action="#" id="checkoutForm" on:submit|preventDefault={handleSubmit}>
-          <input type="text" name="firstname" placeholder="Firstname" />
-          <input type="text" name="lastname" placeholder="Lastname" />
-          <input type="email" name="email" placeholder="Email address" />
-          <input type="text" name="address" placeholder="Address" />
-          <input type="text" name="zip" placeholder="Zip code" />
-          <input type="text" name="city" placeholder="City" />
-          <input type="text" name="country" placeholder="Country" />
-          <input type="phone" name="phone" placeholder="Phone number" />
-          <Checkbox name="terms" label="I accept terms of agreement" />
-          <Checkbox name="subscribe" label="Subscribe to newsletter" />
-
-          <div class="buyButtonContainer">
-            <Button type="submit" text="BUY" onClick={() => redirectToCheckout(Name, PriceID)} />
+    <div class="form-container">
+      <h1>Order {Name}</h1>
+      <form class="form" action="#" on:submit|preventDefault={handleSubmit}>
+        <input type="text" name="firstname" placeholder="Firstname" />
+        <input type="text" name="lastname" placeholder="Lastname" />
+        <input type="email" name="email" placeholder="Email address" />
+        <input type="text" name="address" placeholder="Address" />
+        <input type="text" name="zip" placeholder="Zip code" />
+        <input type="text" name="city" placeholder="City" />
+        <input type="text" name="country" placeholder="Country" />
+        <input type="phone" name="phone" placeholder="Phone number" />
+        <div class="submit-section">
+          <div class="checkboxes">
+            <Checkbox name="terms" label="I accept terms of agreement" />
+            <Checkbox name="subscribe" label="Subscribe to newsletter" />
           </div>
-        </form>
-      </div>
-      <div class="product">
-        <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
-        <h2>{Description.toUpperCase()}</h2>
-        <h3>&#36;<span>{Price}</span></h3>
-      </div>
+
+          <Button type="submit" text="BUY" />
+          <h2>&#36;<span>{Price}</span></h2>
+        </div>
+      </form>
     </div>
+
+    <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
   {/await}
 </div>
 
@@ -112,38 +112,43 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  img {
-    flex: 60%;
     width: 100%;
   }
 
-  .grid {
-    display: flex;
-    gap: 1rem;
+  img {
+    flex: 50%;
+    object-fit: cover;
   }
 
-  .checkoutPersonalia {
-    width: 60%;
-    text-align: center;
-
-    input {
-      display: block;
-      padding: 10px 25px;
-      margin: 1rem auto;
-    }
-
-    .buyButtonContainer {
-      margin-top: 2rem;
-    }
+  .form-container {
+    flex: 50%;
   }
 
-  .product {
+  .form {
     align-items: center;
     display: flex;
-    flex: 40%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    input {
+      height: 4rem;
+      flex: 46%;
+    }
+  }
+
+  .submit-section {
+    width: 100%;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+
+    .checkboxes {
+      margin: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 
   @media (min-width: 1400px) {
