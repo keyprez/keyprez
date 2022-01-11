@@ -6,7 +6,7 @@ import (
 )
 
 func CreateCheckoutSession() (*stripe.CheckoutSession, error) {
-	stripe.Key = GetEnvVar("STRIPE_SECRET")
+	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
 	params := &stripe.CheckoutSessionParams{
 		SuccessURL: stripe.String("http://localhost:8080/success"),

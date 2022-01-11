@@ -92,27 +92,27 @@ h2 {
   }
 }
 
-button {
+button,
+.anchor-button {
   background: $color-tertiary;
-  border: 0;
+  border: 1px solid transparent;
   color: $color-secondary-light;
   font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
-  height: 4rem;
   letter-spacing: 2px;
+  padding: 2rem 5rem;
   position: relative;
   transition: 0.1s linear;
-  width: 10rem;
-}
 
-button:hover,
-button:active {
-  background: $color-primary-dark;
-  border: 1px solid $color-secondary-light;
-  color: $color-secondary-light;
-  cursor: pointer;
-  outline: none;
+  &:hover,
+  &:active {
+    background: $color-primary-dark;
+    border: 1px solid $color-secondary-light;
+    color: $color-secondary-light;
+    cursor: pointer;
+    outline: none;
+  }
 }
 
 input {
