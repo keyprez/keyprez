@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	"net/http"
 	"regexp"
 	"strings"
 
@@ -12,11 +13,16 @@ type lambdaHandler func(request events.APIGatewayProxyRequest) (*events.APIGatew
 
 type Route struct {
 	path    string
+	method  string
 	handler lambdaHandler
 }
 
 func (r *Route) GetPath() string {
 	return r.path
+}
+
+func (r *Route) GetMethod() string {
+	return r.method
 }
 
 func (r *Route) SetHandler(handler lambdaHandler) *Route {
@@ -54,13 +60,13 @@ type Router struct {
 }
 
 func (r *Router) Get(path string, handler lambdaHandler) *Route {
-	route := &Route{path: path}
+	route := &Route{path: path, method: http.MethodGet}
 	r.getRoutes = append(r.getRoutes, route)
 	return route.SetHandler(handler)
 }
 
 func (r *Router) Post(path string, handler lambdaHandler) *Route {
-	route := &Route{path: path}
+	route := &Route{path: path, method: http.MethodPost}
 	r.postRoutes = append(r.postRoutes, route)
 	return route.SetHandler(handler)
 }

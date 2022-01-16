@@ -9,6 +9,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
+	"github.com/keyprez/keyprez/go-src/lib/newsletters"
 	"github.com/keyprez/keyprez/go-src/lib/orders"
 	"github.com/keyprez/keyprez/go-src/lib/products"
 	"github.com/keyprez/keyprez/go-src/lib/router"
@@ -68,6 +69,7 @@ func routerToMux(setupRouter func() router.Router, muxRouter *mux.Router) {
 	router := setupRouter()
 	allRoutes := router.GetAllRoutes()
 	for _, route := range allRoutes {
+		fmt.Printf("Method: %s, Path: %s \n", route.GetMethod(), route.GetPath())
 		muxRouter.HandleFunc(route.GetPath(), func(rw http.ResponseWriter, r *http.Request) {
 			setupAndRespond(rw, r, setupRouter, "Received request")
 		})
@@ -88,6 +90,7 @@ func main() {
 	r := mux.NewRouter()
 	routerToMux(products.SetupRouter, r)
 	routerToMux(orders.SetupRouter, r)
+	routerToMux(newsletters.SetupRouter, r)
 
 	fmt.Println("Listening on port 8090")
 	err := http.ListenAndServe(":8090", r)
