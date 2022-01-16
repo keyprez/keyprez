@@ -4,7 +4,7 @@ import "github.com/aws/aws-lambda-go/events"
 
 func blankApiResponse(status int) *events.APIGatewayProxyResponse {
 	return &events.APIGatewayProxyResponse{
-		StatusCode: 200,
+		StatusCode: status,
 		Headers:    map[string]string{"Content-Type": "application/json"},
 	}
 }
@@ -24,6 +24,10 @@ func Return200(data string) (*events.APIGatewayProxyResponse, error) {
 
 func Return201() (*events.APIGatewayProxyResponse, error) {
 	return blankApiResponse(201), nil
+}
+
+func Return204() (*events.APIGatewayProxyResponse, error) {
+	return blankApiResponse(204), nil
 }
 
 func Return400() (*events.APIGatewayProxyResponse, error) {

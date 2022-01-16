@@ -15,11 +15,15 @@ type NewsletterSubscription struct {
 	Created time.Time          `bson:"created,omitempty"`
 }
 
-func GetNewsletterSubscriptionByEmail(email string) ([]NewsletterSubscription, error) {
+func (ns *NewsletterSubscription) IsValid() bool {
+	return !ns.ID.IsZero()
+}
+
+func GetNewsletterSubscriptionByEmail(email string) (NewsletterSubscription, error) {
 	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
-		return nil, err
+		return NewsletterSubscription{}, err
 	}
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
@@ -27,13 +31,13 @@ func GetNewsletterSubscriptionByEmail(email string) ([]NewsletterSubscription, e
 
 	cursor, err := col.Find(ctx, bson.M{"email": email})
 	if err != nil {
-		return nil, err
+		return NewsletterSubscription{}, err
 	}
 	if err = cursor.All(ctx, &subscriptions); err != nil {
-		return nil, err
+		return NewsletterSubscription{}, err
 	}
 
-	return subscriptions, nil
+	return subscriptions[0], nil
 }
 
 func insertNewsletterSubscription(subscription *NewsletterSubscription) (bool, error) {
@@ -60,4 +64,22 @@ func CreateNewsletterSubscription(email string) (bool, error) {
 		Active:  true,
 		Created: time.Now(),
 	})
+}
+
+func UnsubscribeNewsletterSubscription(subscription NewsletterSubscription) (bool, error) {
+	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
+	mongoClient, err := GetMongoClient()
+	if err != nil {
+		return false, err
+	}
+
+	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
+	update := bson.M{"$set": bson.M{"active": false}}
+	_, updateErr := col.UpdateByID(ctx, subscription.ID, update)
+
+	if updateErr != nil {
+		return false, updateErr
+	}
+
+	return true, nil
 }

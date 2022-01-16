@@ -2,9 +2,9 @@ package newsletters
 
 import (
 	"encoding/json"
-	"net/mail"
 
 	"github.com/keyprez/keyprez/go-src/lib/router"
+	"github.com/keyprez/keyprez/go-src/lib/utils"
 
 	"github.com/keyprez/keyprez/go-src/lib/models"
 
@@ -22,12 +22,7 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 		return router.Return400()
 	}
 
-	_, emailErr := mail.ParseAddress(requestBody.Email)
-	if emailErr != nil {
-		return router.Return400()
-	}
-
-	if requestBody.Email == "" {
+	if !utils.IsValidEmail(requestBody.Email) {
 		return router.Return400()
 	}
 
@@ -36,7 +31,7 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 		return router.Return400()
 	}
 
-	if subscription != nil {
+	if !subscription.IsValid() {
 		return router.ReturnBlank200()
 	}
 
@@ -48,9 +43,27 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 	return router.Return201()
 }
 
+func UnsubscribeSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+	email := request.QueryStringParameters["email"]
+	if !utils.IsValidEmail(email) {
+		return router.Return400()
+	}
+
+	subscription, err := models.GetNewsletterSubscriptionByEmail(email)
+	if err != nil {
+		return router.Return400()
+	}
+
+	if ok, err := models.UnsubscribeNewsletterSubscription(subscription); err != nil || !ok {
+		return router.Return500()
+	}
+
+	return router.Return204()
+}
+
 func SetupRouter() router.Router {
 	r := router.Router{}
 	r.Post("/.netlify/functions/newsletters", CreateSubscriptionHandler)
-
+	r.Get("/.netlify/functions/newsletters/unsubscribe", UnsubscribeSubscriptionHandler)
 	return r
 }
