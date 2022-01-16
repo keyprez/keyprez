@@ -36,11 +36,7 @@ func GetNewsletterSubscriptionByEmail(email string) ([]NewsletterSubscription, e
 	return subscriptions, nil
 }
 
-func insertNewsletterSubscription(subscription NewsletterSubscription) {
-
-}
-
-func CreateNewsletterSubscription(email string) (bool, error) {
+func insertNewsletterSubscription(subscription *NewsletterSubscription) (bool, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 	mongoClient, err := GetMongoClient()
 	if err != nil {
@@ -48,18 +44,20 @@ func CreateNewsletterSubscription(email string) (bool, error) {
 	}
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
-	newNewsletterSubscription := &NewsletterSubscription{
-		ID:      primitive.NewObjectID(),
-		Email:   email,
-		Active:  true,
-		Created: time.Now(),
-	}
 
-	_, insertErr := col.InsertOne(ctx, newNewsletterSubscription)
-
+	_, insertErr := col.InsertOne(ctx, subscription)
 	if insertErr != nil {
 		return false, insertErr
 	}
 
 	return true, nil
+}
+
+func CreateNewsletterSubscription(email string) (bool, error) {
+	return insertNewsletterSubscription(&NewsletterSubscription{
+		ID:      primitive.NewObjectID(),
+		Email:   email,
+		Active:  true,
+		Created: time.Now(),
+	})
 }

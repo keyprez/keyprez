@@ -19,56 +19,33 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 	var requestBody createRequest
 	err := json.Unmarshal([]byte(request.Body), &requestBody)
 	if err != nil {
-		return &events.APIGatewayProxyResponse{
-			StatusCode: 400,
-			Headers:    map[string]string{"Content-Type": "application/json"},
-		}, nil
+		return router.Return400()
 	}
 
 	_, emailErr := mail.ParseAddress(requestBody.Email)
 	if emailErr != nil {
-		return &events.APIGatewayProxyResponse{
-			StatusCode:      400,
-			Headers:         map[string]string{"Content-Type": "application/json"},
-			Body:            "Invalid email address",
-			IsBase64Encoded: false,
-		}, nil
+		return router.Return400()
 	}
 
 	if requestBody.Email == "" {
-		return &events.APIGatewayProxyResponse{
-			StatusCode: 400,
-			Headers:    map[string]string{"Content-Type": "application/json"},
-		}, nil
+		return router.Return400()
 	}
 
 	subscription, err := models.GetNewsletterSubscriptionByEmail(requestBody.Email)
 	if err != nil {
-		return &events.APIGatewayProxyResponse{
-			StatusCode: 400,
-			Headers:    map[string]string{"Content-Type": "application/json"},
-		}, nil
+		return router.Return400()
 	}
 
 	if subscription != nil {
-		return &events.APIGatewayProxyResponse{
-			StatusCode: 200,
-			Headers:    map[string]string{"Content-Type": "application/json"},
-		}, nil
+		return router.ReturnBlank200()
 	}
 
 	success, err := models.CreateNewsletterSubscription(requestBody.Email)
 	if !success || err != nil {
-		return &events.APIGatewayProxyResponse{
-			StatusCode: 400,
-			Headers:    map[string]string{"Content-Type": "application/json"},
-		}, nil
+		return router.Return400()
 	}
 
-	return &events.APIGatewayProxyResponse{
-		StatusCode: 201,
-		Headers:    map[string]string{"Content-Type": "application/json"},
-	}, nil
+	return router.Return201()
 }
 
 func SetupRouter() router.Router {
