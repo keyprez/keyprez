@@ -20,7 +20,7 @@
       return setTimeout(() => (showError = false), 5000);
     }
 
-    const res = await fetch(`${endpoint}/newsletter`, {
+    const res = await fetch(`${endpoint}/newsletters`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
