@@ -92,7 +92,7 @@ func (r *Router) GetHandler() lambdaHandler {
 				StatusCode: 200,
 				Headers: map[string]string{
 					"Content-Type":                 "application/json",
-					"Access-Control-Allow-Methods": "HEAD,GET,PUT,DELETE,OPTIONS",
+					"Access-Control-Allow-Methods": "HEAD,GET,POST,PUT,DELETE,OPTIONS",
 					"Access-Control-Allow-Origin":  "*",
 					"Access-Control-Allow-Headers": "*",
 				},

@@ -54,9 +54,7 @@ func insertNewsletterSubscription(subscription *NewsletterSubscription) (bool, e
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
 
-	_, insertErr := col.InsertOne(ctx, subscription)
-
-	if insertErr != nil {
+	if _, insertErr := col.InsertOne(ctx, subscription); err != nil {
 		return false, insertErr
 	}
 
@@ -83,9 +81,8 @@ func UnsubscribeNewsletterSubscription(subscription NewsletterSubscription) (boo
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
 	update := bson.M{"$set": bson.M{"active": false}}
-	_, updateErr := col.UpdateByID(ctx, subscription.ID, update)
 
-	if updateErr != nil {
+	if _, updateErr := col.UpdateByID(ctx, subscription.ID, update); updateErr != nil {
 		return false, updateErr
 	}
 

@@ -56,12 +56,12 @@ func setupAndRespond(w http.ResponseWriter, req *http.Request, setupRouter func(
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(response)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "HEAD,GET,PUT,DELETE,OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "HEAD,GET,POST,PUT,DELETE,OPTIONS")
+	w.WriteHeader(response.StatusCode)
 	w.Write([]byte(response.Body))
 }
 
