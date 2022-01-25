@@ -31,7 +31,7 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 		return router.Return400()
 	}
 
-	if !subscription.IsValid() {
+	if subscription.IsValid() {
 		return router.ReturnBlank200()
 	}
 

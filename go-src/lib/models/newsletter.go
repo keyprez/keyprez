@@ -37,19 +37,25 @@ func GetNewsletterSubscriptionByEmail(email string) (NewsletterSubscription, err
 		return NewsletterSubscription{}, err
 	}
 
-	return subscriptions[0], nil
+	if len(subscriptions) > 0 {
+		return subscriptions[0], nil
+	}
+	return NewsletterSubscription{}, nil
 }
 
 func insertNewsletterSubscription(subscription *NewsletterSubscription) (bool, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return false, err
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
 
 	_, insertErr := col.InsertOne(ctx, subscription)
+
 	if insertErr != nil {
 		return false, insertErr
 	}
@@ -67,11 +73,13 @@ func CreateNewsletterSubscription(email string) (bool, error) {
 }
 
 func UnsubscribeNewsletterSubscription(subscription NewsletterSubscription) (bool, error) {
-	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return false, err
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
 	update := bson.M{"$set": bson.M{"active": false}}
