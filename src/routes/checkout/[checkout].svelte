@@ -1,6 +1,7 @@
 <script>
+  import { createForm } from 'svelte-forms-lib';
+  import * as yup from 'yup';
   import SvelteSeo from 'svelte-seo';
-  import validate from 'validate.js';
   import { page } from '$app/stores';
 
   import Button from '$lib/Button.svelte';
@@ -11,88 +12,80 @@
 
   const productSlug = $page.path.replace('/checkout/', '');
 
-  const formConstraints = {
-    firstname: {
-      presence: {
-        allowEmpty: false,
-      },
-    },
-    lastname: {
-      presence: {
-        allowEmpty: false,
-      },
-    },
-    email: {
-      presence: {
-        allowEmpty: false,
-      },
-      email: true,
-    },
-    address: {
-      presence: {
-        allowEmpty: false,
-      },
-    },
-    zip: {
-      presence: {
-        allowEmpty: false,
-      },
-      numericality: true,
-    },
-    city: {
-      presence: {
-        allowEmpty: false,
-      },
-    },
-    country: {
-      presence: {
-        allowEmpty: false,
-      },
-    },
-  };
-
-  const handleSubmit = async (event) => {
+  const onSubmit = async (event) => {
     const { Name, PriceID } = await getProductBySlug(productSlug);
     const form = Array.from(new FormData(event.target).entries()).reduce(
       (acc, [key, value]) => ({ ...acc, [key]: value }),
       {},
     );
 
-    if (form.terms !== 'on') {
-      // TODO: Display error message for user here
-      return;
-    }
-
-    const validation = validate(form, formConstraints);
-
-    // TODO: Display error messages for user here
-
-    // Do form submit here
     redirectToCheckout(Name, PriceID);
   };
+
+  const initialValues = {
+    firstname: '',
+    lastname: '',
+    email: '',
+    address: '',
+    zip: '',
+    city: '',
+    country: '',
+    phone: '',
+    terms: false,
+    subscribe: false,
+  };
+
+  const { form, errors, handleChange, handleSubmit } = createForm({
+    initialValues,
+    validationSchema: yup.object().shape({
+      firstname: yup.string().required(),
+      lastname: yup.string().required(),
+      email: yup.string().email().required(),
+      address: yup.string().required(),
+      zip: yup
+        .string()
+        .required()
+        .matches(/^[\d ]+$/, 'invalid zip code'),
+      city: yup.string().required(),
+      country: yup.string().required(),
+      phone: yup.string(),
+      terms: yup.boolean().oneOf([true], 'terms must be accepted'),
+      subscribe: yup.boolean(),
+    }),
+    onSubmit,
+  });
 </script>
 
 <div class="container">
   {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
-  {:then { Name, Description, Price, PriceID, Slug }}
+  {:then { Name, Description, Price }}
     <SvelteSeo title={`Keyprez - Checkout - ${capitalize(Name)}`} {Description} />
 
-    <div class="form-container">
+    <div class="formContainer">
       <h1>Order {Name}</h1>
-      <form class="form" action="#" on:submit|preventDefault={handleSubmit}>
-        <input type="text" name="firstname" placeholder="Firstname" />
-        <input type="text" name="lastname" placeholder="Lastname" />
-        <input type="email" name="email" placeholder="Email address" />
-        <input type="text" name="address" placeholder="Address" />
-        <input type="text" name="zip" placeholder="Zip code" />
-        <input type="text" name="city" placeholder="City" />
-        <input type="text" name="country" placeholder="Country" />
-        <input type="phone" name="phone" placeholder="Phone number" />
-        <div class="submit-section">
+      <form class="form" on:submit={handleSubmit}>
+        {#each Object.keys(initialValues).filter((val) => !['subscribe', 'terms'].includes(val)) as name}
+          <div class="formInputWrapper">
+            <input
+              {name}
+              class="formInput"
+              type="string"
+              placeholder={capitalize(name)}
+              bind:value={$form[name]}
+              on:keyup={handleChange}
+              on:blur={handleChange}
+            />
+            <small class="error {$errors[name] ? 'errorVisible' : ''}">{$errors[name]}</small>
+          </div>
+        {/each}
+        <div class="submitSection">
           <div class="checkboxes">
-            <Checkbox name="terms" label="I accept terms of agreement" />
-            <Checkbox name="subscribe" label="Subscribe to newsletter" />
+            <div class="checkboxWrapper">
+              <Checkbox name="terms" label="I accept terms of agreement" bind:checked={$form.terms} />
+              <small class="error errorCheckbox {!$form.terms ? 'errorVisible' : ''}">{$errors.terms}</small>
+            </div>
+            <Checkbox name="subscribe" label="Subscribe to newsletter" bind:checked={$form.subscribe} />
           </div>
 
           <Button type="submit" text="BUY" />
@@ -120,23 +113,47 @@
     object-fit: cover;
   }
 
-  .form-container {
-    flex: 50%;
-  }
-
   .form {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 
-    input {
-      height: 4rem;
+    &Container {
+      flex: 50%;
+    }
+
+    &InputWrapper {
+      position: relative;
+      display: flex;
       flex: 46%;
+    }
+
+    &Input {
+      height: 4rem;
+      width: 100%;
     }
   }
 
-  .submit-section {
+  .error {
+    display: none;
+    position: absolute;
+    right: 0.3em;
+    bottom: 0.3em;
+    color: $color-warning;
+
+    &Checkbox {
+      bottom: 0;
+      left: 105%;
+      width: 100%;
+    }
+
+    &Visible {
+      display: block;
+    }
+  }
+
+  .submitSection {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -148,6 +165,10 @@
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    .checkboxWrapper {
+      position: relative;
     }
   }
 
