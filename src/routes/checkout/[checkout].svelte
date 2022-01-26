@@ -35,19 +35,18 @@
     subscribe: false,
   };
 
+  const requiredString = yup.string().required();
+
   const { form, errors, handleChange, handleSubmit } = createForm({
     initialValues,
     validationSchema: yup.object().shape({
-      firstname: yup.string().required(),
-      lastname: yup.string().required(),
-      email: yup.string().email().required(),
-      address: yup.string().required(),
-      zip: yup
-        .string()
-        .required()
-        .matches(/^[\d ]+$/, 'invalid zip code'),
-      city: yup.string().required(),
-      country: yup.string().required(),
+      firstname: requiredString,
+      lastname: requiredString,
+      email: requiredString.email(),
+      address: requiredString,
+      zip: requiredString.matches(/^[\d ]+$/, 'invalid zip code'),
+      city: requiredString,
+      country: requiredString,
       phone: yup.string(),
       terms: yup.boolean().oneOf([true], 'terms must be accepted'),
       subscribe: yup.boolean(),
