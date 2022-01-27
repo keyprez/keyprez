@@ -23,6 +23,7 @@ func GetMongoClient() (*mongo.Client, error) {
 		client, err := mongo.NewClient(options.Client().ApplyURI(atlasUri))
 		if err != nil {
 			log.Fatal(err)
+			log.Println(err)
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
@@ -30,6 +31,7 @@ func GetMongoClient() (*mongo.Client, error) {
 		err = client.Connect(ctx)
 		if err != nil {
 			log.Fatal(err)
+			log.Println(err)
 		}
 
 		err = client.Ping(ctx, readpref.Primary())
