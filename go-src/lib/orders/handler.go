@@ -36,7 +36,7 @@ func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*event
 func SetupRouter() router.Router {
 	r := router.Router{}
 	//r.Get("/.netlify/functions/orders", ProductsHandler)
-	r.Post("/.netlify/functions/orders/checkout", CreateCheckoutSessionHandler)
+	r.Post("/orders/checkout", CreateCheckoutSessionHandler)
 
 	return r
 }
