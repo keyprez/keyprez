@@ -9,6 +9,12 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
+const ENDPOINT_PREFIX string = "/.netlify/functions"
+
+func getPath(path string) string {
+	return ENDPOINT_PREFIX + path
+}
+
 type lambdaHandler func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error)
 
 type Route struct {
@@ -55,24 +61,41 @@ func (r *Route) SetUrlParameters(url string, request *events.APIGatewayProxyRequ
 }
 
 type Router struct {
-	getRoutes  []*Route
-	postRoutes []*Route
+	getRoutes    []*Route
+	postRoutes   []*Route
+	putRoutes    []*Route
+	deleteRoutes []*Route
 }
 
 func (r *Router) Get(path string, handler lambdaHandler) *Route {
-	route := &Route{path: path, method: http.MethodGet}
+	route := &Route{path: getPath(path), method: http.MethodGet}
 	r.getRoutes = append(r.getRoutes, route)
 	return route.SetHandler(handler)
 }
 
 func (r *Router) Post(path string, handler lambdaHandler) *Route {
-	route := &Route{path: path, method: http.MethodPost}
+	route := &Route{path: getPath(path), method: http.MethodPost}
 	r.postRoutes = append(r.postRoutes, route)
 	return route.SetHandler(handler)
 }
 
+func (r *Router) Put(path string, handler lambdaHandler) *Route {
+	route := &Route{path: getPath(path), method: http.MethodPut}
+	r.putRoutes = append(r.putRoutes, route)
+	return route.SetHandler(handler)
+}
+
+func (r *Router) Delete(path string, handler lambdaHandler) *Route {
+	route := &Route{path: getPath(path), method: http.MethodDelete}
+	r.deleteRoutes = append(r.deleteRoutes, route)
+	return route.SetHandler(handler)
+}
+
 func (r *Router) GetAllRoutes() []*Route {
-	combinedRoutes := append(r.getRoutes, r.postRoutes...)
+	combinedRoutes := []*Route{}
+	combinedRoutes = append(r.getRoutes, r.postRoutes...)
+	combinedRoutes = append(combinedRoutes, r.putRoutes...)
+	combinedRoutes = append(combinedRoutes, r.deleteRoutes...)
 	return combinedRoutes
 }
 
