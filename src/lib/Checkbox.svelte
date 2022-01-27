@@ -3,7 +3,7 @@
 
   export let label = '';
   export let name = '';
-  let checked = false;
+  export let checked = false;
 
   const id = Math.random().toString(36);
 </script>
