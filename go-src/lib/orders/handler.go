@@ -17,10 +17,7 @@ type createCheckoutSessionResponse struct {
 func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	s, err := utils.CreateCheckoutSession()
 	if err != nil {
-		return &events.APIGatewayProxyResponse{
-			StatusCode:      500,
-			IsBase64Encoded: false,
-		}, nil
+		return router.Return500()
 	}
 
 	response := &createCheckoutSessionResponse{

@@ -6,6 +6,7 @@
   let showError = false;
   let errorMessage = '';
   let showSuccess = false;
+  let hasSubscription = false;
 
   const isValidEmail = (email) => /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
 
@@ -20,7 +21,7 @@
       return setTimeout(() => (showError = false), 5000);
     }
 
-    const res = await fetch(`${endpoint}/newsletter`, {
+    const res = await fetch(`${endpoint}/newsletters`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
@@ -28,8 +29,9 @@
 
     loading = false;
 
-    if (res.status === 200) {
+    if (res.status === 200 || res.status === 201) {
       showSuccess = true;
+      hasSubscription = res.status === 200;
       e.target.email.value = '';
       return setTimeout(() => (showSuccess = false), 5000);
     } else {
@@ -46,7 +48,10 @@
   {:else if showError}
     <h2>{errorMessage}</h2>
   {:else if showSuccess}
-    <h2>Your email <strong class="subscribe">{email}</strong> has been subscribed to our newsletter 🎉</h2>
+    <h2>
+      Your email <strong class="subscribe">{email}</strong> has been {hasSubscription ? 'already' : ''} subscribed to our
+      newsletter 🎉
+    </h2>
   {:else}
     <h2><strong class="subscribe">SUBSCRIBE</strong> to latest news and updates</h2>
   {/if}

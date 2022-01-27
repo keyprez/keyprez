@@ -9,6 +9,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
+	"github.com/keyprez/keyprez/go-src/lib/newsletters"
 	"github.com/keyprez/keyprez/go-src/lib/orders"
 	"github.com/keyprez/keyprez/go-src/lib/products"
 	"github.com/keyprez/keyprez/go-src/lib/router"
@@ -55,12 +56,12 @@ func setupAndRespond(w http.ResponseWriter, req *http.Request, setupRouter func(
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(response)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "HEAD,GET,PUT,DELETE,OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "HEAD,GET,POST,PUT,DELETE,OPTIONS")
+	w.WriteHeader(response.StatusCode)
 	w.Write([]byte(response.Body))
 }
 
@@ -68,6 +69,7 @@ func routerToMux(setupRouter func() router.Router, muxRouter *mux.Router) {
 	router := setupRouter()
 	allRoutes := router.GetAllRoutes()
 	for _, route := range allRoutes {
+		fmt.Printf("Method: %s, Path: %s \n", route.GetMethod(), route.GetPath())
 		muxRouter.HandleFunc(route.GetPath(), func(rw http.ResponseWriter, r *http.Request) {
 			setupAndRespond(rw, r, setupRouter, "Received request")
 		})
@@ -88,6 +90,7 @@ func main() {
 	r := mux.NewRouter()
 	routerToMux(products.SetupRouter, r)
 	routerToMux(orders.SetupRouter, r)
+	routerToMux(newsletters.SetupRouter, r)
 
 	fmt.Println("Listening on port 8090")
 	err := http.ListenAndServe(":8090", r)
