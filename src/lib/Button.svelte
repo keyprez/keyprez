@@ -1,41 +1,24 @@
 <script>
   export let text;
   export let type;
+  export let loading = false;
   export let onClick;
-
-  let loading = false;
-
-  const resolver = async (promise, loading) => {
-    loading(true);
-    await promise;
-    loading(false);
-  };
 </script>
 
-{#if typeof onClick !== 'undefined'}
-  <button
-    type={type || 'button'}
-    class={loading ? 'button-loading' : ''}
-    on:click|preventDefault={() => resolver(onClick(), (status) => (loading = status))}
-  >
-    <span>{text}</span>
-  </button>
-{:else}
-  <button type={type || 'button'} class={loading ? 'button-loading' : ''}>
-    <span>{text}</span>
-  </button>
-{/if}
+<button {type} class:loading on:click={onClick}>
+  <span>{text}</span>
+</button>
 
 <style type="text/scss">
   @import 'src/variables';
 
-  .button-loading span {
+  .loading span {
     opacity: 0;
     transition: all 0.2s;
     visibility: hidden;
   }
 
-  .button-loading::after {
+  .loading::after {
     animation: spinner 1s ease infinite;
     border: 0.3rem solid transparent;
     border-radius: 50%;
