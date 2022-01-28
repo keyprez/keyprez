@@ -1,7 +1,7 @@
 <script>
   import SvelteSeo from 'svelte-seo';
   import { fade } from 'svelte/transition';
-  import Product from '$lib/Product.svelte';
+  import { Product } from '$lib';
 
   import { fetchProducts } from '../utils/fetchProducts';
 

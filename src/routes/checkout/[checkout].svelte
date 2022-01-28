@@ -4,8 +4,7 @@
   import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
 
-  import Button from '$lib/Button.svelte';
-  import Checkbox from '$lib/Checkbox.svelte';
+  import { Button, Checkbox } from '$lib';
   import { capitalize } from '../../utils/capitalize';
   import { redirectToCheckout } from '../../utils/redirectToCheckout';
   import { getProductBySlug } from '../../utils/getProductBySlug';
