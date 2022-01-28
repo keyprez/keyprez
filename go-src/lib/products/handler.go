@@ -34,8 +34,8 @@ func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayP
 
 func SetupRouter() router.Router {
 	r := router.Router{}
-	r.Get("/.netlify/functions/products", ProductsHandler)
-	r.Get("/.netlify/functions/products/{name}", ProductHandler)
+	r.Get("/products", ProductsHandler)
+	r.Get("/products/{name}", ProductHandler)
 
 	return r
 }

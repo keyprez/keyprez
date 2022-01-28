@@ -63,7 +63,7 @@ func UnsubscribeSubscriptionHandler(request events.APIGatewayProxyRequest) (*eve
 
 func SetupRouter() router.Router {
 	r := router.Router{}
-	r.Post("/.netlify/functions/newsletters", CreateSubscriptionHandler)
-	r.Get("/.netlify/functions/newsletters/unsubscribe", UnsubscribeSubscriptionHandler)
+	r.Post("/newsletters", CreateSubscriptionHandler)
+	r.Get("/newsletters/unsubscribe", UnsubscribeSubscriptionHandler)
 	return r
 }
