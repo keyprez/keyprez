@@ -92,10 +92,10 @@ h2 {
   }
 }
 
-button,
-.anchor-button {
+button {
   background: $color-tertiary;
   border: 1px solid transparent;
+  border-radius: $border-radius-small;
   color: $color-secondary-light;
   font-family: inherit;
   font-size: 1rem;
@@ -117,15 +117,23 @@ button,
 
 input {
   background: $color-secondary-dark;
-  border: 0;
+  border: 2px solid transparent;
+  outline: none;
   color: $color-tertiary;
   font-size: inherit;
-  outline: none;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
+  width: 20rem;
+  border-radius: $border-radius-small;
+
+  &:hover,
+  &:focus {
+    border-color: $color-primary-dark;
+  }
 }
 
 textarea {
   background: $color-secondary-dark;
+  border-radius: $border-radius-small;
   font-family: inherit;
   font-size: inherit;
   padding: 1rem;
