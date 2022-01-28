@@ -1,16 +1,39 @@
 <script>
+  import { createForm } from 'svelte-forms-lib';
+  import * as yup from 'yup';
   import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
 
-  import { capitalize, getProductBySlug } from '/src/utils';
+  import { Button, Checkbox } from '$lib';
+  import { capitalize, getProductBySlug, redirectToCheckout } from '/src/utils';
 
   const productSlug = $page.path.replace('/product/', '');
+
+  let loading = false;
+  let inputRef;
+  let focus = () => inputRef.focus();
+
+  const onSubmit = async (formData) => {
+    const { Name, PriceID } = await getProductBySlug(productSlug);
+    loading = true;
+    redirectToCheckout(Name, PriceID);
+  };
+
+  const { form, errors, handleChange, handleSubmit } = createForm({
+    initialValues: { email: '', terms: false, subscribe: false },
+    validationSchema: yup.object().shape({
+      email: yup.string().email().required(),
+      terms: yup.boolean().oneOf([true], 'terms must be accepted'),
+      subscribe: yup.boolean(),
+    }),
+    onSubmit,
+  });
 </script>
 
 <div class="container">
   {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
-  {:then { Name, Description, Price, PriceID, Slug }}
+  {:then { Name, Description, Price }}
     <SvelteSeo title={`Keyprez - ${capitalize(Name)}`} {Description} />
     <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
     <div class="text">
@@ -40,7 +63,31 @@
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <a class="anchor-button" href={'/checkout/' + Slug}>BUY</a>
+      <form class="form" on:submit={handleSubmit}>
+        <div class="formInputWrapper">
+          <input
+            bind:this={inputRef}
+            name="email"
+            class="formInput {$errors.email ? 'errorInput' : ''}"
+            type="text"
+            placeholder="Type your email"
+            bind:value={$form.email}
+            on:keyup={handleChange}
+            on:blur={handleChange}
+          />
+          <small class="error {$errors.email ? 'errorVisible' : ''}">{$errors.email}</small>
+        </div>
+        <div class="checkboxes">
+          <div>
+            <div class="checkboxWrapper">
+              <Checkbox name="terms" label="I accept terms of agreement" bind:checked={$form.terms} />
+              <small class="error errorCheckbox {!$form.terms ? 'errorVisible' : ''}">{$errors.terms}</small>
+            </div>
+            <Checkbox name="subscribe" label="Subscribe to newsletter" bind:checked={$form.subscribe} />
+          </div>
+        </div>
+        <Button type="submit" text="BUY" {loading} onClick={focus} />
+      </form>
       <h2>&#36;<span>{Price}</span></h2>
     </div>
   {/await}
@@ -59,6 +106,7 @@
     flex: 60%;
     object-fit: cover;
     width: 100%;
+    border-radius: $border-radius-large;
   }
 
   .text {
@@ -66,6 +114,51 @@
     display: flex;
     flex: 40%;
     flex-direction: column;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &InputWrapper {
+      position: relative;
+      display: flex;
+    }
+  }
+
+  .checkboxes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  .checkboxWrapper {
+    position: relative;
+  }
+
+  .error {
+    display: none;
+    position: absolute;
+    right: 0.3em;
+    bottom: 0.3em;
+    color: $color-warning;
+
+    &Checkbox {
+      bottom: 0;
+      left: 105%;
+      width: 100%;
+    }
+
+    &Visible {
+      display: block;
+    }
+
+    &Input {
+      border-color: $color-warning;
+    }
   }
 
   @media (min-width: 1400px) {
