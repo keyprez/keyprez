@@ -5,9 +5,7 @@
   import { page } from '$app/stores';
 
   import { Button, Checkbox } from '$lib';
-  import { capitalize } from '../../utils/capitalize';
-  import { redirectToCheckout } from '../../utils/redirectToCheckout';
-  import { getProductBySlug } from '../../utils/getProductBySlug';
+  import { capitalize, getProductBySlug, redirectToCheckout } from '/src/utils';
 
   const productSlug = $page.path.replace('/checkout/', '');
 

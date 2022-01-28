@@ -2,8 +2,7 @@
   import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
 
-  import { getProductBySlug } from '../../utils/getProductBySlug';
-  import { capitalize } from '../../utils/capitalize';
+  import { capitalize, getProductBySlug } from '/src/utils';
 
   const productSlug = $page.path.replace('/product/', '');
 </script>

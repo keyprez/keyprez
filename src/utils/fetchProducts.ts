@@ -1,7 +1,7 @@
 import { endpoint } from '../config';
 import type { Product, Cache } from './interfaces';
 
-export const fetchProducts = async (): Promise<Product[]> => {
+export default async (): Promise<Product[]> => {
   const lifespan = 3600; // 1 hour
   const cacheStr: string | null = localStorage.getItem('products');
   let cache: Cache | null = null;
