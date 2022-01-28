@@ -13,7 +13,13 @@ func CreateCheckoutSession() (*stripe.CheckoutSession, error) {
 		CancelURL:  stripe.String("http://localhost:8080"),
 		PaymentMethodTypes: stripe.StringSlice([]string{
 			"card",
+			"klarna",
 		}),
+		ShippingAddressCollection: &stripe.CheckoutSessionShippingAddressCollectionParams{
+			AllowedCountries: stripe.StringSlice([]string{
+				"NO",
+			}),
+		},
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			&stripe.CheckoutSessionLineItemParams{
 				Name:     stripe.String("Eagle"),
