@@ -88,11 +88,7 @@
   }
 
   textarea {
-    border: 0;
     box-sizing: border-box;
-    outline: none;
-    padding: 1rem;
-    width: 100%;
   }
 
   .inputs {
