@@ -82,8 +82,6 @@
 
   input {
     box-sizing: border-box;
-    font-size: inherit;
-    height: 4rem;
     width: 100%;
   }
 
