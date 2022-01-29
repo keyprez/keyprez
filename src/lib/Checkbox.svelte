@@ -9,8 +9,8 @@
 </script>
 
 <div class="checkboxWrapper">
-  <label for={id}>{label}</label>
   <Checkbox class="checkbox" {name} {id} bind:checked size="1rem" />
+  <label for={id}>{label}</label>
 </div>
 
 <style type="text/scss">
@@ -18,7 +18,7 @@
 
   .checkboxWrapper {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: center;
   }
 </style>

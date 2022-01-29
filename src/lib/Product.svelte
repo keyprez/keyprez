@@ -33,6 +33,7 @@
     opacity: 1;
     transition: 0.3s linear;
     width: 100%;
+    border-radius: $border-radius-large;
   }
 
   .image-container > span {
