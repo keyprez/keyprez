@@ -36,7 +36,7 @@
   const { form, errors, handleChange, handleSubmit } = createForm({
     initialValues: { email: '' },
     validationSchema: yup.object().shape({
-      email: yup.string().email().required(),
+      email: yup.string().email(),
     }),
     onSubmit,
   });
