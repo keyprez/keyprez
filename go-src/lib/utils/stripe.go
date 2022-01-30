@@ -3,14 +3,16 @@ package utils
 import (
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/checkout/session"
+	"github.com/stripe/stripe-go/customer"
 )
 
-func CreateCheckoutSession() (*stripe.CheckoutSession, error) {
+func CreateCheckoutSession(productName string, priceId string, customerStripeId string) (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
 	params := &stripe.CheckoutSessionParams{
 		SuccessURL: stripe.String("http://localhost:8080/success?session_id={CHECKOUT_SESSION_ID}"),
 		CancelURL:  stripe.String("http://localhost:8080"),
+		Customer:   stripe.String(customerStripeId),
 		PaymentMethodTypes: stripe.StringSlice([]string{
 			"card",
 			"klarna",
@@ -22,9 +24,9 @@ func CreateCheckoutSession() (*stripe.CheckoutSession, error) {
 		},
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			&stripe.CheckoutSessionLineItemParams{
-				Name:     stripe.String("Eagle"),
-				Amount:   stripe.Int64(200),
-				Quantity: stripe.Int64(2),
+				Name:     stripe.String(productName),
+				Amount:   stripe.Int64(20000),
+				Quantity: stripe.Int64(1),
 				Currency: stripe.String("NOK"),
 			},
 		},

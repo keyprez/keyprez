@@ -9,6 +9,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 
+	"github.com/keyprez/keyprez/go-src/lib/customers"
 	"github.com/keyprez/keyprez/go-src/lib/newsletters"
 	"github.com/keyprez/keyprez/go-src/lib/orders"
 	"github.com/keyprez/keyprez/go-src/lib/products"
@@ -88,6 +89,7 @@ func headers(req *http.Request) map[string]string {
 
 func main() {
 	r := mux.NewRouter()
+	routerToMux(customers.SetupRouter, r)
 	routerToMux(products.SetupRouter, r)
 	routerToMux(orders.SetupRouter, r)
 	routerToMux(newsletters.SetupRouter, r)

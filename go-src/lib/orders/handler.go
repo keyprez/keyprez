@@ -10,6 +10,12 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
+type createCheckoutSessionRequest struct {
+	ProductName      string `json:"productname"`
+	PriceID          string `json:"priceid"`
+	CustomerStripeID string `json:"customerstripeid"`
+}
+
 type createCheckoutSessionResponse struct {
 	ID string `json:"id"`
 }
@@ -19,7 +25,13 @@ type retrieveSessionRequest struct {
 }
 
 func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	s, err := utils.CreateCheckoutSession()
+	var requestBody createCheckoutSessionRequest
+	err := json.Unmarshal([]byte(request.Body), &requestBody)
+	if err != nil {
+		return router.Return400()
+	}
+
+	s, err := utils.CreateCheckoutSession(requestBody.ProductName, requestBody.PriceID, requestBody.CustomerStripeID)
 	if err != nil {
 		return router.Return500()
 	}
