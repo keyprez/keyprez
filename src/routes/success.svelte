@@ -5,19 +5,21 @@
   import { endpoint } from '../config';
 
   let productName = '';
-  let email = '';
   let loading = true;
 
   onMount(async () => {
     const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get('id');
+    const sessionId = params.get('session_id');
 
     try {
-      const res = await fetch(`${endpoint}/checkout?id=${sessionId}`);
+      const res = await fetch(`${endpoint}/orders/success`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId }),
+      });
+      if (res.status !== 200) throw new Error('There was an error retrieving Stripe session');
       const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      productName = data.line_items.data[0].description;
-      email = data.customer_details.email;
+      productName = data.display_items[0].custom.name;
       loading = false;
     } catch (err) {
       console.error(`Error fetching checkout session: ${err}`);
@@ -32,8 +34,8 @@
 {:else}
   <div>
     <h1>Thank you for purchasing <span>{productName}</span> kit</h1>
-    <img src={`${productName}.jpg`} alt={productName} />
-    <h2>Check your email <span>{email}</span> for confirmation</h2>
+    <img src={`/${productName.toLocaleLowerCase()}.jpg`} alt={productName} />
+    <h2>Check your email for confirmation</h2>
   </div>
 {/if}
 

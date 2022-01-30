@@ -9,7 +9,7 @@ func CreateCheckoutSession() (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
 	params := &stripe.CheckoutSessionParams{
-		SuccessURL: stripe.String("http://localhost:8080/success"),
+		SuccessURL: stripe.String("http://localhost:8080/success?session_id={CHECKOUT_SESSION_ID}"),
 		CancelURL:  stripe.String("http://localhost:8080"),
 		PaymentMethodTypes: stripe.StringSlice([]string{
 			"card",
@@ -32,4 +32,20 @@ func CreateCheckoutSession() (*stripe.CheckoutSession, error) {
 	}
 
 	return session.New(params)
+}
+
+func CreateCustomer(email string) (*stripe.Customer, error) {
+	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
+
+	params := &stripe.CustomerParams{
+		Email: stripe.String(email),
+	}
+
+	return customer.New(params)
+}
+
+func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {
+	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
+
+	return session.Get(SessionID, nil)
 }
