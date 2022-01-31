@@ -2,7 +2,6 @@ package customers
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/keyprez/keyprez/go-src/lib/router"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
@@ -38,12 +37,7 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 
 	if customer.IsValid() {
 		data, _ := json.Marshal(customer)
-		return &events.APIGatewayProxyResponse{
-			StatusCode:      200,
-			Headers:         map[string]string{"Content-Type": "application/json"},
-			Body:            string(data),
-			IsBase64Encoded: false,
-		}, nil
+		return router.Return200(string(data))
 	}
 
 	c, err := utils.CreateCustomer(requestBody.Email)
@@ -55,20 +49,13 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 		ID: c.ID,
 	}
 
-	fmt.Println("Utils customer created")
 	cust, err := models.CreateCustomer(requestBody.Email, response.ID)
 	if err != nil {
 		return router.Return400()
 	}
-	data, err := json.Marshal(cust)
-	fmt.Println("Models customer created")
+	data, _ := json.Marshal(cust)
 
-	return &events.APIGatewayProxyResponse{
-		StatusCode:      201,
-		Headers:         map[string]string{"Content-Type": "application/json"},
-		Body:            string(data),
-		IsBase64Encoded: false,
-	}, nil
+	return router.Return201(string(data))
 }
 
 func SetupRouter() router.Router {

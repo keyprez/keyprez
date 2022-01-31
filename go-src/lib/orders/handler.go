@@ -39,14 +39,9 @@ func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*event
 	response := &createCheckoutSessionResponse{
 		ID: s.ID,
 	}
-	data, err := json.Marshal(response)
+	data, _ := json.Marshal(response)
 
-	return &events.APIGatewayProxyResponse{
-		StatusCode:      200,
-		Headers:         map[string]string{"Content-Type": "application/json"},
-		Body:            string(data),
-		IsBase64Encoded: false,
-	}, nil
+	return router.Return200(string(data))
 }
 
 func RetrieveSessionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
@@ -62,13 +57,11 @@ func RetrieveSessionHandler(request events.APIGatewayProxyRequest) (*events.APIG
 	}
 
 	data, err := json.Marshal(s)
+	if err != nil {
+		return router.Return500()
+	}
 
-	return &events.APIGatewayProxyResponse{
-		StatusCode:      200,
-		Headers:         map[string]string{"Content-Type": "application/json"},
-		Body:            string(data),
-		IsBase64Encoded: false,
-	}, nil
+	return router.Return200(string(data))
 }
 
 func SetupRouter() router.Router {

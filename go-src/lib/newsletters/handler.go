@@ -40,7 +40,7 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 		return router.Return400()
 	}
 
-	return router.Return201()
+	return router.Return201("Subscription created")
 }
 
 func UnsubscribeSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
