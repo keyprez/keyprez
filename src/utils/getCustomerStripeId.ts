@@ -7,7 +7,8 @@ export default async (email: string): Promise<void> => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
     });
-    const { StripeID: customerStripeId } = await res.json();
+    const customerStripeId = await res.json();
+
     return customerStripeId;
   } catch (err) {
     console.error(`Error getting customer Stripe ID: ${err}`);

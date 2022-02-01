@@ -36,7 +36,7 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 	}
 
 	if customer.IsValid() {
-		data, _ := json.Marshal(customer)
+		data, _ := json.Marshal(customer.StripeID)
 		return router.Return200(string(data))
 	}
 
@@ -53,9 +53,13 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 	if err != nil {
 		return router.Return400()
 	}
-	data, _ := json.Marshal(cust)
 
-	return router.Return201(string(data))
+	if cust.IsValid() {
+		data, _ := json.Marshal(cust.StripeID)
+		return router.Return201(string(data))
+	}
+
+	return router.Return500()
 }
 
 func SetupRouter() router.Router {
