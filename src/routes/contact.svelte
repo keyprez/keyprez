@@ -82,17 +82,11 @@
 
   input {
     box-sizing: border-box;
-    font-size: inherit;
-    height: 4rem;
     width: 100%;
   }
 
   textarea {
-    border: 0;
     box-sizing: border-box;
-    outline: none;
-    padding: 1rem;
-    width: 100%;
   }
 
   .inputs {

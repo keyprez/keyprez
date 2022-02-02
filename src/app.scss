@@ -116,26 +116,28 @@ button {
 }
 
 input {
+  padding: 2rem 1rem;
+  width: 25rem;
+}
+
+textarea {
+  padding: 1rem;
+  resize: none;
+  width: 100%;
+}
+
+input,
+textarea {
   background: $color-secondary-dark;
   border: 2px solid transparent;
-  outline: none;
-  color: $color-tertiary;
-  font-size: inherit;
-  padding: 2rem 1rem;
-  width: 20rem;
   border-radius: $border-radius-small;
+  color: $color-tertiary;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
 
   &:hover,
   &:focus {
     border-color: $color-primary-dark;
   }
-}
-
-textarea {
-  background: $color-secondary-dark;
-  border-radius: $border-radius-small;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 1rem;
-  resize: none;
 }

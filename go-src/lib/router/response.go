@@ -13,17 +13,21 @@ func ReturnBlank200() (*events.APIGatewayProxyResponse, error) {
 	return blankApiResponse(200), nil
 }
 
-func Return200(data string) (*events.APIGatewayProxyResponse, error) {
+func statusWithBody(status int, data string) (*events.APIGatewayProxyResponse, error) {
 	return &events.APIGatewayProxyResponse{
-		StatusCode:      200,
+		StatusCode:      status,
 		Headers:         map[string]string{"Content-Type": "application/json"},
 		Body:            data,
 		IsBase64Encoded: false,
 	}, nil
 }
 
-func Return201() (*events.APIGatewayProxyResponse, error) {
-	return blankApiResponse(201), nil
+func Return200(data string) (*events.APIGatewayProxyResponse, error) {
+	return statusWithBody(200, string(data))
+}
+
+func Return201(data string) (*events.APIGatewayProxyResponse, error) {
+	return statusWithBody(201, string(data))
 }
 
 func Return204() (*events.APIGatewayProxyResponse, error) {

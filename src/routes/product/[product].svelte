@@ -5,7 +5,7 @@
   import { page } from '$app/stores';
 
   import { Button, Checkbox } from '$lib';
-  import { capitalize, getProductBySlug, redirectToCheckout } from '/src/utils';
+  import { capitalize, getCustomerStripeId, getProductBySlug, redirectToCheckout } from '/src/utils';
 
   const productSlug = $page.path.replace('/product/', '');
 
@@ -13,10 +13,11 @@
   let inputRef;
   let focus = () => inputRef.focus();
 
-  const onSubmit = async (formData) => {
-    const { Name, PriceID } = await getProductBySlug(productSlug);
+  const onSubmit = async ({ email }) => {
     loading = true;
-    redirectToCheckout(Name, PriceID);
+    const { Name, PriceID } = await getProductBySlug(productSlug);
+    const customerStripeId = await getCustomerStripeId(email);
+    redirectToCheckout(Name, PriceID, customerStripeId);
   };
 
   const { form, errors, handleChange, handleSubmit } = createForm({
