@@ -5,19 +5,35 @@
   import { page } from '$app/stores';
 
   import { Button, Checkbox } from '$lib';
-  import { capitalize, getCustomerStripeId, getProductBySlug, redirectToCheckout } from '/src/utils';
+  import { capitalize, createSessionId, getCustomerStripeId, getProductBySlug, redirectToCheckout } from '/src/utils';
 
   const productSlug = $page.path.replace('/product/', '');
 
   let loading = false;
+  let error = false;
   let inputRef;
   let focus = () => inputRef.focus();
 
   const onSubmit = async ({ email }) => {
     loading = true;
-    const { Name, PriceID } = await getProductBySlug(productSlug);
+    const { Name: productName, PriceID: priceId } = await getProductBySlug(productSlug);
+
     const customerStripeId = await getCustomerStripeId(email);
-    redirectToCheckout(Name, PriceID, customerStripeId);
+    if (!customerStripeId) {
+      error = true;
+      return;
+    }
+
+    const sessionId = await createSessionId(productName, priceId, customerStripeId);
+    if (!sessionId) {
+      error = true;
+      return;
+    }
+
+    const success = await redirectToCheckout(sessionId);
+    if (!success) error = true;
+
+    loading = false;
   };
 
   const { form, errors, handleChange, handleSubmit } = createForm({
@@ -87,7 +103,7 @@
             <Checkbox name="subscribe" label="Subscribe to newsletter" bind:checked={$form.subscribe} />
           </div>
         </div>
-        <Button type="submit" text="BUY" {loading} onClick={focus} />
+        <Button type="submit" text={error ? 'ERROR 😞' : 'BUY'} {loading} onClick={focus} />
       </form>
       <h2>&#36;<span>{Price}</span></h2>
     </div>
