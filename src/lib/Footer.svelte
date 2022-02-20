@@ -4,7 +4,7 @@
   import * as yup from 'yup';
   import { Button } from '$lib';
 
-  let email = '';
+  let displayedEmail = '';
   let loading = false;
   let showError = false;
   let showSuccess = false;
@@ -25,6 +25,7 @@
 
     if (res.status === 200 || res.status === 201) {
       showSuccess = true;
+      displayedEmail = email;
       hasSubscription = res.status === 200;
       return setTimeout(() => (showSuccess = false), 5000);
     } else {
@@ -45,14 +46,13 @@
 <footer>
   <h2>
     {#if showError}
-      <h2>There was an error❌ Please try again later</h2>
+      <h2>There was an error ❌ Please try again later</h2>
+    {:else if hasSubscription}
+      <h2><strong>{displayedEmail}</strong> has been already subscribed to our newsletter 😊</h2>
     {:else if showSuccess}
-      <h2>
-        <strong class="subscribe">{email}</strong> has been {hasSubscription ? 'already' : ''} subscribed to our newsletter
-        🎉
-      </h2>
+      <h2>Thank you for subscribing to our newsletter 🎉</h2>
     {:else}
-      <h2><strong class="subscribe">SUBSCRIBE</strong> to latest news and updates</h2>
+      <h2><strong>SUBSCRIBE</strong> to latest news and updates</h2>
     {/if}
   </h2>
   <form class="form" on:submit={handleSubmit}>
@@ -90,16 +90,11 @@
     padding: 10rem 1rem;
   }
 
-  h2,
-  strong {
+  h2 {
     letter-spacing: 2px;
     color: inherit;
     font-weight: 1000;
     margin: 0;
-  }
-
-  .subscribe {
-    color: $color-tertiary;
   }
 
   .form {

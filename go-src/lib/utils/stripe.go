@@ -1,12 +1,12 @@
 package utils
 
 import (
-	"github.com/stripe/stripe-go"
-	"github.com/stripe/stripe-go/checkout/session"
-	"github.com/stripe/stripe-go/customer"
+	"github.com/stripe/stripe-go/v72"
+	"github.com/stripe/stripe-go/v72/checkout/session"
+	"github.com/stripe/stripe-go/v72/customer"
 )
 
-func CreateCheckoutSession(productName string, priceId string, customerStripeId string) (*stripe.CheckoutSession, error) {
+func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
 	params := &stripe.CheckoutSessionParams{
@@ -24,10 +24,8 @@ func CreateCheckoutSession(productName string, priceId string, customerStripeId 
 		},
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			&stripe.CheckoutSessionLineItemParams{
-				Name:     stripe.String(productName),
-				Amount:   stripe.Int64(20000),
+				Price:    stripe.String(priceId),
 				Quantity: stripe.Int64(1),
-				Currency: stripe.String("NOK"),
 			},
 		},
 		Mode: stripe.String(string(stripe.CheckoutSessionModePayment)),
@@ -49,5 +47,8 @@ func CreateCustomer(email string) (*stripe.Customer, error) {
 func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
-	return session.Get(SessionID, nil)
+	params := &stripe.CheckoutSessionParams{}
+	params.AddExpand("line_items")
+
+	return session.Get(SessionID, params)
 }

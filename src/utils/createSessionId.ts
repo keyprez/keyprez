@@ -1,11 +1,11 @@
 import { endpoint } from '../config';
 
-export default async (productName: string, priceId: string, customerStripeId: string): Promise<void> => {
+export default async (priceId: string, customerStripeId: string): Promise<void> => {
   try {
     const res = await fetch(`${endpoint}/orders/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productName, priceId, customerStripeId }),
+      body: JSON.stringify({ priceId, customerStripeId }),
     });
     const { id: sessionId } = await res.json();
     return sessionId;
