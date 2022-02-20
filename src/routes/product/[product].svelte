@@ -15,25 +15,25 @@
   let focus = () => inputRef.focus();
 
   const onSubmit = async ({ email }) => {
-    loading = true;
-    const { Name: productName, PriceID: priceId } = await getProductBySlug(productSlug);
+    try {
+      loading = true;
+      const { PriceID } = await getProductBySlug(productSlug);
+      if (!PriceID) throw new Error(`Could not get product by slug`);
 
-    const customerStripeId = await getCustomerStripeId(email);
-    if (!customerStripeId) {
+      const customerStripeId = await getCustomerStripeId(email);
+      if (!customerStripeId) throw new Error(`Could not get customerStripeId`);
+
+      const sessionId = await createSessionId(PriceID, customerStripeId);
+      if (!sessionId) throw new Error(`Could not get sessionId`);
+
+      const success = await redirectToCheckout(sessionId);
+      if (!success) throw new Error(`Could not redirect to stripe checkout`);
+    } catch (err) {
       error = true;
-      return;
+      console.error(err);
+    } finally {
+      loading = false;
     }
-
-    const sessionId = await createSessionId(productName, priceId, customerStripeId);
-    if (!sessionId) {
-      error = true;
-      return;
-    }
-
-    const success = await redirectToCheckout(sessionId);
-    if (!success) error = true;
-
-    loading = false;
   };
 
   const { form, errors, handleChange, handleSubmit } = createForm({

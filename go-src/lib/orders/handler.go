@@ -11,7 +11,6 @@ import (
 )
 
 type createCheckoutSessionRequest struct {
-	ProductName      string `json:"productname"`
 	PriceID          string `json:"priceid"`
 	CustomerStripeID string `json:"customerstripeid"`
 }
@@ -31,7 +30,7 @@ func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*event
 		return router.Return400()
 	}
 
-	s, err := utils.CreateCheckoutSession(requestBody.ProductName, requestBody.PriceID, requestBody.CustomerStripeID)
+	s, err := utils.CreateCheckoutSession(requestBody.PriceID, requestBody.CustomerStripeID)
 	if err != nil {
 		return router.Return500()
 	}
