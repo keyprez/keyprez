@@ -141,3 +141,10 @@ textarea {
     border-color: $color-primary-dark;
   }
 }
+
+strong {
+  letter-spacing: 2px;
+  color: $color-tertiary;
+  font-weight: 1000;
+  margin: 0;
+}
