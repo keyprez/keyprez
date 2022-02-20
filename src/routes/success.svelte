@@ -4,6 +4,7 @@
 
   import { endpoint } from '../config';
 
+  let customerEmail = '';
   let productName = '';
   let loading = true;
 
@@ -17,9 +18,18 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId }),
       });
+
       if (res.status !== 200) throw new Error('There was an error retrieving Stripe session');
-      const data = await res.json();
-      productName = data.display_items[0].custom.name;
+
+      const {
+        customer_details: { email },
+        line_items: {
+          data: [product],
+        },
+      } = await res.json();
+
+      customerEmail = email;
+      productName = product.description;
       loading = false;
     } catch (err) {
       console.error(`Error fetching checkout session: ${err}`);
@@ -35,7 +45,7 @@
   <div>
     <h1>Thank you for purchasing <span>{productName}</span> kit</h1>
     <img src={`/${productName.toLocaleLowerCase()}.jpg`} alt={productName} />
-    <h2>Check your email for confirmation</h2>
+    <h2>Confirmation email has been sent to <strong>{customerEmail}</strong></h2>
   </div>
 {/if}
 

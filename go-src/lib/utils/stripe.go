@@ -47,5 +47,8 @@ func CreateCustomer(email string) (*stripe.Customer, error) {
 func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
-	return session.Get(SessionID, nil)
+	params := &stripe.CheckoutSessionParams{}
+	params.AddExpand("line_items")
+
+	return session.Get(SessionID, params)
 }
