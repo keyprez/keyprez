@@ -5,8 +5,8 @@
 </script>
 
 <header>
-  <a class="corner" sveltekit:prefetch href="/">
-    <img class="logo" src="/keycap_simple.svg" alt="keyprez logo" />
+  <a sveltekit:prefetch href="/">
+    <img class="logo" src="/k.svg" alt="keyprez logo" />
     <img class="name" src="/keyprez_name.svg" alt="keyprez name" />
   </a>
   <nav>
@@ -31,17 +31,12 @@
     background-color: $color-primary-dark;
     display: flex;
     margin-bottom: 3rem;
-    padding: 1rem;
-  }
-
-  .corner {
-    align-items: center;
-    display: flex;
+    padding: 2rem;
   }
 
   .logo {
-    margin-right: 1rem;
-    width: 3rem;
+    display: block;
+    width: 2rem;
   }
 
   .name {
@@ -60,8 +55,10 @@
   ul {
     display: flex;
     list-style: none;
-    margin: 0;
-    padding: 0;
+
+    li:last-child a {
+      padding-right: 0;
+    }
   }
 
   .link {
@@ -83,6 +80,7 @@
     }
 
     .logo {
+      display: none;
       width: 5rem;
     }
 

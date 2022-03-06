@@ -55,8 +55,8 @@
       <h2><strong>SUBSCRIBE</strong> to latest news and updates</h2>
     {/if}
   </h2>
-  <form class="form" on:submit={handleSubmit}>
-    <div class="formInputWrapper">
+  <form on:submit={handleSubmit}>
+    <div>
       <input
         bind:this={inputRef}
         class:errorInput={$errors.email}
@@ -87,7 +87,7 @@
     flex-direction: column;
     gap: 2rem;
     justify-content: center;
-    padding: 10rem 1rem;
+    padding: 10rem 1rem 5rem;
   }
 
   h2 {
@@ -97,13 +97,13 @@
     margin: 0;
   }
 
-  .form {
+  form {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     justify-content: center;
 
-    &InputWrapper {
+    div {
       position: relative;
       display: flex;
     }
@@ -141,8 +141,12 @@
   }
 
   @media (max-width: 768px) {
-    input {
-      width: 12rem;
+    footer {
+      padding: 5rem 1rem 3rem;
+    }
+
+    form {
+      flex-direction: column;
     }
   }
 </style>

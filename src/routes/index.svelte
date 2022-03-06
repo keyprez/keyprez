@@ -8,7 +8,7 @@
   const response = fetchProducts();
 </script>
 
-<SvelteSeo title="Keyprez" description="New keyboard shop in progress..." />
+<SvelteSeo title="keyprez" description="New keyboard shop in progress..." />
 
 <div class="gallery" in:fade={{ duration: 1000 }}>
   {#await response}

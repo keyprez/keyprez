@@ -137,10 +137,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 
     &InputWrapper {
       position: relative;
       display: flex;
+      justify-content: center;
+      width: 100%;
     }
   }
 
@@ -186,6 +189,12 @@
 
     h1 {
       margin-top: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .formInput {
+      width: 100%;
     }
   }
 </style>
