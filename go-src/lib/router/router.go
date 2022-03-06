@@ -102,7 +102,7 @@ func (r *Router) GetAllRoutes() []*Route {
 func (r *Router) GetHandler() lambdaHandler {
 	return func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 		var potentialRoutes []*Route
-		fmt.Println(request.HTTPMethod)
+		fmt.Println(request.HTTPMethod, request.Path)
 		switch request.HTTPMethod {
 		case "GET":
 			potentialRoutes = r.getRoutes
