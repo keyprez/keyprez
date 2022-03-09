@@ -19,6 +19,18 @@ npm install
 npm start
 ```
 
+With `stripe-cli` you can listen for completion webhook:
+
+```bash
+npm run listen
+```
+
+Instead of going through the whole completion process run:
+
+```bash
+npm run trigger
+```
+
 To build the application run:
 
 ```bash
