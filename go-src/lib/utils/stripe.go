@@ -52,3 +52,19 @@ func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {
 
 	return session.Get(SessionID, params)
 }
+
+func VerifySignature(payload []byte, signature string) error {
+	// stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
+	// webhookSecret := GetEnvVar("STRIPE_WEBHOOK_SECRET")
+
+	// FIXME: raw body needs to be passed in here. Seems like that's not the case
+	// and we modify the request body somehow
+
+	// _, err := webhook.ConstructEvent(payload, signature, webhookSecret)
+	// if err != nil {
+	// 	fmt.Println("Error verifying signature", err)
+	// 	return err
+	// }
+
+	return nil
+}
