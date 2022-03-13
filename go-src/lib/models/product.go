@@ -70,7 +70,6 @@ func GetProducts() ([]Product, error) {
 }
 
 func UpdateProductStock(priceId string, quantity int64) (*mongo.UpdateResult, error) {
-	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
