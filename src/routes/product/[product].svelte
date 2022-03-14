@@ -192,7 +192,7 @@
 
   @media (min-width: 600px) {
     .form {
-      width: 50%;
+      width: 60%;
       max-width: 400px;
     }
 
