@@ -1,4 +1,5 @@
 <script>
+  import { Loader } from '$lib';
   import { onMount } from 'svelte';
   import SvelteSeo from 'svelte-seo';
 
@@ -40,7 +41,7 @@
 <SvelteSeo title="Keyprez - Success" />
 
 {#if loading}
-  <div><h1>Processing...</h1></div>
+  <Loader />
 {:else}
   <div>
     <h1>Thank you for purchasing <span>{productName}</span> kit</h1>
