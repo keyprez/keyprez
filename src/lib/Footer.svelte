@@ -62,7 +62,7 @@
         class:errorInput={$errors.email}
         type="text"
         name="email"
-        placeholder="Your email"
+        placeholder="Type your email"
         bind:value={$form.email}
         on:keyup={handleChange}
         on:blur={handleChange}
@@ -106,6 +106,8 @@
     div {
       position: relative;
       display: flex;
+      width: 100%;
+      max-width: 400px;
     }
   }
 
@@ -140,13 +142,17 @@
     transform: scale(1.3);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     footer {
       padding: 5rem 1rem 3rem;
     }
 
     form {
       flex-direction: column;
+
+      div {
+        max-width: 100%;
+      }
     }
   }
 </style>

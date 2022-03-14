@@ -117,6 +117,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
   }
 
   img {
@@ -142,17 +143,14 @@
     &InputWrapper {
       position: relative;
       display: flex;
-      justify-content: center;
       width: 100%;
     }
   }
 
   .checkboxes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
     margin: 0.5rem 0 1rem 0;
+    display: flex;
+    align-self: baseline;
   }
 
   .checkboxWrapper {
@@ -192,9 +190,14 @@
     }
   }
 
-  @media (max-width: 768px) {
-    .formInput {
-      width: 100%;
+  @media (min-width: 600px) {
+    .form {
+      width: 50%;
+      max-width: 400px;
+    }
+
+    .checkboxes {
+      align-self: center;
     }
   }
 </style>
