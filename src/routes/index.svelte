@@ -1,7 +1,7 @@
 <script>
   import SvelteSeo from 'svelte-seo';
   import { fade } from 'svelte/transition';
-  import { Product } from '$lib';
+  import { Loader, Product } from '$lib';
 
   import { fetchProducts } from '/src/utils';
 
@@ -12,7 +12,7 @@
 
 <div class="gallery" in:fade={{ duration: 1000 }}>
   {#await response}
-    <h1>LOADING...</h1>
+    <Loader />
   {:then products}
     {#each products as product}
       <Product {product} />
