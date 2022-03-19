@@ -80,7 +80,7 @@ func UpdateProductStock(priceId string, quantity int64) (*mongo.UpdateResult, er
 
 	col := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
 
-	res, updateErr := col.UpdateOne(ctx, bson.M{"price_id": priceId}, bson.D{{"$inc", bson.D{{"Stock", quantity}}}})
+	res, updateErr := col.UpdateOne(ctx, bson.M{"price_id": priceId}, bson.D{{"$inc", bson.D{{"Stock", -quantity}}}})
 	if updateErr != nil {
 		return nil, updateErr
 	}
