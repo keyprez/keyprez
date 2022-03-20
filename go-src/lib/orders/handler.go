@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/keyprez/keyprez/go-src/lib/models"
+	"github.com/keyprez/keyprez/go-src/lib/repository"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
 	"github.com/stripe/stripe-go/v72"
 
@@ -96,7 +96,7 @@ func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 
 	product := sessionData[0]
 
-	updatedProduct, updatedProductErr := models.UpdateProductStock(product.Price.ID, product.Quantity)
+	updatedProduct, updatedProductErr := repository.UpdateProductStock(product.Price.ID, product.Quantity)
 	if updatedProductErr != nil {
 		log.Printf("Error updating stock amout for product %s: %v\n", product.Price.ID, updatedProductErr)
 		return router.Return500()

@@ -1,49 +1,39 @@
-package models
+package repository
 
 import (
 	"context"
 	"time"
 
+	"github.com/keyprez/keyprez/go-src/lib/repository/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type NewsletterSubscription struct {
-	ID      primitive.ObjectID `bson:"_id,omitempty"`
-	Email   string             `bson:"email,omitempty"`
-	Active  bool               `bson:"active,omitempty"`
-	Created time.Time          `bson:"created,omitempty"`
-}
-
-func (ns *NewsletterSubscription) IsValid() bool {
-	return !ns.ID.IsZero()
-}
-
-func GetNewsletterSubscriptionByEmail(email string) (NewsletterSubscription, error) {
+func GetNewsletterSubscriptionByEmail(email string) (models.NewsletterSubscription, error) {
 	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
-		return NewsletterSubscription{}, err
+		return models.NewsletterSubscription{}, err
 	}
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
-	var subscriptions []NewsletterSubscription
+	var subscriptions []models.NewsletterSubscription
 
 	cursor, err := col.Find(ctx, bson.M{"email": email})
 	if err != nil {
-		return NewsletterSubscription{}, err
+		return models.NewsletterSubscription{}, err
 	}
 	if err = cursor.All(ctx, &subscriptions); err != nil {
-		return NewsletterSubscription{}, err
+		return models.NewsletterSubscription{}, err
 	}
 
 	if len(subscriptions) > 0 {
 		return subscriptions[0], nil
 	}
-	return NewsletterSubscription{}, nil
+	return models.NewsletterSubscription{}, nil
 }
 
-func insertNewsletterSubscription(subscription *NewsletterSubscription) (bool, error) {
+func insertNewsletterSubscription(subscription *models.NewsletterSubscription) (bool, error) {
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return false, err
@@ -62,7 +52,7 @@ func insertNewsletterSubscription(subscription *NewsletterSubscription) (bool, e
 }
 
 func CreateNewsletterSubscription(email string) (bool, error) {
-	return insertNewsletterSubscription(&NewsletterSubscription{
+	return insertNewsletterSubscription(&models.NewsletterSubscription{
 		ID:      primitive.NewObjectID(),
 		Email:   email,
 		Active:  true,
@@ -70,7 +60,7 @@ func CreateNewsletterSubscription(email string) (bool, error) {
 	})
 }
 
-func UnsubscribeNewsletterSubscription(subscription NewsletterSubscription) (bool, error) {
+func UnsubscribeNewsletterSubscription(subscription models.NewsletterSubscription) (bool, error) {
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return false, err

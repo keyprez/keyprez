@@ -3,10 +3,9 @@ package newsletters
 import (
 	"encoding/json"
 
+	"github.com/keyprez/keyprez/go-src/lib/repository"
 	"github.com/keyprez/keyprez/go-src/lib/router"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
-
-	"github.com/keyprez/keyprez/go-src/lib/models"
 
 	"github.com/aws/aws-lambda-go/events"
 )
@@ -22,7 +21,7 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 		return router.Return400()
 	}
 
-	subscription, err := models.GetNewsletterSubscriptionByEmail(requestBody.Email)
+	subscription, err := repository.GetNewsletterSubscriptionByEmail(requestBody.Email)
 	if err != nil {
 		return router.Return400()
 	}
@@ -31,7 +30,7 @@ func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.A
 		return router.ReturnBlank200()
 	}
 
-	success, err := models.CreateNewsletterSubscription(requestBody.Email)
+	success, err := repository.CreateNewsletterSubscription(requestBody.Email)
 	if !success || err != nil {
 		return router.Return400()
 	}
@@ -45,12 +44,12 @@ func UnsubscribeSubscriptionHandler(request events.APIGatewayProxyRequest) (*eve
 		return router.Return400()
 	}
 
-	subscription, err := models.GetNewsletterSubscriptionByEmail(email)
+	subscription, err := repository.GetNewsletterSubscriptionByEmail(email)
 	if err != nil {
 		return router.Return400()
 	}
 
-	if ok, err := models.UnsubscribeNewsletterSubscription(subscription); err != nil || !ok {
+	if ok, err := repository.UnsubscribeNewsletterSubscription(subscription); err != nil || !ok {
 		return router.Return500()
 	}
 

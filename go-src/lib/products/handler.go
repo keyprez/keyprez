@@ -3,15 +3,14 @@ package products
 import (
 	"encoding/json"
 
+	"github.com/keyprez/keyprez/go-src/lib/repository"
 	"github.com/keyprez/keyprez/go-src/lib/router"
-
-	"github.com/keyprez/keyprez/go-src/lib/models"
 
 	"github.com/aws/aws-lambda-go/events"
 )
 
 func ProductHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	products, err := models.GetProduct()
+	products, err := repository.GetProduct()
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +21,7 @@ func ProductHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 }
 
 func ProductsHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	products, err := models.GetProducts()
+	products, err := repository.GetProducts()
 	if err != nil {
 		return nil, err
 	}
