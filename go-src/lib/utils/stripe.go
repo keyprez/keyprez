@@ -26,6 +26,11 @@ func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.Che
 			&stripe.CheckoutSessionLineItemParams{
 				Price:    stripe.String(priceId),
 				Quantity: stripe.Int64(1),
+				AdjustableQuantity: &stripe.CheckoutSessionLineItemAdjustableQuantityParams{
+					Enabled: stripe.Bool(true),
+					Minimum: stripe.Int64(1),
+					Maximum: stripe.Int64(5),
+				},
 			},
 		},
 		Mode: stripe.String(string(stripe.CheckoutSessionModePayment)),
