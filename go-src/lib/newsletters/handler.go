@@ -11,10 +11,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-type createRequest struct {
-	Email string `json:"email"`
-}
-
 func CreateSubscriptionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	var requestBody createRequest
 	err := json.Unmarshal([]byte(request.Body), &requestBody)

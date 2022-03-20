@@ -13,23 +13,9 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 )
 
-type createCheckoutSessionRequest struct {
-	PriceID          string `json:"priceid"`
-	CustomerStripeID string `json:"customerstripeid"`
-}
-
-type createCheckoutSessionResponse struct {
-	ID string `json:"id"`
-}
-
-type retrieveSessionRequest struct {
-	SessionID string `json:"sessionid"`
-}
-
 func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	var requestBody createCheckoutSessionRequest
-	err := json.Unmarshal([]byte(request.Body), &requestBody)
-	if err != nil {
+	if err := json.Unmarshal([]byte(request.Body), &requestBody); err != nil {
 		return router.Return400()
 	}
 
@@ -41,15 +27,17 @@ func CreateCheckoutSessionHandler(request events.APIGatewayProxyRequest) (*event
 	response := &createCheckoutSessionResponse{
 		ID: s.ID,
 	}
-	data, _ := json.Marshal(response)
+	data, err := json.Marshal(response)
+	if err != nil {
+		return router.Return500()
+	}
 
 	return router.Return200(string(data))
 }
 
 func RetrieveSessionHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	var requestBody retrieveSessionRequest
-	err := json.Unmarshal([]byte(request.Body), &requestBody)
-	if err != nil {
+	if err := json.Unmarshal([]byte(request.Body), &requestBody); err != nil {
 		return router.Return400()
 	}
 
