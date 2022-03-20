@@ -9,11 +9,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func GetCustomerByEmail(email string) (models.Customer, error) {
+func GetCustomerByEmail(email string) (*models.Customer, error) {
 	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
-		return models.Customer{}, err
+		return nil, err
 	}
 
 	col := GetMongoCollection(mongoClient, CUSTOMER_COLLECTION)
@@ -21,22 +21,22 @@ func GetCustomerByEmail(email string) (models.Customer, error) {
 
 	cursor, err := col.Find(ctx, bson.M{"email": email})
 	if err != nil {
-		return models.Customer{}, err
+		return nil, err
 	}
 	if err = cursor.All(ctx, &customers); err != nil {
-		return models.Customer{}, err
+		return nil, err
 	}
 
 	if len(customers) > 0 {
-		return customers[0], nil
+		return &customers[0], nil
 	}
-	return models.Customer{}, nil
+	return nil, nil
 }
 
-func insertCustomer(customer *models.Customer) (models.Customer, error) {
+func insertCustomer(customer *models.Customer) (*models.Customer, error) {
 	mongoClient, err := GetMongoClient()
 	if err != nil {
-		return models.Customer{}, err
+		return nil, err
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
@@ -45,13 +45,13 @@ func insertCustomer(customer *models.Customer) (models.Customer, error) {
 	col := GetMongoCollection(mongoClient, CUSTOMER_COLLECTION)
 
 	if _, insertErr := col.InsertOne(ctx, customer); err != nil {
-		return models.Customer{}, insertErr
+		return nil, insertErr
 	}
 
-	return *customer, nil
+	return customer, nil
 }
 
-func CreateCustomer(email string, StripeID string) (models.Customer, error) {
+func CreateCustomer(email string, StripeID string) (*models.Customer, error) {
 	return insertCustomer(&models.Customer{
 		ID:       primitive.NewObjectID(),
 		StripeID: StripeID,

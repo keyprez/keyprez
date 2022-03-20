@@ -9,11 +9,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func GetNewsletterSubscriptionByEmail(email string) (models.NewsletterSubscription, error) {
+func GetNewsletterSubscriptionByEmail(email string) (*models.NewsletterSubscription, error) {
 	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
-		return models.NewsletterSubscription{}, err
+		return nil, err
 	}
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
@@ -21,16 +21,16 @@ func GetNewsletterSubscriptionByEmail(email string) (models.NewsletterSubscripti
 
 	cursor, err := col.Find(ctx, bson.M{"email": email})
 	if err != nil {
-		return models.NewsletterSubscription{}, err
+		return nil, err
 	}
 	if err = cursor.All(ctx, &subscriptions); err != nil {
-		return models.NewsletterSubscription{}, err
+		return nil, err
 	}
 
 	if len(subscriptions) > 0 {
-		return subscriptions[0], nil
+		return &subscriptions[0], nil
 	}
-	return models.NewsletterSubscription{}, nil
+	return nil, nil
 }
 
 func insertNewsletterSubscription(subscription *models.NewsletterSubscription) (bool, error) {
@@ -60,7 +60,7 @@ func CreateNewsletterSubscription(email string) (bool, error) {
 	})
 }
 
-func UnsubscribeNewsletterSubscription(subscription models.NewsletterSubscription) (bool, error) {
+func UnsubscribeNewsletterSubscription(subscription *models.NewsletterSubscription) (bool, error) {
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return false, err
