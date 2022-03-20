@@ -12,9 +12,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-var clientInstance *mongo.Client
-var clientInstanceError error
-var mongoOnce sync.Once
+var (
+	clientInstance      *mongo.Client
+	clientInstanceError error
+	mongoOnce           sync.Once
+)
 
 func GetMongoClient() (*mongo.Client, error) {
 	atlasUri := utils.GetEnvVar("ATLAS_URI")
@@ -23,7 +25,6 @@ func GetMongoClient() (*mongo.Client, error) {
 		client, err := mongo.NewClient(options.Client().ApplyURI(atlasUri))
 		if err != nil {
 			log.Fatal(err)
-			log.Println(err)
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
@@ -31,7 +32,6 @@ func GetMongoClient() (*mongo.Client, error) {
 		err = client.Connect(ctx)
 		if err != nil {
 			log.Fatal(err)
-			log.Println(err)
 		}
 
 		err = client.Ping(ctx, readpref.Primary())

@@ -11,11 +11,13 @@ import (
 )
 
 func GetProduct() ([]models.Product, error) {
-	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
 
 	productCollection := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
 	var products []models.Product
@@ -35,11 +37,13 @@ func GetProduct() ([]models.Product, error) {
 }
 
 func GetProducts() ([]models.Product, error) {
-	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
 
 	productCollection := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
 	var products []models.Product

@@ -10,11 +10,13 @@ import (
 )
 
 func GetCustomerByEmail(email string) (*models.Customer, error) {
-	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
 
 	col := GetMongoCollection(mongoClient, CUSTOMER_COLLECTION)
 	var customers []models.Customer

@@ -10,11 +10,13 @@ import (
 )
 
 func GetNewsletterSubscriptionByEmail(email string) (*models.NewsletterSubscription, error) {
-	ctx := context.TODO()
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
 
 	col := GetMongoCollection(mongoClient, NEWSLETTER_COLLECTION)
 	var subscriptions []models.NewsletterSubscription
