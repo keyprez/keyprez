@@ -3,7 +3,6 @@ package orders
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 
 	"github.com/keyprez/keyprez/go-src/lib/models"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
@@ -68,11 +67,6 @@ func RetrieveSessionHandler(request events.APIGatewayProxyRequest) (*events.APIG
 }
 
 func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	if request.HTTPMethod != http.MethodPost {
-		fmt.Println("Only POST method is allowed")
-		return router.Return400()
-	}
-
 	signature, present := request.Headers["Stripe-Signature"]
 	if !present {
 		fmt.Printf("Missing Stripe-Signature header\n")
