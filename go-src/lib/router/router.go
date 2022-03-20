@@ -1,7 +1,7 @@
 package router
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"regexp"
 	"strings"
@@ -102,7 +102,8 @@ func (r *Router) GetAllRoutes() []*Route {
 func (r *Router) GetHandler() lambdaHandler {
 	return func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 		var potentialRoutes []*Route
-		fmt.Println(request.HTTPMethod, request.Path)
+		log.Println("Received request", request.HTTPMethod, request.Path)
+
 		switch request.HTTPMethod {
 		case "GET":
 			potentialRoutes = r.getRoutes
@@ -135,11 +136,6 @@ func (r *Router) GetHandler() lambdaHandler {
 			}
 		}
 
-		return &events.APIGatewayProxyResponse{
-			StatusCode:      404,
-			Headers:         map[string]string{"Content-Type": "application/json"},
-			Body:            "",
-			IsBase64Encoded: false,
-		}, nil
+		return Return404()
 	}
 }

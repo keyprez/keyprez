@@ -2,7 +2,7 @@ package orders
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 
 	"github.com/keyprez/keyprez/go-src/lib/models"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
@@ -69,18 +69,18 @@ func RetrieveSessionHandler(request events.APIGatewayProxyRequest) (*events.APIG
 func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	signature, present := request.Headers["Stripe-Signature"]
 	if !present {
-		fmt.Printf("Missing Stripe-Signature header\n")
+		log.Printf("Missing Stripe-Signature header\n")
 		return router.Return400()
 	}
 
 	if err := utils.VerifySignature([]byte(request.Body), signature); err != nil {
-		fmt.Printf("Error verifying webhook signature\n")
+		log.Printf("Error verifying webhook signature\n")
 		return router.Return400()
 	}
 
 	event := stripe.Event{}
 	if err := json.Unmarshal([]byte(request.Body), &event); err != nil {
-		fmt.Printf("Error while parsing event. %v\n", err.Error())
+		log.Printf("Error while parsing event. %v\n", err.Error())
 		return router.Return500()
 	}
 
@@ -90,19 +90,19 @@ func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 
 	var checkoutSession stripe.CheckoutSession
 	if err := json.Unmarshal(event.Data.Raw, &checkoutSession); err != nil {
-		fmt.Printf("Error parsing webhook JSON: %v\n", err)
+		log.Printf("Error parsing webhook JSON: %v\n", err)
 		return router.Return400()
 	}
 
 	s, sErr := utils.RetrieveSession(checkoutSession.ID)
 	if sErr != nil {
-		fmt.Printf("Error retrieving checkout session with ID %s: %v\n", checkoutSession.ID, sErr)
+		log.Printf("Error retrieving checkout session with ID %s: %v\n", checkoutSession.ID, sErr)
 		return router.Return500()
 	}
 
 	sessionData := s.LineItems.Data
 	if len(sessionData) > 1 {
-		fmt.Println("Max one product is allowed")
+		log.Println("Max one product is allowed")
 		return router.Return500()
 	}
 
@@ -110,7 +110,7 @@ func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 
 	updatedProduct, updatedProductErr := models.UpdateProductStock(product.Price.ID, product.Quantity)
 	if updatedProductErr != nil {
-		fmt.Printf("Error updating stock amout for product %s: %v\n", product.Price.ID, updatedProductErr)
+		log.Printf("Error updating stock amout for product %s: %v\n", product.Price.ID, updatedProductErr)
 		return router.Return500()
 	}
 
@@ -126,7 +126,6 @@ func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 
 func SetupRouter() router.Router {
 	r := router.Router{}
-	//r.Get("/.netlify/functions/orders", ProductsHandler)
 	r.Post("/orders/checkout", CreateCheckoutSessionHandler)
 	r.Post("/orders/success", RetrieveSessionHandler)
 	r.Post("/orders/webhook", WebhookHandler)
