@@ -19,3 +19,11 @@ func GetEnvVar(key string) string {
 	}
 	return os.Getenv(key)
 }
+
+func GetEnvVarOrDefault(key, defaultValue string) string {
+	envVar := GetEnvVar(key)
+	if envVar == "" {
+		return defaultValue
+	}
+	return envVar
+}

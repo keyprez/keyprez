@@ -3,21 +3,12 @@ package customers
 import (
 	"encoding/json"
 
+	"github.com/keyprez/keyprez/go-src/lib/repository"
 	"github.com/keyprez/keyprez/go-src/lib/router"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
 
-	"github.com/keyprez/keyprez/go-src/lib/models"
-
 	"github.com/aws/aws-lambda-go/events"
 )
-
-type createRequest struct {
-	Email string `json:"email"`
-}
-
-type createResponse struct {
-	ID string `json:"id"`
-}
 
 func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	var requestBody createRequest
@@ -30,7 +21,7 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 		return router.Return400()
 	}
 
-	customer, err := models.GetCustomerByEmail(requestBody.Email)
+	customer, err := repository.GetCustomerByEmail(requestBody.Email)
 	if err != nil {
 		return router.Return400()
 	}
@@ -49,7 +40,7 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 		ID: c.ID,
 	}
 
-	cust, err := models.CreateCustomer(requestBody.Email, response.ID)
+	cust, err := repository.CreateCustomer(requestBody.Email, response.ID)
 	if err != nil {
 		return router.Return400()
 	}

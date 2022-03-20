@@ -1,4 +1,4 @@
-package models
+package repository
 
 const CUSTOMER_COLLECTION = "customers"
 const PRODUCT_COLLECTION = "products"

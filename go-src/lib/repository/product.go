@@ -1,35 +1,26 @@
-package models
+package repository
 
 import (
 	"context"
 	"time"
 
+	"github.com/keyprez/keyprez/go-src/lib/repository/models"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Product struct {
-	ID          primitive.ObjectID `bson:"_id,omitempty"`
-	Name        string             `bson:"name,omitempty"`
-	Description string             `bson:"description,omitempty"`
-	Price       int32              `bson:"price,omitempty"`
-	PriceID     string             `bson:"price_id,omitempty"`
-	Stock       int32              `bson:"stock,omitempty"`
-	Slug        string             `bson:"slug,omitempty"`
-	Active      bool               `bson:"active,omitempty"`
-}
-
-func GetProduct() ([]Product, error) {
-	ctx := context.TODO()
+func GetProduct() ([]models.Product, error) {
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
 	productCollection := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
-	var products []Product
+	var products []models.Product
 
 	selectOpts := options.Find()
 	selectOpts.SetLimit(1)
@@ -45,15 +36,17 @@ func GetProduct() ([]Product, error) {
 	return products, nil
 }
 
-func GetProducts() ([]Product, error) {
-	ctx := context.TODO()
+func GetProducts() ([]models.Product, error) {
 	mongoClient, err := GetMongoClient()
 	if err != nil {
 		return nil, err
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
 	productCollection := GetMongoCollection(mongoClient, PRODUCT_COLLECTION)
-	var products []Product
+	var products []models.Product
 
 	selectOpts := options.Find()
 	selectOpts.SetLimit(4)
