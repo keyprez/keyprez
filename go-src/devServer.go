@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -50,12 +50,12 @@ func transformRequest(req *http.Request) events.APIGatewayProxyRequest {
 	}
 }
 
-func setupAndRespond(w http.ResponseWriter, req *http.Request, setupRouter func() router.Router, log string) {
-	fmt.Println(log)
+func setupAndRespond(w http.ResponseWriter, req *http.Request, setupRouter func() router.Router, message string) {
+	log.Println(message)
 	router := setupRouter()
 	response, err := router.GetHandler()(transformRequest(req))
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -70,7 +70,7 @@ func routerToMux(setupRouter func() router.Router, muxRouter *mux.Router) {
 	router := setupRouter()
 	allRoutes := router.GetAllRoutes()
 	for _, route := range allRoutes {
-		fmt.Printf("Method: %s, Path: %s \n", route.GetMethod(), route.GetPath())
+		log.Printf("Method: %s, Path: %s \n", route.GetMethod(), route.GetPath())
 		muxRouter.HandleFunc(route.GetPath(), func(rw http.ResponseWriter, r *http.Request) {
 			setupAndRespond(rw, r, setupRouter, "Received request")
 		})
@@ -94,7 +94,7 @@ func main() {
 	routerToMux(orders.SetupRouter, r)
 	routerToMux(newsletters.SetupRouter, r)
 
-	fmt.Println("Listening on port 8090")
+	log.Println("Listening on port 8090")
 	err := http.ListenAndServe(":8090", r)
 
 	if err != nil {
