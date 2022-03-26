@@ -111,6 +111,12 @@ func (r *Router) GetHandler() lambdaHandler {
 		case "POST":
 			potentialRoutes = r.postRoutes
 			break
+                case "PUT":
+                        potentialRoutes = r.putRoutes 
+                        break 
+                case "DELETE":
+                        potentialRoutes = r.deleteRoutes 
+                        break
 		case "OPTIONS":
 			return &events.APIGatewayProxyResponse{
 				StatusCode: 200,
