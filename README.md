@@ -14,7 +14,7 @@ Application built with SvelteKit (currently in public beta), TypeScript and Vite
 Create your own .env file by running:
 
 ```bash
-cp .env.default .env
+cp .env.dist .env
 ```
 
 Update necessary variables. `STRIPE_PUBLISHABLE_KEY` and `STRIPE_SECRET_KEY` can be found in Stripe Dashboard. `STRIPE_WEBHOOK_SECRET` is returned from running the command `npm run listen`
