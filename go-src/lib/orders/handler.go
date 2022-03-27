@@ -82,7 +82,7 @@ func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 	}
 
 	if event.Type != "checkout.session.completed" {
-		log.Println("Oly checkout.session.completed event is supported")
+		log.Println("Only checkout.session.completed event is supported")
 		return router.Return400()
 	}
 
