@@ -55,14 +55,23 @@ func RetrieveSessionHandler(request events.APIGatewayProxyRequest) (*events.APIG
 }
 
 func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	signature, present := request.Headers["Stripe-Signature"]
-	if !present {
-		log.Printf("Missing Stripe-Signature header\n")
+	key := request.QueryStringParameters["key"]
+	publishableKey := utils.GetEnvVar("STRIPE_PUBLISHABLE_KEY")
+	if key != publishableKey {
+		log.Println("Invalid or missing key")
 		return router.Return400()
 	}
 
-	if err := utils.VerifySignature([]byte(request.Body), signature); err != nil {
-		log.Printf("Error verifying webhook signature\n")
+	header, present := request.Headers["Stripe-Signature"]
+	if !present {
+		log.Println("Missing Stripe-Signature header")
+		return router.Return400()
+
+	}
+
+	timestamp, err := utils.VerifyWebhookHeader(header)
+	if err != nil {
+		log.Println(err)
 		return router.Return400()
 	}
 
@@ -73,6 +82,12 @@ func WebhookHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayPr
 	}
 
 	if event.Type != "checkout.session.completed" {
+		log.Println("Only checkout.session.completed event is supported")
+		return router.Return400()
+	}
+
+	if err := utils.VerifyTimestamp(event.Created, timestamp); err != nil {
+		log.Printf("Error verifying webhook timestamp: %s\n", err)
 		return router.Return400()
 	}
 

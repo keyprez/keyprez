@@ -1,6 +1,10 @@
 package utils
 
 import (
+	"errors"
+	"strconv"
+	"strings"
+
 	"github.com/stripe/stripe-go/v72"
 	"github.com/stripe/stripe-go/v72/checkout/session"
 	"github.com/stripe/stripe-go/v72/customer"
@@ -58,18 +62,40 @@ func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {
 	return session.Get(SessionID, params)
 }
 
-func VerifySignature(payload []byte, signature string) error {
-	// stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
-	// webhookSecret := GetEnvVar("STRIPE_WEBHOOK_SECRET")
+func VerifyWebhookHeader(header string) (int64, error) {
+	var timestamp string
+	var signature string
 
-	// FIXME: raw body needs to be passed in here. Seems like that's not the case
-	// and we modify the request body somehow
+	pairs := strings.Split(header, ",")
+	for _, pair := range pairs {
+		parts := strings.Split(pair, "=")
+		switch parts[0] {
+		case "t":
+			timestamp = parts[1]
+		case "v1":
+			signature = parts[1]
+		}
+	}
 
-	// _, err := webhook.ConstructEvent(payload, signature, webhookSecret)
-	// if err != nil {
-	// 	fmt.Println("Error verifying signature", err)
-	// 	return err
-	// }
+	if timestamp == "" {
+		return 0, errors.New("missing webhook timestamp")
+	}
 
+	if signature == "" {
+		return 0, errors.New("missing webhook signature")
+	}
+
+	res, err := strconv.ParseInt(timestamp, 10, 64)
+	if err != nil {
+		return 0, errors.New("invalid timestamp")
+	}
+
+	return res, nil
+}
+
+func VerifyTimestamp(eventTime int64, webhookTime int64) error {
+	if webhookTime-eventTime > 10 {
+		return errors.New("webhook too old")
+	}
 	return nil
 }
