@@ -69,10 +69,10 @@ func VerifyWebhookHeader(header string) (int64, error) {
 	pairs := strings.Split(header, ",")
 	for _, pair := range pairs {
 		parts := strings.Split(pair, "=")
-		if parts[0] == "t" {
+		switch parts[0] {
+		case "t":
 			timestamp = parts[1]
-		}
-		if parts[0] == "v1" {
+		case "v1":
 			signature = parts[1]
 		}
 	}
