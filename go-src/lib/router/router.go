@@ -3,62 +3,10 @@ package router
 import (
 	"log"
 	"net/http"
-	"regexp"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
 )
-
-const ENDPOINT_PREFIX string = "/.netlify/functions"
-
-func getPath(path string) string {
-	return ENDPOINT_PREFIX + path
-}
-
-type lambdaHandler func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error)
-
-type Route struct {
-	path    string
-	method  string
-	handler lambdaHandler
-}
-
-func (r *Route) GetPath() string {
-	return r.path
-}
-
-func (r *Route) GetMethod() string {
-	return r.method
-}
-
-func (r *Route) SetHandler(handler lambdaHandler) *Route {
-	r.handler = handler
-	return r
-}
-
-func (r *Route) GetMatcher() string {
-	m := regexp.MustCompile(`\{[a-z]+\}`)
-	matcher := m.ReplaceAllString(r.path, "([a-z0-9-]+)")
-	return "^" + matcher + "$"
-}
-
-func (r *Route) SetUrlParameters(url string, request *events.APIGatewayProxyRequest) {
-	m := regexp.MustCompile(`\{[a-z]+\}`)
-	parameters := make(map[string]string)
-	urlChunks := strings.Split(url, "/")
-	pathChunks := strings.Split(r.path, "/")
-
-	for index, value := range pathChunks {
-		if !m.Match([]byte(value)) {
-			continue
-		}
-
-		key := value[1 : len(value)-1]
-		parameters[key] = urlChunks[index]
-	}
-
-	request.PathParameters = parameters
-}
 
 type Router struct {
 	getRoutes    []*Route
@@ -67,28 +15,28 @@ type Router struct {
 	deleteRoutes []*Route
 }
 
-func (r *Router) Get(path string, handler lambdaHandler) *Route {
-	route := &Route{path: getPath(path), method: http.MethodGet}
+func (r *Router) Get(path string, handler LambdaHandler) *Route {
+	route := NewRoute(path, http.MethodGet, handler)
 	r.getRoutes = append(r.getRoutes, route)
-	return route.SetHandler(handler)
+	return route
 }
 
-func (r *Router) Post(path string, handler lambdaHandler) *Route {
-	route := &Route{path: getPath(path), method: http.MethodPost}
-	r.postRoutes = append(r.postRoutes, route)
-	return route.SetHandler(handler)
+func (r *Router) Post(path string, handler LambdaHandler) *Route {
+	route := NewRoute(path, http.MethodPost, handler)
+	r.getRoutes = append(r.getRoutes, route)
+	return route
 }
 
-func (r *Router) Put(path string, handler lambdaHandler) *Route {
-	route := &Route{path: getPath(path), method: http.MethodPut}
-	r.putRoutes = append(r.putRoutes, route)
-	return route.SetHandler(handler)
+func (r *Router) Put(path string, handler LambdaHandler) *Route {
+	route := NewRoute(path, http.MethodPut, handler)
+	r.getRoutes = append(r.getRoutes, route)
+	return route
 }
 
-func (r *Router) Delete(path string, handler lambdaHandler) *Route {
-	route := &Route{path: getPath(path), method: http.MethodDelete}
-	r.deleteRoutes = append(r.deleteRoutes, route)
-	return route.SetHandler(handler)
+func (r *Router) Delete(path string, handler LambdaHandler) *Route {
+	route := NewRoute(path, http.MethodDelete, handler)
+	r.getRoutes = append(r.getRoutes, route)
+	return route
 }
 
 func (r *Router) GetAllRoutes() []*Route {
@@ -99,7 +47,7 @@ func (r *Router) GetAllRoutes() []*Route {
 	return combinedRoutes
 }
 
-func (r *Router) GetHandler() lambdaHandler {
+func (r *Router) GetHandler() LambdaHandler {
 	return func(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 		var potentialRoutes []*Route
 		log.Println("Received request", request.HTTPMethod, request.Path)
@@ -111,12 +59,12 @@ func (r *Router) GetHandler() lambdaHandler {
 		case "POST":
 			potentialRoutes = r.postRoutes
 			break
-                case "PUT":
-                        potentialRoutes = r.putRoutes 
-                        break 
-                case "DELETE":
-                        potentialRoutes = r.deleteRoutes 
-                        break
+		case "PUT":
+			potentialRoutes = r.putRoutes
+			break
+		case "DELETE":
+			potentialRoutes = r.deleteRoutes
+			break
 		case "OPTIONS":
 			return &events.APIGatewayProxyResponse{
 				StatusCode: 200,
@@ -134,8 +82,7 @@ func (r *Router) GetHandler() lambdaHandler {
 		if len(potentialRoutes) >= 0 {
 			uriWithoutQuery := []byte(strings.Split(request.Path, "?")[0])
 			for _, route := range potentialRoutes {
-				checkMatch := regexp.MustCompile(route.GetMatcher())
-				if checkMatch.Match(uriWithoutQuery) {
+				if route.IsMatch(uriWithoutQuery) {
 					route.SetUrlParameters(request.Path, &request)
 					return route.handler(request)
 				}
