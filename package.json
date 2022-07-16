@@ -7,14 +7,14 @@
     "url": "https://github.com/keyprez/keyprez.git"
   },
   "scripts": {
-    "build": "svelte-kit build",
-    "dev": "svelte-kit dev --open --port 8080",
+    "build": "vite build",
+    "dev": "vite dev --open --port 8080",
     "format": "eslint --fix src/",
     "lint": "eslint src/",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
     "api": "nodemon --exec go run ./go-src/devServer.go --signal SIGTERM",
-    "preview": "svelte-kit preview",
+    "preview": "vite preview",
     "start": "npm run dev",
     "listen": "stripe listen -f http://localhost:8090/.netlify/functions/orders/webhook?key=pk_test_51IzFveLwcEKoBoonzTPmtwFhbwqix42XQtnxeHPtDb2IutljsV75FQI9jVi9JOCxBHYxQLvy3eVwpTWXYpmVDplN00ZeSz3HSi",
     "trigger": "stripe trigger checkout.session.completed"
