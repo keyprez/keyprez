@@ -7,7 +7,7 @@
   import { Button, Checkbox } from '$lib';
   import { capitalize, createSessionId, getCustomerStripeId, getProductBySlug, redirectToCheckout } from '/src/utils';
 
-  const productSlug = $page.path.replace('/product/', '');
+  const productSlug = $page.url.pathname.replace('/product/', '');
 
   let loading = false;
   let error = false;
