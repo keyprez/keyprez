@@ -110,7 +110,7 @@
   {/await}
 </div>
 
-<style type="text/scss">
+<style lang="scss">
   @import 'src/variables';
 
   .container {
