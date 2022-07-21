@@ -13,7 +13,7 @@
   <label for={id}>{label}</label>
 </div>
 
-<style type="text/scss">
+<style lang="scss">
   @import 'src/variables';
 
   .checkboxWrapper {
