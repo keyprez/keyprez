@@ -23,19 +23,19 @@ func (r *Router) Get(path string, handler LambdaHandler) *Route {
 
 func (r *Router) Post(path string, handler LambdaHandler) *Route {
 	route := NewRoute(path, http.MethodPost, handler)
-	r.getRoutes = append(r.getRoutes, route)
+	r.postRoutes = append(r.postRoutes, route)
 	return route
 }
 
 func (r *Router) Put(path string, handler LambdaHandler) *Route {
 	route := NewRoute(path, http.MethodPut, handler)
-	r.getRoutes = append(r.getRoutes, route)
+	r.putRoutes = append(r.putRoutes, route)
 	return route
 }
 
 func (r *Router) Delete(path string, handler LambdaHandler) *Route {
 	route := NewRoute(path, http.MethodDelete, handler)
-	r.getRoutes = append(r.getRoutes, route)
+	r.deleteRoutes = append(r.deleteRoutes, route)
 	return route
 }
 
