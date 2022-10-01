@@ -10,7 +10,7 @@
 
 {#if hideContent}
   <div style="text-align: center;">
-    <img src="keyprez_name.svg" alt="keyprez name" />
+    <img src="/keyprez_name.svg" alt="keyprez name" />
     <h1>New keyboard shop in progress...</h1>
   </div>
 {:else}
