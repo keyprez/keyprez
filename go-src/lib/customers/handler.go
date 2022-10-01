@@ -26,7 +26,7 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 		return router.Return400()
 	}
 
-	if customer.IsValid() {
+	if customer != nil && customer.IsValid() {
 		data, _ := json.Marshal(customer.StripeID)
 		return router.Return200(string(data))
 	}
