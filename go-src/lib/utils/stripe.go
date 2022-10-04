@@ -11,6 +11,17 @@ import (
 	"github.com/stripe/stripe-go/v72/customer"
 )
 
+type CreateCustomerRequest struct {
+	Email      string `bson:"email" validate:"required,email"`
+	Name       string `bson:"name" validate:"required,min=2"`
+	City       string `bson:"city" validate:"required"`
+	Country    string `bson:"country" validate:"required,eq=Norway|eq=Sweden|eq=Denmark"`
+	Line1      string `bson:"line1" validate:"required"`
+	Line2      string `bson:"line2" validate:"omitempty,min=2"`
+	PostalCode string `bson:"postalCode"`
+	State      string `bson:"state"`
+}
+
 func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 	stripeCallbackUrl := GetEnvVar("STRIPE_CALLBACK_URL")
@@ -24,11 +35,6 @@ func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.Che
 			"card",
 			"klarna",
 		}),
-		ShippingAddressCollection: &stripe.CheckoutSessionShippingAddressCollectionParams{
-			AllowedCountries: stripe.StringSlice([]string{
-				"NO",
-			}),
-		},
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			&stripe.CheckoutSessionLineItemParams{
 				Price:    stripe.String(priceId),
@@ -46,11 +52,20 @@ func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.Che
 	return session.New(params)
 }
 
-func CreateCustomer(email string) (*stripe.Customer, error) {
+func CreateCustomer(createRequest CreateCustomerRequest) (*stripe.Customer, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
 	params := &stripe.CustomerParams{
-		Email: stripe.String(email),
+		Email: stripe.String(createRequest.Email),
+		Name:  stripe.String(createRequest.Name),
+		Address: &stripe.AddressParams{
+			City:       stripe.String(createRequest.City),
+			Country:    stripe.String(createRequest.Country),
+			Line1:      stripe.String(createRequest.Line1),
+			Line2:      stripe.String(createRequest.Line2),
+			PostalCode: stripe.String(createRequest.PostalCode),
+			State:      stripe.String(createRequest.State),
+		},
 	}
 
 	return customer.New(params)
@@ -61,6 +76,7 @@ func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {
 
 	params := &stripe.CheckoutSessionParams{}
 	params.AddExpand("line_items")
+	params.AddExpand("customer")
 
 	return session.Get(SessionID, params)
 }
