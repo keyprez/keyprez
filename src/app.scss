@@ -116,9 +116,9 @@ button {
   }
 }
 
-input {
-  padding: 2rem 1rem;
-  width: 100%;
+input,
+select {
+  padding: 1.5rem 1rem;
 }
 
 textarea {
@@ -128,7 +128,8 @@ textarea {
 }
 
 input,
-textarea {
+textarea,
+select {
   background: $color-secondary-dark;
   border: 2px solid transparent;
   border-radius: $border-radius-small;
