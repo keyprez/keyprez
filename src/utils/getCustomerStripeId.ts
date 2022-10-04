@@ -1,11 +1,12 @@
 import { endpoint } from '../config';
+import type { CheckoutFormValues } from './interfaces';
 
-export default async (email: string): Promise<void> => {
+export default async (checkoutFormValues: CheckoutFormValues): Promise<void> => {
   try {
     const res = await fetch(`${endpoint}/customers`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify(checkoutFormValues),
     });
     const customerStripeId = await res.json();
 
