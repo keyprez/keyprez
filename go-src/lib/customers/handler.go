@@ -11,13 +11,13 @@ import (
 )
 
 func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	var requestBody createRequest
+	var requestBody utils.CreateCustomerRequest
 	err := json.Unmarshal([]byte(request.Body), &requestBody)
 	if err != nil {
 		return router.Return400()
 	}
 
-	if !utils.IsValidEmail(requestBody.Email) {
+	if !utils.IsValidCustomer(requestBody) {
 		return router.Return400()
 	}
 
@@ -31,7 +31,8 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 		return router.Return200(string(data))
 	}
 
-	c, err := utils.CreateCustomer(requestBody.Email)
+	// Create customer in Stripe
+	c, err := utils.CreateCustomer(requestBody)
 	if err != nil {
 		return router.Return500()
 	}
@@ -40,7 +41,8 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 		ID: c.ID,
 	}
 
-	cust, err := repository.CreateCustomer(requestBody.Email, response.ID)
+	// Create customer in Mongo
+	cust, err := repository.CreateCustomer(requestBody, response.ID)
 	if err != nil {
 		return router.Return400()
 	}
