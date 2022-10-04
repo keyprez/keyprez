@@ -1,50 +1,11 @@
 <script>
-  import { createForm } from 'svelte-forms-lib';
-  import * as yup from 'yup';
   import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
 
-  import { Button, Checkbox } from '$lib';
-  import { capitalize, createSessionId, getCustomerStripeId, getProductBySlug, redirectToCheckout } from '/src/utils';
+  import { Button } from '$lib';
+  import { capitalize, getProductBySlug } from '/src/utils';
 
   const productSlug = $page.url.pathname.replace('/product/', '');
-
-  let loading = false;
-  let error = false;
-  let inputRef;
-  let focus = () => inputRef.focus();
-
-  const onSubmit = async ({ email }) => {
-    try {
-      loading = true;
-      const { PriceID } = await getProductBySlug(productSlug);
-      if (!PriceID) throw new Error(`Could not get product by slug`);
-
-      const customerStripeId = await getCustomerStripeId(email);
-      if (!customerStripeId) throw new Error(`Could not get customerStripeId`);
-
-      const sessionId = await createSessionId(PriceID, customerStripeId);
-      if (!sessionId) throw new Error(`Could not get sessionId`);
-
-      const success = await redirectToCheckout(sessionId);
-      if (!success) throw new Error(`Could not redirect to stripe checkout`);
-    } catch (err) {
-      error = true;
-      console.error(err);
-    } finally {
-      loading = false;
-    }
-  };
-
-  const { form, errors, handleChange, handleSubmit } = createForm({
-    initialValues: { email: '', terms: false, subscribe: false },
-    validationSchema: yup.object().shape({
-      email: yup.string().email().required(),
-      terms: yup.boolean().oneOf([true], 'terms must be accepted'),
-      subscribe: yup.boolean(),
-    }),
-    onSubmit,
-  });
 </script>
 
 <div class="container">
@@ -80,31 +41,10 @@
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <form class="form" on:submit={handleSubmit}>
-        <div class="formInputWrapper">
-          <input
-            bind:this={inputRef}
-            name="email"
-            class="formInput {$errors.email ? 'errorInput' : ''}"
-            type="text"
-            placeholder="Type your email"
-            bind:value={$form.email}
-            on:keyup={handleChange}
-            on:blur={handleChange}
-          />
-          <small class="error {$errors.email ? 'errorVisible' : ''}">{$errors.email}</small>
-        </div>
-        <div class="checkboxes">
-          <div>
-            <div class="checkboxWrapper">
-              <Checkbox name="terms" label="I accept terms of agreement" bind:checked={$form.terms} />
-              <small class="error errorCheckbox {!$form.terms ? 'errorVisible' : ''}">{$errors.terms}</small>
-            </div>
-            <Checkbox name="subscribe" label="Subscribe to newsletter" bind:checked={$form.subscribe} />
-          </div>
-        </div>
-        <Button type="submit" text={error ? 'ERROR 😞' : 'BUY'} {loading} onClick={focus} />
-      </form>
+
+      <a class="link" data-sveltekit-prefetch href="/product/{productSlug}/checkout">
+        <Button text="BUY" />
+      </a>
       <h2>&#36;<span>{Price}</span></h2>
     </div>
   {/await}
@@ -134,51 +74,6 @@
     flex-direction: column;
   }
 
-  .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-    &InputWrapper {
-      position: relative;
-      display: flex;
-      width: 100%;
-    }
-  }
-
-  .checkboxes {
-    margin: 0.5rem 0 1rem 0;
-    display: flex;
-    align-self: baseline;
-  }
-
-  .checkboxWrapper {
-    position: relative;
-  }
-
-  .error {
-    display: none;
-    position: absolute;
-    right: 0.3em;
-    bottom: 0.3em;
-    color: $color-warning;
-
-    &Checkbox {
-      bottom: 0;
-      left: 105%;
-      width: 100%;
-    }
-
-    &Visible {
-      display: block;
-    }
-
-    &Input {
-      border-color: $color-warning;
-    }
-  }
-
   @media (min-width: 1400px) {
     .container {
       flex-direction: row;
@@ -187,17 +82,6 @@
 
     h1 {
       margin-top: 0;
-    }
-  }
-
-  @media (min-width: 600px) {
-    .form {
-      width: 60%;
-      max-width: 400px;
-    }
-
-    .checkboxes {
-      align-self: center;
     }
   }
 </style>
