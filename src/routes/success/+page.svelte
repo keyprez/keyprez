@@ -1,60 +1,49 @@
 <script>
   import { Loader } from '$lib';
-  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
   import SvelteSeo from 'svelte-seo';
 
-  import { endpoint } from '../../config';
-
-  let customerEmail = '';
-  let productName = '';
-  let loading = true;
-
-  onMount(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get('session_id');
-
-    try {
-      const res = await fetch(`${endpoint}/orders/success`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId }),
-      });
-
-      if (res.status !== 200) throw new Error('There was an error retrieving Stripe session');
-
-      const {
-        customer_details: { email },
-        line_items: {
-          data: [product],
-        },
-      } = await res.json();
-
-      customerEmail = email;
-      productName = product.description;
-      loading = false;
-    } catch (err) {
-      console.error(`Error fetching checkout session: ${err}`);
-    }
-  });
+  const {
+    name,
+    address: { city, country, line1, line2, postal_code: postalCode, state },
+    email,
+    paymentId,
+    product: { description },
+  } = $page.data;
 </script>
 
 <SvelteSeo title="Keyprez - Success" />
 
-{#if loading}
-  <Loader />
-{:else}
-  <div>
-    <h1>Thank you for purchasing <span>{productName}</span> kit</h1>
-    <img src={`/${productName.toLocaleLowerCase()}.jpg`} alt={productName} />
-    <h2>Confirmation email has been sent to <strong>{customerEmail}</strong></h2>
+<div class="container">
+  <h1>Thank you for purchasing <span>{description}</span> kit</h1>
+  <img src={`/${description.toLocaleLowerCase()}.jpg`} alt={description} />
+  <h2>Summary</h2>
+  <div class="summary">
+    <h3>Order ID: <strong>{paymentId}</strong></h3>
+    <h3>Name: <strong>{name}</strong></h3>
+    <h3>City: <strong>{city}</strong></h3>
+    <h3>Country: <strong>{country}</strong></h3>
+    <h3>Line1: <strong>{line1}</strong></h3>
+    {#if line2}
+      <h3>Line2: <strong>{name}</strong></h3>
+    {/if}
+    <h3>Postal Code: <strong>{postalCode}</strong></h3>
+    {#if state}
+      <h3>State: <strong>{state}</strong></h3>
+    {/if}
+    <h3>Confirmation email has been sent to <strong>{email}</strong></h3>
   </div>
-{/if}
+</div>
 
 <style lang="scss">
   @import 'src/variables';
 
-  div {
+  .container {
     text-align: center;
+  }
+
+  .summary {
+    text-align: left;
   }
 
   h1,
