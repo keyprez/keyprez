@@ -5,20 +5,20 @@
 </script>
 
 <header>
-  <a sveltekit:prefetch href="/">
+  <a data-sveltekit-prefetch href="/">
     <img class="logo" src="/k.svg" alt="keyprez logo" />
     <img class="name" src="/keyprez_name.svg" alt="keyprez name" />
   </a>
   <nav>
     <ul>
       <li class:active={$page.url.pathname === '/'}>
-        <a class="link" sveltekit:prefetch href="/">Products</a>
+        <a class="link" data-sveltekit-prefetch href="/">Products</a>
       </li>
       <li class:active={$page.url.pathname === '/about'}>
-        <a class="link" sveltekit:prefetch href="/about">About</a>
+        <a class="link" data-sveltekit-prefetch href="/about">About</a>
       </li>
       <li class:active={$page.url.pathname === '/contact'}>
-        <a class="link" sveltekit:prefetch href="/contact">Contact</a>
+        <a class="link" data-sveltekit-prefetch href="/contact">Contact</a>
       </li>
     </ul>
   </nav>

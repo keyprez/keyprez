@@ -103,6 +103,10 @@
     gap: 0.5rem;
     justify-content: center;
 
+    input {
+      width: 100%;
+    }
+
     div {
       position: relative;
       display: flex;

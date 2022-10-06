@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/keyprez/keyprez/go-src/lib/repository/models"
+	"github.com/keyprez/keyprez/go-src/lib/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -53,11 +54,18 @@ func insertCustomer(customer *models.Customer) (*models.Customer, error) {
 	return customer, nil
 }
 
-func CreateCustomer(email string, StripeID string) (*models.Customer, error) {
+func CreateCustomer(customer utils.CreateCustomerRequest, StripeID string) (*models.Customer, error) {
 	return insertCustomer(&models.Customer{
-		ID:       primitive.NewObjectID(),
-		StripeID: StripeID,
-		Email:    email,
-		Created:  time.Now(),
+		ID:         primitive.NewObjectID(),
+		StripeID:   StripeID,
+		Email:      customer.Email,
+		Name:       customer.Name,
+		City:       customer.City,
+		Country:    customer.Country,
+		Line1:      customer.Line1,
+		Line2:      customer.Line2,
+		PostalCode: customer.PostalCode,
+		State:      customer.State,
+		Created:    time.Now(),
 	})
 }

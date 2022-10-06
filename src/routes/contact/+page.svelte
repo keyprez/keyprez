@@ -1,7 +1,6 @@
-<script context="module">
+<script>
   import { fade } from 'svelte/transition';
-
-  export const prerender = true;
+  import SvelteSeo from 'svelte-seo';
 
   const handleSubmit = (e) => {
     const form = new FormData(e.target);
@@ -9,10 +8,6 @@
 
     // Send formData to keyprez API to handle email sendout
   };
-</script>
-
-<script>
-  import SvelteSeo from 'svelte-seo';
 </script>
 
 <SvelteSeo title="Keyprez - Contact" />
