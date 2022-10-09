@@ -1,4 +1,3 @@
-export { default as capitalize } from './capitalize';
 export { default as createSessionId } from './createSessionId';
 export { default as fetchProducts } from './fetchProducts';
 export { default as getCustomerStripeId } from './getCustomerStripeId';

@@ -3,7 +3,8 @@
   import { page } from '$app/stores';
 
   import { Button } from '$lib';
-  import { capitalize, getProductBySlug } from '/src/utils';
+  import { getProductBySlug } from '/src/utils';
+  import { capitalize } from 'lodash';
 
   const productSlug = $page.url.pathname.replace('/product/', '');
 </script>

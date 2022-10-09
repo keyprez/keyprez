@@ -3,7 +3,8 @@
   import { createForm } from 'svelte-forms-lib';
   import * as yup from 'yup';
   import { Button } from '$lib';
-  import { capitalize, createSessionId, getCustomerStripeId, redirectToCheckout } from '../../../../../src/utils';
+  import { createSessionId, getCustomerStripeId, redirectToCheckout } from '../../../../../src/utils';
+  import { capitalize } from 'lodash';
   import type { CheckoutFormValues, Country } from 'src/utils/interfaces';
 
   export let data;
