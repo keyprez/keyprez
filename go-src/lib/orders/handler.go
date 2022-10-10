@@ -194,6 +194,7 @@ func FetchShippingRate(request events.APIGatewayProxyRequest) (*events.APIGatewa
 
 	req, err := http.NewRequest(http.MethodPost, bringApiUrl, bytes.NewBuffer(jsonString))
 	if err != nil {
+		log.Printf("Error fetching shipping rate: %s\n", err)
 		return router.Return500()
 	}
 
@@ -211,6 +212,7 @@ func FetchShippingRate(request events.APIGatewayProxyRequest) (*events.APIGatewa
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		log.Printf("Error parsing response body: %s\n", err)
 		return router.Return500()
 	}
 
