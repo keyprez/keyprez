@@ -15,7 +15,7 @@ type CreateCustomerRequest struct {
 	Email      string `bson:"email" validate:"required,email"`
 	Name       string `bson:"name" validate:"required,min=2"`
 	City       string `bson:"city" validate:"required"`
-	Country    string `bson:"country" validate:"required,eq=Norway|eq=Sweden|eq=Denmark"`
+	Country    string `bson:"country" validate:"required,eq=NO|eq=SE|eq=DK"`
 	Line1      string `bson:"line1" validate:"required"`
 	Line2      string `bson:"line2" validate:"omitempty,min=2"`
 	PostalCode string `bson:"postalCode"`
