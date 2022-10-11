@@ -51,6 +51,7 @@
     "node": ">18.0"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "svelte-checkbox": "^1.0.1",
     "svelte-forms-lib": "^2.0.1",
     "svelte-seo": "^1.4.1",

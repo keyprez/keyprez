@@ -10,15 +10,27 @@ export interface Cache {
   products: Product[];
 }
 
-export type Country = 'Norway' | 'Sweden' | 'Denmark' | '';
+export type CountryLabel = 'Norway' | 'Sweden' | 'Denmark';
+
+export type CountryValue = 'NO' | 'SE' | 'DK';
+
+export interface Country {
+  label: CountryLabel;
+  value: CountryValue;
+}
 
 export interface CheckoutFormValues {
   email: string;
   name: string;
   city: string;
-  country: Country;
+  country: CountryValue;
   line1: string;
   line2: string;
   postalCode: string;
   state: string;
+}
+
+export interface ShippingRateRequest {
+  country: CountryValue;
+  postalCode: string;
 }

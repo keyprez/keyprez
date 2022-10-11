@@ -3,7 +3,8 @@
   import { page } from '$app/stores';
 
   import { Button } from '$lib';
-  import { capitalize, getProductBySlug } from '/src/utils';
+  import { getProductBySlug } from '/src/utils';
+  import { capitalize } from 'lodash';
 
   const productSlug = $page.url.pathname.replace('/product/', '');
 </script>
@@ -11,11 +12,11 @@
 <div class="container">
   {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
-  {:then { Name, Description, Price }}
-    <SvelteSeo title={`Keyprez - ${capitalize(Name)}`} {Description} />
-    <img src={`/${Name.toLowerCase()}.jpg`} alt={Name} />
+  {:then { name, description, price }}
+    <SvelteSeo title={`Keyprez - ${capitalize(name)}`} {description} />
+    <img src={`/${name.toLowerCase()}.jpg`} alt={name} />
     <div class="text">
-      <h1>{Description.toUpperCase()}</h1>
+      <h1>{description.toUpperCase()}</h1>
       <p>
         Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis
         eget condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum
@@ -43,9 +44,9 @@
       </p>
 
       <a class="link" data-sveltekit-prefetch href="/product/{productSlug}/checkout">
-        <Button text="BUY" />
+        <Button text="Go to checkout" />
       </a>
-      <h2>&#36;<span>{Price}</span></h2>
+      <h2>&#36;<span>{price}</span></h2>
     </div>
   {/await}
 </div>

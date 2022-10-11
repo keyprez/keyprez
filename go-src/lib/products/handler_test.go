@@ -9,12 +9,12 @@ import (
 )
 
 type ProductsResponse struct {
-	ID          primitive.ObjectID `json:"ID"`
-	Name        string             `json:"Name"`
-	Description string             `json:"Description"`
-	Price       int32              `json:"Price"`
-	PriceID     string             `json:"PriceID"`
-	Stock       int32              `json:"Stock"`
+	ID          primitive.ObjectID `json:"id"`
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	Price       int32              `json:"price"`
+	PriceID     string             `json:"priceID"`
+	Stock       int32              `json:"stock"`
 }
 
 func TestProductsHandler(t *testing.T) {
