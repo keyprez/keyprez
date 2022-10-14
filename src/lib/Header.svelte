@@ -24,11 +24,9 @@
   </nav>
 </header>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   header {
-    background-color: $color-primary-dark;
+    background-color: --color-primary-dark;
     display: flex;
     margin-bottom: 3rem;
     padding: 2rem;
@@ -55,10 +53,10 @@
   ul {
     display: flex;
     list-style: none;
+  }
 
-    li:last-child a {
-      padding-right: 0;
-    }
+  ul > li:last-child a {
+    padding-right: 0;
   }
 
   .link {
@@ -70,7 +68,7 @@
   }
 
   .link:hover {
-    color: $color-tertiary;
+    color: --color-tertiary;
   }
 
   @media (min-width: 768px) {

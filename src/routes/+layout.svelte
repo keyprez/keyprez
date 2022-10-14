@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import '/src/app.scss';
+  import '/src/app.css';
   import { Footer, Header } from '$lib';
 
   let hideContent = true;

@@ -18,14 +18,12 @@
   </p>
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   h1 {
-    color: $color-primary-dark;
+    color: --color-primary-dark;
   }
 
   p {
-    color: $color-secondary-dark;
+    color: --color-secondary-dark;
   }
 </style>

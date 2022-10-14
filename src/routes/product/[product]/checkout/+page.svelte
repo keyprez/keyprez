@@ -154,9 +154,7 @@
   </form>
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   .container {
     display: flex;
     flex-direction: column;
@@ -177,13 +175,13 @@
     align-items: center;
     width: 100%;
     gap: 1rem;
+  }
 
-    &InputWrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
+  .formInputWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 
   .error {
@@ -191,30 +189,31 @@
     position: absolute;
     right: 0.3em;
     bottom: 0.3em;
-    color: $color-warning;
+    color: --color-warning;
+  }
 
-    &Visible {
-      display: block;
-    }
+  .errorVisible {
+    display: block;
+  }
 
-    &Input {
-      border-color: $color-warning;
-    }
+  .errorInput {
+    border-color: --color-warning;
   }
 
   .shippingError {
-    color: $color-warning;
+    color: --color-warning;
   }
   .price {
     width: 100%;
+  }
 
-    &Placeholder {
-      color: $color-tertiary;
-    }
-    &Row {
-      display: flex;
-      justify-content: space-between;
-    }
+  .pricePlaceholder {
+    color: --color-tertiary;
+  }
+
+  .priceRow {
+    display: flex;
+    justify-content: space-between;
   }
 
   @media (min-width: 1400px) {

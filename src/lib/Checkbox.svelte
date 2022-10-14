@@ -13,9 +13,7 @@
   <label for={id}>{label}</label>
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   .checkboxWrapper {
     display: flex;
     gap: 1rem;

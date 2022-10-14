@@ -51,9 +51,7 @@
   {/await}
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   .container {
     display: flex;
     flex-direction: column;
@@ -65,7 +63,7 @@
     flex: 60%;
     object-fit: cover;
     width: 100%;
-    border-radius: $border-radius-large;
+    border-radius: --border-radius-large;
   }
 
   .text {

@@ -35,9 +35,7 @@
   </div>
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   .container {
     text-align: center;
   }
@@ -48,11 +46,11 @@
 
   h1,
   h2 {
-    color: $color-secondary-light;
+    color: --color-secondary-light;
   }
 
   span {
-    color: $color-tertiary;
+    color: --color-tertiary;
   }
 
   img {

@@ -55,9 +55,7 @@
   </div>
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   .container {
     display: flex;
     flex-direction: column;
@@ -106,7 +104,7 @@
   }
 
   li {
-    color: $color-tertiary;
+    color: --color-tertiary;
     font-size: 150%;
   }
 

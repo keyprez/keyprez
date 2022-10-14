@@ -12,9 +12,7 @@
   <h2>&#36;<span>{price}</span></h2>
 </div>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   .product-container {
     flex: 1 0 100%;
     text-align: center;
@@ -33,19 +31,18 @@
     opacity: 1;
     transition: 0.3s linear;
     width: 100%;
-    border-radius: $border-radius-large;
+    border-radius: --border-radius-large;
   }
 
   .image-container > span {
     opacity: 0;
     position: absolute;
     transition: 0.3s linear;
-
-    img {
-      max-width: 15rem;
-      min-width: 13rem;
-      max-height: 10rem;
-    }
+  }
+  .image-container > span > img {
+    max-width: 15rem;
+    min-width: 13rem;
+    max-height: 10rem;
   }
 
   .image-container:hover > img {
@@ -57,7 +54,7 @@
   }
 
   p {
-    color: $color-secondary-dark;
+    color: --color-secondary-dark;
   }
 
   @media (min-width: 768px) {

@@ -79,9 +79,7 @@
   </div>
 </footer>
 
-<style lang="scss">
-  @import 'src/variables';
-
+<style>
   footer {
     display: flex;
     flex-direction: column;
@@ -102,17 +100,17 @@
     flex-direction: row;
     gap: 0.5rem;
     justify-content: center;
+  }
 
-    input {
-      width: 100%;
-    }
+  form > input {
+    width: 100%;
+  }
 
-    div {
-      position: relative;
-      display: flex;
-      width: 100%;
-      max-width: 400px;
-    }
+  form > div {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 400px;
   }
 
   .error {
@@ -120,15 +118,15 @@
     position: absolute;
     right: 0.3em;
     bottom: 0.3em;
-    color: $color-warning;
+    color: --color-warning;
+  }
 
-    &Visible {
-      display: block;
-    }
+  .errorVisible {
+    display: block;
+  }
 
-    &Input {
-      border-color: $color-warning;
-    }
+  .errorInput {
+    border-color: --color-warning;
   }
 
   .links {
@@ -153,10 +151,9 @@
 
     form {
       flex-direction: column;
-
-      div {
-        max-width: 100%;
-      }
+    }
+    form > div {
+      max-width: 100%;
     }
   }
 </style>
