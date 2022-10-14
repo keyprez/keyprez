@@ -32,7 +32,7 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 	}
 
 	if existing != nil && existing.HasValidID() {
-		if repository.MatchExisting(existing, incoming) {
+		if existing.Equals(incoming) {
 			data, _ := json.Marshal(existing.StripeID)
 			return router.Return200(string(data))
 		}

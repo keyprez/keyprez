@@ -30,3 +30,13 @@ func (customer *Customer) IsValid() bool {
 	err := validate.Struct(customer)
 	return err == nil
 }
+
+func (existing *Customer) Equals(incoming *Customer) bool {
+	return incoming.Name == existing.Name &&
+		incoming.Country == existing.Country &&
+		incoming.City == existing.City &&
+		incoming.Line1 == existing.Line1 &&
+		incoming.Line2 == existing.Line2 &&
+		incoming.PostalCode == existing.PostalCode &&
+		incoming.State == existing.State
+}

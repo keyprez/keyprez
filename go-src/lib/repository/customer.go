@@ -99,17 +99,3 @@ func UpdateCustomer(id primitive.ObjectID, customer *models.Customer) error {
 
 	return nil
 }
-
-func MatchExisting(existing *models.Customer, incoming *models.Customer) bool {
-	if incoming.Name == existing.Name &&
-		incoming.Country == existing.Country &&
-		incoming.City == existing.City &&
-		incoming.Line1 == existing.Line1 &&
-		incoming.Line2 == existing.Line2 &&
-		incoming.PostalCode == existing.PostalCode &&
-		incoming.State == existing.State {
-		return true
-	} else {
-		return false
-	}
-}
