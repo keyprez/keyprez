@@ -6,21 +6,11 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/keyprez/keyprez/go-src/lib/repository/models"
 	"github.com/stripe/stripe-go/v72"
 	"github.com/stripe/stripe-go/v72/checkout/session"
 	"github.com/stripe/stripe-go/v72/customer"
 )
-
-type CreateCustomerRequest struct {
-	Email      string `bson:"email" validate:"required,email"`
-	Name       string `bson:"name" validate:"required,min=2"`
-	City       string `bson:"city" validate:"required"`
-	Country    string `bson:"country" validate:"required,eq=Norway|eq=Sweden|eq=Denmark"`
-	Line1      string `bson:"line1" validate:"required"`
-	Line2      string `bson:"line2" validate:"omitempty,min=2"`
-	PostalCode string `bson:"postalCode"`
-	State      string `bson:"state"`
-}
 
 func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.CheckoutSession, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
@@ -52,23 +42,42 @@ func CreateCheckoutSession(priceId string, customerStripeId string) (*stripe.Che
 	return session.New(params)
 }
 
-func CreateCustomer(createRequest CreateCustomerRequest) (*stripe.Customer, error) {
+func CreateCustomer(cc *models.Customer) (*stripe.Customer, error) {
 	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
 
 	params := &stripe.CustomerParams{
-		Email: stripe.String(createRequest.Email),
-		Name:  stripe.String(createRequest.Name),
+		Email: stripe.String(cc.Email),
+		Name:  stripe.String(cc.Name),
 		Address: &stripe.AddressParams{
-			City:       stripe.String(createRequest.City),
-			Country:    stripe.String(createRequest.Country),
-			Line1:      stripe.String(createRequest.Line1),
-			Line2:      stripe.String(createRequest.Line2),
-			PostalCode: stripe.String(createRequest.PostalCode),
-			State:      stripe.String(createRequest.State),
+			City:       stripe.String(cc.City),
+			Country:    stripe.String(cc.Country),
+			Line1:      stripe.String(cc.Line1),
+			Line2:      stripe.String(cc.Line2),
+			PostalCode: stripe.String(cc.PostalCode),
+			State:      stripe.String(cc.State),
 		},
 	}
 
 	return customer.New(params)
+}
+
+func UpdateCustomer(id string, uc *models.Customer) (*stripe.Customer, error) {
+	stripe.Key = GetEnvVar("STRIPE_SECRET_KEY")
+
+	params := &stripe.CustomerParams{
+		Name: stripe.String(uc.Name),
+		Address: &stripe.AddressParams{
+			City:       stripe.String(uc.City),
+			Country:    stripe.String(uc.Country),
+			Line1:      stripe.String(uc.Line1),
+			Line2:      stripe.String(uc.Line2),
+			PostalCode: stripe.String(uc.PostalCode),
+			State:      stripe.String(uc.State),
+		},
+	}
+
+	return customer.Update(id, params)
+
 }
 
 func RetrieveSession(SessionID string) (*stripe.CheckoutSession, error) {

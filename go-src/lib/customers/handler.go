@@ -2,8 +2,10 @@ package customers
 
 import (
 	"encoding/json"
+	"log"
 
 	"github.com/keyprez/keyprez/go-src/lib/repository"
+	"github.com/keyprez/keyprez/go-src/lib/repository/models"
 	"github.com/keyprez/keyprez/go-src/lib/router"
 	"github.com/keyprez/keyprez/go-src/lib/utils"
 
@@ -11,28 +13,51 @@ import (
 )
 
 func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	var requestBody utils.CreateCustomerRequest
-	err := json.Unmarshal([]byte(request.Body), &requestBody)
+	var incoming *models.Customer
+	err := json.Unmarshal([]byte(request.Body), &incoming)
 	if err != nil {
+		log.Printf("Failed parsing request body: %s", err)
 		return router.Return400()
 	}
 
-	if !utils.IsValidCustomer(requestBody) {
+	if !incoming.IsValid() {
+		log.Print("Invalid customer")
 		return router.Return400()
 	}
 
-	customer, err := repository.GetCustomerByEmail(requestBody.Email)
+	existing, err := repository.GetCustomerByEmail(incoming.Email)
 	if err != nil {
+		log.Printf("Could not fetch customer: %s", err)
 		return router.Return400()
 	}
 
-	if customer != nil && customer.IsValid() {
-		data, _ := json.Marshal(customer.StripeID)
+	if existing != nil && existing.HasValidID() {
+		if existing.Equals(incoming) {
+			data, _ := json.Marshal(existing.StripeID)
+			return router.Return200(string(data))
+		}
+
+		// Update customer in MongoDB
+		err := repository.UpdateCustomer(existing.ID, incoming)
+		if err != nil {
+			log.Printf("Failed updating customer(MongoDB) with email %s", incoming.Email)
+			return router.Return500()
+		}
+
+		data, _ := json.Marshal(existing.StripeID)
+
+		// Update customer in Stripe
+		_, stripeErr := utils.UpdateCustomer(existing.StripeID, incoming)
+		if stripeErr != nil {
+			log.Printf("Failed updating customer(Stripe) with email %s", incoming.Email)
+			return router.Return500()
+		}
+
 		return router.Return200(string(data))
 	}
 
 	// Create customer in Stripe
-	c, err := utils.CreateCustomer(requestBody)
+	c, err := utils.CreateCustomer(incoming)
 	if err != nil {
 		return router.Return500()
 	}
@@ -42,12 +67,12 @@ func CreateCustomerHandler(request events.APIGatewayProxyRequest) (*events.APIGa
 	}
 
 	// Create customer in Mongo
-	cust, err := repository.CreateCustomer(requestBody, response.ID)
+	cust, err := repository.CreateCustomer(incoming, response.ID)
 	if err != nil {
 		return router.Return400()
 	}
 
-	if cust.IsValid() {
+	if cust.HasValidID() {
 		data, _ := json.Marshal(cust.StripeID)
 		return router.Return201(string(data))
 	}
