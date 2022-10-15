@@ -10,7 +10,7 @@
   let showSuccess = false;
   let hasSubscription = false;
   let inputRef;
-  let focus = () => inputRef.focus();
+  let focus = () => (!$form.email || $errors.email) && inputRef.focus();
 
   const onSubmit = async ({ email }) => {
     loading = true;
@@ -37,7 +37,7 @@
   const { form, errors, handleChange, handleSubmit } = createForm({
     initialValues: { email: '' },
     validationSchema: yup.object().shape({
-      email: yup.string().email(),
+      email: yup.string().email().required(),
     }),
     onSubmit,
   });
@@ -59,7 +59,7 @@
     <div class="relative flex w-full max-w-full md:max-w-sm">
       <input
         bind:this={inputRef}
-        class="py-6 px-4 text-black rounded-lg w-full {$errors.email ? 'border-red-500' : ''}"
+        class="py-6 px-4 text-black rounded-lg shadow-xl w-full {$errors.email ? 'border-red-500' : ''}"
         type="text"
         name="email"
         placeholder="Type your email"

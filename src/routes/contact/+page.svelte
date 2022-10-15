@@ -18,7 +18,7 @@
     <h1 class="text-center text-2xl mb-3 text-black">Contact us</h1>
     <form class="flex flex-col justify-center items-center gap-2" method="POST" on:submit|preventDefault={handleSubmit}>
       <textarea
-        class="rounded-lg p-4 resize-none w-full"
+        class="rounded-lg shadow-xl p-4 resize-none w-full"
         placeholder="Type your message..."
         name="message"
         rows="15"
@@ -26,8 +26,8 @@
         required
       />
       <div class="flex flex-col xl:flex-row gap-2 w-full">
-        <input class="w-full rounded-lg py-6 px-4" placeholder="Name" type="text" name="name" />
-        <input class="w-full rounded-lg py-6 px-4" placeholder="Email" type="email" name="email" required />
+        <input class="w-full rounded-lg shadow-xl py-6 px-4" placeholder="Name" type="text" name="name" />
+        <input class="w-full rounded-lg shadow-xl py-6 px-4" placeholder="Email" type="email" name="email" required />
       </div>
       <div class="w-full md:w-auto">
         <Button type="submit" text="SUBMIT" />

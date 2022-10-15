@@ -6,7 +6,7 @@
 <div class="text-center w-full flex-[1_0_100%] md:flex-[1_0_40%] lg:flex-[1_0_20%]">
   <a class="flex flex-col justify-center items-center group" data-sveltekit-prefetch href={`/product/${slug}`}>
     <img
-      class="object-cover opacity-100 w-full rounded-lg ease-linear duration-300 group-hover:opacity-20"
+      class="object-cover opacity-100 w-full rounded-lg shadow-xl ease-linear duration-300 group-hover:opacity-20"
       src={`${name.toLowerCase()}.jpg`}
       alt={name}
     />
