@@ -1,6 +1,6 @@
 import { endpoint } from '../config';
 
-export default async (priceId: string, customerStripeId: string): Promise<void> => {
+export default async (priceId: string, customerStripeId: string): Promise<string | void> => {
   try {
     const res = await fetch(`${endpoint}/orders/checkout`, {
       method: 'POST',

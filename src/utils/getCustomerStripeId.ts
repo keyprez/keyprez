@@ -1,7 +1,7 @@
 import { endpoint } from '../config';
 import type { CheckoutFormValues } from './interfaces';
 
-export default async (checkoutFormValues: CheckoutFormValues): Promise<void> => {
+export default async (checkoutFormValues: CheckoutFormValues): Promise<string | void> => {
   try {
     const res = await fetch(`${endpoint}/customers`, {
       method: 'POST',
