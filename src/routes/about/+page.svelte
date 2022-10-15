@@ -6,7 +6,7 @@
 <SvelteSeo title="Keyprez - About us" />
 
 <div in:fade>
-  <h1>About us</h1>
+  <h1 class="text-black">About us</h1>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum elit. Nullam blandit gravida vehicula.
     Suspendisse pretium quam lectus, sed elementum dolor iaculis ac. Pellentesque vel tellus sed ante euismod maximus.
@@ -17,13 +17,3 @@
     risus malesuada sit amet. Integer id tempus risus.
   </p>
 </div>
-
-<style>
-  h1 {
-    color: --color-primary-dark;
-  }
-
-  p {
-    color: --color-secondary-dark;
-  }
-</style>
