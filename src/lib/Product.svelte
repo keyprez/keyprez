@@ -3,7 +3,7 @@
   $: ({ name, description, price, slug } = product);
 </script>
 
-<div class="flex-[1,0,100%] md:flex-[1,0,40%] lg:flex-[1,0,20%] text-center w-full">
+<div class="text-center w-full flex-[1_0_100%] md:flex-[1_0_40%] lg:flex-[1_0_20%]">
   <a class="flex flex-col justify-center items-center group" data-sveltekit-prefetch href={`/product/${slug}`}>
     <img
       class="object-cover opacity-100 w-full rounded-lg ease-linear duration-300 group-hover:opacity-20"
