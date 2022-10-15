@@ -25,7 +25,7 @@
         maxlength="1000"
         required
       />
-      <div class="flex flex-col md:flex-row gap-2 w-full">
+      <div class="flex flex-col xl:flex-row gap-2 w-full">
         <input class="w-full rounded-lg py-6 px-4" placeholder="Name" type="text" name="name" />
         <input class="w-full rounded-lg py-6 px-4" placeholder="Email" type="email" name="email" required />
       </div>

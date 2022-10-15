@@ -8,7 +8,7 @@
 </script>
 
 <button
-  class="relative w-full md:max-w-xs flex justify-center bg-black rounded-lg py-8 px-20 hover:bg-teal-900"
+  class="relative w-full md:max-w-xs flex justify-center bg-black rounded-lg py-6 px-20 hover:bg-teal-900"
   {type}
   on:click={onClick}
 >
