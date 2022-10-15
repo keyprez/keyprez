@@ -16,7 +16,7 @@
     <SvelteSeo title={`Keyprez - ${capitalize(name)}`} {description} />
     <img class="flex-[60%] object-cover w-full rounded-lg" src={`/${name.toLowerCase()}.jpg`} alt={name} />
     <div class="flex flex-col gap-4 items-center flex-[40%]">
-      <h1 class="flex">{description.toUpperCase()}</h1>
+      <h1 class="flex text-black text-2xl">{description.toUpperCase()}</h1>
       <p>
         Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis
         eget condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum

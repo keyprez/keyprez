@@ -45,13 +45,15 @@
 
 <footer class="flex flex-col gap-8 justify-center px-4 md:px-12 py-12 md:py-40">
   {#if showError}
-    <h2>There was an error ❌ Please try again later</h2>
+    <h2 class="text-center text-2xl">There was an error ❌ Please try again later</h2>
   {:else if hasSubscription}
-    <h2><strong>{displayedEmail}</strong> has been already subscribed to our newsletter 😊</h2>
+    <h2 class="text-center text-2xl">
+      <strong>{displayedEmail}</strong> has been already subscribed to our newsletter 😊
+    </h2>
   {:else if showSuccess}
-    <h2>Thank you for subscribing to our newsletter 🎉</h2>
+    <h2 class="text-center text-2xl">Thank you for subscribing to our newsletter 🎉</h2>
   {:else}
-    <h2><strong>SUBSCRIBE</strong> to latest news and updates</h2>
+    <h2 class="text-center text-2xl"><strong>SUBSCRIBE</strong> to latest news and updates</h2>
   {/if}
   <form class="flex flex-col md:flex-row gap-2 justify-center" on:submit={handleSubmit}>
     <div class="relative flex w-full max-w-full md:max-w-sm">

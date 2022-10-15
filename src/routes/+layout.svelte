@@ -16,7 +16,9 @@
 {:else}
   <Header />
 
-  <main>
+  <main
+    class="flex flex-col items-center justify-center box-border flex-1 min-h-[40vh] py-0 px-4 md:px-12 text-justify w-full"
+  >
     <slot />
   </main>
 

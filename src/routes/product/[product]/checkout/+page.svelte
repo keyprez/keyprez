@@ -105,7 +105,7 @@
       <div class="relative flex flex-col w-full text-black">
         {#if value === 'country'}
           <select
-            class="formInput {!selectionMade ? 'text-gray-400' : ''} {$errors[value] ? 'errorInput' : ''}"
+            class="py-6 px-4 rounded-lg {!selectionMade ? 'text-gray-400' : ''} {$errors[value] ? 'errorInput' : ''}"
             bind:value={$form[value]}
             on:change={(e) => {
               selectionMade = true;
@@ -121,7 +121,7 @@
         {:else}
           <input
             name={value}
-            class="formInput {$errors[value] ? 'border-red-500' : ''}"
+            class="py-6 px-4 rounded-lg {$errors[value] ? 'border-red-500' : ''}"
             type="text"
             placeholder={startCase(value)}
             bind:value={$form[value]}
