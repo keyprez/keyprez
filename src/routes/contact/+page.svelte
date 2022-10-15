@@ -15,10 +15,10 @@
 
 <div class="flex flex-col md:flex-row gap-8" in:fade>
   <div class="flex-[40%]">
-    <h1 class="text-center text-2xl mb-3 text-black">Contact us</h1>
+    <h1 class="text-center text-2xl mb-3 text-black dark:text-teal-800">Contact us</h1>
     <form class="flex flex-col justify-center items-center gap-2" method="POST" on:submit|preventDefault={handleSubmit}>
       <textarea
-        class="rounded-lg shadow-xl p-4 resize-none w-full"
+        class="rounded-lg shadow-xl p-4 resize-none w-full border-2 text-black dark:text-white dark:bg-transparent dark:border-teal-800"
         placeholder="Type your message..."
         name="message"
         rows="15"
@@ -26,8 +26,19 @@
         required
       />
       <div class="flex flex-col xl:flex-row gap-2 w-full">
-        <input class="w-full rounded-lg shadow-xl py-6 px-4" placeholder="Name" type="text" name="name" />
-        <input class="w-full rounded-lg shadow-xl py-6 px-4" placeholder="Email" type="email" name="email" required />
+        <input
+          class="w-full rounded-lg shadow-xl py-6 px-4 border-2 text-black dark:text-white dark:bg-transparent dark:border-teal-800"
+          placeholder="Name"
+          type="text"
+          name="name"
+        />
+        <input
+          class="w-full rounded-lg shadow-xl py-6 px-4 border-2 text-black dark:text-white dark:bg-transparent dark:border-teal-800"
+          placeholder="Email"
+          type="email"
+          name="email"
+          required
+        />
       </div>
       <div class="w-full md:w-auto">
         <Button type="submit" text="SUBMIT" />
@@ -37,14 +48,16 @@
   <div class="flex-[60%]">
     <h1 class="text-center text-2xl mb-3">FAQ</h1>
     <ul>
-      <li class="text-black text-2xl mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.?</li>
+      <li class="text-black dark:text-teal-800 text-2xl mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.?
+      </li>
       <p>
         Suspendisse quis odio vel augue gravida faucibus id at eros. Donec sit amet ornare felis. Praesent dapibus nisl
         leo, sit amet auctor lorem tincidunt eget. Aenean vestibulum pretium sapien, et pulvinar libero consequat ac.
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <li class="text-black text-2xl mb-4">
+      <li class="text-black dark:text-teal-800 text-2xl mb-4">
         Morbi eget bibendum elit. Nullam blandit gravida vehicula. Suspendisse pretium quam lectus, sed elementum dolor
         iaculis ac?
       </li>
@@ -54,7 +67,7 @@
         Proin eleifend bibendum nunc, a ornare mi lacinia nec. Pellentesque suscipit sapien at sodales vestibulum. Etiam
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
-      <li class="text-black text-2xl mb-4">
+      <li class="text-black dark:text-teal-800 text-2xl mb-4">
         Pellentesque vel tellus sed ante euismod maximus. Suspendisse pharetra ornare ex eget pellentesque?
       </li>
       <p>

@@ -14,6 +14,6 @@
       ><img class="max-w-[15rem] min-w-[13rem] max-h-[10rem]" src={`/${name.toLowerCase()}.svg`} alt={name} /></span
     >
   </a>
-  <p class="text-black">{description.toUpperCase()}</p>
-  <h2>&#36;<span>{price}</span></h2>
+  <p class="text-black dark:text-white">{description.toUpperCase()}</p>
+  <h2 class="dark:text-teal-500">{price} NOK</h2>
 </div>

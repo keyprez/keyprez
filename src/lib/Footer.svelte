@@ -59,7 +59,9 @@
     <div class="relative flex w-full max-w-full md:max-w-sm">
       <input
         bind:this={inputRef}
-        class="py-6 px-4 text-black rounded-lg shadow-xl w-full {$errors.email ? 'border-red-500' : ''}"
+        class="py-6 px-4 text-black dark:text-white border-2 dark:bg-transparent rounded-lg shadow-xl w-full {$errors.email
+          ? 'border-red-500'
+          : 'border-transparent dark:border-teal-800'}"
         type="text"
         name="email"
         placeholder="Type your email"
