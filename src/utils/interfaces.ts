@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   description: string;
   stock: number;
+  slug: string;
 }
 
 export interface Cache {
@@ -33,4 +34,9 @@ export interface CheckoutFormValues {
 export interface ShippingRateRequest {
   country: CountryValue;
   postalCode: string;
+}
+
+export interface SessionIdRequest {
+  priceId: string;
+  customerStripeId: string;
 }

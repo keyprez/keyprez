@@ -31,16 +31,9 @@
   const onSubmit = async (checkoutFormValues: CheckoutFormValues) => {
     try {
       loading = true;
-      if (!priceId) throw new Error(`Could not get product by slug`);
-
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
-      if (!customerStripeId) throw new Error(`Could not get customerStripeId`);
-
-      const sessionId = await createSessionId(priceId, customerStripeId);
-      if (!sessionId) throw new Error(`Could not get sessionId`);
-
-      const success = await redirectToCheckout(sessionId);
-      if (!success) throw new Error(`Could not redirect to stripe checkout`);
+      const sessionId = await createSessionId({ priceId, customerStripeId });
+      await redirectToCheckout(sessionId);
     } catch (err) {
       submitError = true;
       console.error(err);
