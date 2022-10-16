@@ -26,20 +26,14 @@
   let shippingError = '';
   let selectionMade = false;
   let total: number;
+  let formRef: HTMLFormElement;
 
   const onSubmit = async (checkoutFormValues: CheckoutFormValues) => {
     try {
       loading = true;
-      if (!priceId) throw new Error(`Could not get product by slug`);
-
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
-      if (!customerStripeId) throw new Error(`Could not get customerStripeId`);
-
-      const sessionId = await createSessionId(priceId, customerStripeId);
-      if (!sessionId) throw new Error(`Could not get sessionId`);
-
-      const success = await redirectToCheckout(sessionId);
-      if (!success) throw new Error(`Could not redirect to stripe checkout`);
+      const sessionId = await createSessionId({ priceId, customerStripeId });
+      await redirectToCheckout(sessionId);
     } catch (err) {
       submitError = true;
       console.error(err);
@@ -94,18 +88,31 @@
       total = parseFloat(price) + parseFloat(shippingRate);
     }
   }, 1000);
+
+  let focus = () => {
+    const inputs = formRef.querySelectorAll('input');
+
+    for (let i = 0; inputs.length; i++) {
+      if ($errors[inputs[i].name]) {
+        inputs[i].scrollIntoView();
+        return inputs[i].focus();
+      }
+    }
+  };
 </script>
 
 <div class="flex flex-col gap-4">
   <SvelteSeo title={`Keyprez - ${upperFirst(name)}`} />
-  <img src={`/${name.toLowerCase()}.jpg`} alt={name} />
+  <img class="rounded-lg shadow-xl" src={`/${name.toLowerCase()}.jpg`} alt={name} />
 
-  <form class="flex flex-col items-center w-full gap-4" on:submit={handleSubmit}>
+  <form bind:this={formRef} class="flex flex-col items-center w-full gap-4" on:submit={handleSubmit}>
     {#each Object.keys(initialValues) as value}
       <div class="relative flex flex-col w-full text-black">
         {#if value === 'country'}
           <select
-            class="py-6 px-4 rounded-lg {!selectionMade ? 'text-gray-400' : ''} {$errors[value] ? 'errorInput' : ''}"
+            class="py-6 px-4 border-2 rounded-lg shadow-xl dark:bg-transparent
+            {$errors[value] ? 'border-red-500' : 'border-transparent dark:border-teal-800'}
+            {!selectionMade ? 'text-gray-400' : 'dark:text-white'} "
             bind:value={$form[value]}
             on:change={(e) => {
               selectionMade = true;
@@ -121,7 +128,8 @@
         {:else}
           <input
             name={value}
-            class="py-6 px-4 rounded-lg {$errors[value] ? 'border-red-500' : ''}"
+            class="py-6 px-4 border-2 rounded-lg shadow-xl text-black dark:text-white dark:bg-transparent 
+                  {$errors[value] ? 'border-red-500' : 'border-transparent dark:border-teal-800'}"
             type="text"
             placeholder={startCase(value)}
             bind:value={$form[value]}
@@ -152,6 +160,6 @@
         {/if}
       </p>
     </div>
-    <Button type="submit" text={submitError ? 'ERROR 😞' : 'BUY'} {loading} />
+    <Button type="submit" text={submitError ? 'ERROR 😞' : 'BUY'} {loading} onClick={focus} />
   </form>
 </div>
