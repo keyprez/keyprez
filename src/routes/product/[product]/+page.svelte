@@ -44,7 +44,7 @@
       </p>
 
       <a data-sveltekit-prefetch href="/product/{productSlug}/checkout">
-        <Button text="Go to checkout" />
+        <Button text="Add to cart" />
       </a>
       <h2>&#36;<span>{price}</span></h2>
     </div>
