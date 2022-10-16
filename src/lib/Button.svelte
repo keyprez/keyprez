@@ -7,24 +7,14 @@
   export let onClick;
 </script>
 
-<button {type} on:click={onClick}>
+<button
+  class="relative w-full md:max-w-xs flex justify-center bg-black rounded-lg py-6 px-20 hover:bg-teal-900"
+  {type}
+  on:click={onClick}
+>
   {#if loading}
     <Loader />
   {:else}
     <span>{text}</span>
   {/if}
 </button>
-
-<style>
-  button {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  @media (min-width: 600px) {
-    button {
-      max-width: 200px;
-    }
-  }
-</style>

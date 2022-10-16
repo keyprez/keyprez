@@ -43,23 +43,23 @@
   });
 </script>
 
-<footer>
-  <h2>
-    {#if showError}
-      <h2>There was an error ❌ Please try again later</h2>
-    {:else if hasSubscription}
-      <h2><strong>{displayedEmail}</strong> has been already subscribed to our newsletter 😊</h2>
-    {:else if showSuccess}
-      <h2>Thank you for subscribing to our newsletter 🎉</h2>
-    {:else}
-      <h2><strong>SUBSCRIBE</strong> to latest news and updates</h2>
-    {/if}
-  </h2>
-  <form on:submit={handleSubmit}>
-    <div>
+<footer class="flex flex-col gap-8 justify-center px-4 md:px-12 py-12 md:py-40">
+  {#if showError}
+    <h2 class="text-center text-2xl">There was an error ❌ Please try again later</h2>
+  {:else if hasSubscription}
+    <h2 class="text-center text-2xl">
+      <strong>{displayedEmail}</strong> has been already subscribed to our newsletter 😊
+    </h2>
+  {:else if showSuccess}
+    <h2 class="text-center text-2xl">Thank you for subscribing to our newsletter 🎉</h2>
+  {:else}
+    <h2 class="text-center text-2xl"><strong>SUBSCRIBE</strong> to latest news and updates</h2>
+  {/if}
+  <form class="flex flex-col md:flex-row gap-2 justify-center" on:submit={handleSubmit}>
+    <div class="relative flex w-full max-w-full md:max-w-sm">
       <input
         bind:this={inputRef}
-        class:errorInput={$errors.email}
+        class="py-6 px-4 text-black rounded-lg w-full {$errors.email ? 'border-red-500' : ''}"
         type="text"
         name="email"
         placeholder="Type your email"
@@ -67,96 +67,22 @@
         on:keyup={handleChange}
         on:blur={handleChange}
       />
-      <small class="error {$errors.email ? 'errorVisible' : ''}">{$errors.email}</small>
+      <small class="absolute right-2 bottom-1 text-red-500 {$errors.email ? 'block' : 'hidden'}">{$errors.email}</small>
     </div>
     <Button type="submit" text="SUBSCRIBE" {loading} onClick={focus} />
   </form>
-  <div class="links">
-    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="/github_logo.svg" alt="GitHub" /></a>
-    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="/instagram_logo.svg" alt="Instagram" /></a>
-    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="/reddit_logo.svg" alt="Reddit" /></a>
-    <a href="https://github.com/keyprez/keyprez" target="blank"><img src="/meetup_logo.svg" alt="Meetup" /></a>
+  <div class="flex flex-row gap-4 justify-center">
+    <a href="https://github.com/keyprez/keyprez" target="blank"
+      ><img class="w-6 hover:scale-125" src="/github_logo.svg" alt="GitHub" /></a
+    >
+    <a href="https://github.com/keyprez/keyprez" target="blank"
+      ><img class="w-6 hover:scale-125" src="/instagram_logo.svg" alt="Instagram" /></a
+    >
+    <a href="https://github.com/keyprez/keyprez" target="blank"
+      ><img class="w-6 hover:scale-125" src="/reddit_logo.svg" alt="Reddit" /></a
+    >
+    <a href="https://github.com/keyprez/keyprez" target="blank"
+      ><img class="w-6 hover:scale-125" src="/meetup_logo.svg" alt="Meetup" /></a
+    >
   </div>
 </footer>
-
-<style lang="scss">
-  @import 'src/variables';
-
-  footer {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: center;
-    padding: 10rem 1rem 5rem;
-  }
-
-  h2 {
-    letter-spacing: 2px;
-    color: inherit;
-    font-weight: 1000;
-    margin: 0;
-  }
-
-  form {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    justify-content: center;
-
-    input {
-      width: 100%;
-    }
-
-    div {
-      position: relative;
-      display: flex;
-      width: 100%;
-      max-width: 400px;
-    }
-  }
-
-  .error {
-    display: none;
-    position: absolute;
-    right: 0.3em;
-    bottom: 0.3em;
-    color: $color-warning;
-
-    &Visible {
-      display: block;
-    }
-
-    &Input {
-      border-color: $color-warning;
-    }
-  }
-
-  .links {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    justify-content: center;
-  }
-
-  img {
-    width: 1.5rem;
-  }
-
-  img:hover {
-    transform: scale(1.3);
-  }
-
-  @media (max-width: 600px) {
-    footer {
-      padding: 5rem 1rem 3rem;
-    }
-
-    form {
-      flex-direction: column;
-
-      div {
-        max-width: 100%;
-      }
-    }
-  }
-</style>

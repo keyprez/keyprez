@@ -9,14 +9,14 @@
   const productSlug = $page.url.pathname.replace('/product/', '');
 </script>
 
-<div class="container">
+<div class="flex flex-col xl:flex-row gap-4 md:gap-8 w-full">
   {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
   {:then { name, description, price }}
     <SvelteSeo title={`Keyprez - ${capitalize(name)}`} {description} />
-    <img src={`/${name.toLowerCase()}.jpg`} alt={name} />
-    <div class="text">
-      <h1>{description.toUpperCase()}</h1>
+    <img class="flex-[60%] object-cover w-full rounded-lg" src={`/${name.toLowerCase()}.jpg`} alt={name} />
+    <div class="flex flex-col gap-4 items-center flex-[40%]">
+      <h1 class="flex text-black text-2xl">{description.toUpperCase()}</h1>
       <p>
         Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis
         eget condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum
@@ -43,46 +43,10 @@
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
 
-      <a class="link" data-sveltekit-prefetch href="/product/{productSlug}/checkout">
+      <a data-sveltekit-prefetch href="/product/{productSlug}/checkout">
         <Button text="Go to checkout" />
       </a>
       <h2>&#36;<span>{price}</span></h2>
     </div>
   {/await}
 </div>
-
-<style lang="scss">
-  @import 'src/variables';
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-  }
-
-  img {
-    flex: 60%;
-    object-fit: cover;
-    width: 100%;
-    border-radius: $border-radius-large;
-  }
-
-  .text {
-    align-items: center;
-    display: flex;
-    flex: 40%;
-    flex-direction: column;
-  }
-
-  @media (min-width: 1400px) {
-    .container {
-      flex-direction: row;
-      gap: 2rem;
-    }
-
-    h1 {
-      margin-top: 0;
-    }
-  }
-</style>

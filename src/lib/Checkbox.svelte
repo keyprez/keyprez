@@ -8,17 +8,7 @@
   const id = Math.random().toString(36);
 </script>
 
-<div class="checkboxWrapper">
+<div class="flex gap-4 items-center">
   <Checkbox class="checkbox" {name} {id} bind:checked size="1rem" />
   <label for={id}>{label}</label>
 </div>
-
-<style lang="scss">
-  @import 'src/variables';
-
-  .checkboxWrapper {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-</style>

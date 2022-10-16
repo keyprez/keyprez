@@ -96,16 +96,16 @@
   }, 1000);
 </script>
 
-<div class="container">
+<div class="flex flex-col gap-4">
   <SvelteSeo title={`Keyprez - ${upperFirst(name)}`} />
-  <img class="img" src={`/${name.toLowerCase()}.jpg`} alt={name} />
+  <img src={`/${name.toLowerCase()}.jpg`} alt={name} />
 
-  <form class="form" on:submit={handleSubmit}>
+  <form class="flex flex-col items-center w-full gap-4" on:submit={handleSubmit}>
     {#each Object.keys(initialValues) as value}
-      <div class="formInputWrapper">
+      <div class="relative flex flex-col w-full text-black">
         {#if value === 'country'}
           <select
-            class="formInput {!selectionMade ? 'placeholder' : ''} {$errors[value] ? 'errorInput' : ''}"
+            class="py-6 px-4 rounded-lg {!selectionMade ? 'text-gray-400' : ''} {$errors[value] ? 'errorInput' : ''}"
             bind:value={$form[value]}
             on:change={(e) => {
               selectionMade = true;
@@ -121,7 +121,7 @@
         {:else}
           <input
             name={value}
-            class="formInput {$errors[value] ? 'errorInput' : ''}"
+            class="py-6 px-4 rounded-lg {$errors[value] ? 'border-red-500' : ''}"
             type="text"
             placeholder={startCase(value)}
             bind:value={$form[value]}
@@ -132,94 +132,26 @@
             on:blur={handleChange}
           />
         {/if}
-        <small class="error {$errors[value] ? 'errorVisible' : ''}">{upperFirst($errors[value])}</small>
+        <small class="absolute right-2 bottom-1 text-red-500 {$errors[value] ? 'block' : 'hidden'}"
+          >{upperFirst($errors[value])}</small
+        >
       </div>
     {/each}
-    <div class="price">
-      <p class="priceRow">Price before shipping: <strong>{price} NOK</strong></p>
-      <p class="priceRow">
+    <div class="w-full">
+      <p class="flex justify-between">Price before shipping: <strong>{price} NOK</strong></p>
+      <p class="flex justify-between">
         Price total:
         {#if shippingError}
-          <small class="shippingError">{shippingError}</small>
+          <small class="border-red-500">{shippingError}</small>
         {:else if total}
           <strong>
             {`${total} NOK`}
           </strong>
         {:else}
-          <small class="pricePlaceholder">Select Country & Postal Code</small>
+          <small>Select Country & Postal Code</small>
         {/if}
       </p>
     </div>
-    <Button type="submit" text={submitError ? 'ERROR 😞' : 'BUY'} {loading} } />
+    <Button type="submit" text={submitError ? 'ERROR 😞' : 'BUY'} {loading} />
   </form>
 </div>
-
-<style lang="scss">
-  @import 'src/variables';
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .img {
-    width: 20rem;
-  }
-
-  .placeholder {
-    color: #757575;
-  }
-
-  .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
-
-    &InputWrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-  }
-
-  .error {
-    display: none;
-    position: absolute;
-    right: 0.3em;
-    bottom: 0.3em;
-    color: $color-warning;
-
-    &Visible {
-      display: block;
-    }
-
-    &Input {
-      border-color: $color-warning;
-    }
-  }
-
-  .shippingError {
-    color: $color-warning;
-  }
-  .price {
-    width: 100%;
-
-    &Placeholder {
-      color: $color-tertiary;
-    }
-    &Row {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-  @media (min-width: 1400px) {
-    .container {
-      gap: 2rem;
-    }
-  }
-</style>
