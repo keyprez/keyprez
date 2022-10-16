@@ -6,4 +6,7 @@
   };
 </script>
 
-<button on:click={toggle}>Toggle</button>
+<button class="relative w-10 flex justify-center items-center margin-2 margin-red-500" on:click={toggle}>
+  <img class="absolute w-5" src="/keycap_simple.svg" alt="keycap" />
+  <img class="absolute block dark:hidden" src="/sun.svg" alt="sun" />
+</button>

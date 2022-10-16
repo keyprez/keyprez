@@ -1,11 +1,11 @@
 <script>
-  import ThemeToggle from './ThemeToggle.svelte';
+  import { KeyprezLogo, KeyprezName, ThemeToggle } from '$lib';
 </script>
 
-<header class="bg-teal-800 dark:bg-transparent flex mb-12 md:mb-28 p-8 md:p-12">
+<header class="bg-teal-800 dark:bg-transparent flex mb-12 md:mb-28 p-4 sm:p-8 md:p-12">
   <a data-sveltekit-prefetch href="/">
-    <img class="block md:hidden w-8" src="/k.svg" alt="keyprez logo" />
-    <img class="hidden md:block" src="/keyprez_name.svg" alt="keyprez name" />
+    <KeyprezLogo />
+    <KeyprezName />
   </a>
   <nav class="flex items-center justify-end flex-1 font-black">
     <ul class="flex list-none">

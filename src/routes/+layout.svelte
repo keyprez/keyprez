@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import '/src/app.css';
-  import { Footer, Header } from '$lib';
+  import { Footer, Header, KeyprezName } from '$lib';
 
   let hideContent = true;
 
@@ -10,7 +10,7 @@
 
 {#if hideContent}
   <div style="text-align: center;">
-    <img src="/keyprez_name.svg" alt="keyprez name" />
+    <KeyprezName />
     <h1>New keyboard shop in progress...</h1>
   </div>
 {:else}
