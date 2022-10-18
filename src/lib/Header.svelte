@@ -26,7 +26,7 @@
     {#each navItems as { label, route }}
       <a
         class="hover:text-black dark:hover:text-teal-800 no-underline uppercase {$page.url.pathname === route
-          ? 'text-teal-800'
+          ? 'text-black dark:text-teal-800'
           : ''}"
         data-sveltekit-prefetch
         href={route}>{label}</a
