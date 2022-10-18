@@ -1,5 +1,19 @@
-import { writable } from 'svelte/store';
-import type { Writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
+import { tweened, type Tweened } from 'svelte/motion';
+import { browser } from '$app/environment';
+
 import type { CartItem } from './utils/interfaces';
 
-export const cart: Writable<CartItem[]> = writable([]);
+let parsedCart: CartItem[] = [];
+
+if (browser) {
+  const storedCart = localStorage.getItem('cart');
+  parsedCart = storedCart ? JSON.parse(storedCart) : [];
+}
+
+export const cart: Writable<CartItem[]> = writable(parsedCart);
+export const total: Tweened<number> = tweened(0);
+
+if (browser) {
+  cart.subscribe((newCart) => localStorage.setItem('cart', JSON.stringify(newCart)));
+}
