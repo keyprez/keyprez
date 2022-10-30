@@ -1,22 +1,37 @@
 <script>
   import SvelteSeo from 'svelte-seo';
   import { page } from '$app/stores';
+  import { cart } from '../../../store';
 
   import { Button } from '$lib';
   import { getProductBySlug } from '/src/utils';
   import { capitalize } from 'lodash';
 
   const productSlug = $page.url.pathname.replace('/product/', '');
+
+  const addToCart = (product) => {
+    const cartItem = $cart.find((item) => item.id === product.id);
+    if (cartItem) {
+      cartItem.quantity += 1;
+      $cart = $cart;
+      return;
+    }
+    $cart = [...$cart, { ...product, quantity: 1 }];
+  };
 </script>
 
 <div class="flex flex-col xl:flex-row gap-4 md:gap-8 w-full">
   {#await getProductBySlug(productSlug)}
     <h1>LOADING...</h1>
-  {:then { name, description, price }}
-    <SvelteSeo title={`Keyprez - ${capitalize(name)}`} {description} />
-    <img class="flex-[60%] object-cover w-full rounded-lg" src={`/${name.toLowerCase()}.jpg`} alt={name} />
+  {:then product}
+    <SvelteSeo title={`Keyprez - ${capitalize(product.name)}`} />
+    <img
+      class="shadow-lg flex-[60%] object-cover w-full rounded-lg"
+      src={`/${product.name.toLowerCase()}.jpg`}
+      alt={product.name}
+    />
     <div class="flex flex-col gap-4 items-center flex-[40%]">
-      <h1 class="flex text-black text-2xl">{description.toUpperCase()}</h1>
+      <h1 class="flex text-black text-2xl">{product.description.toUpperCase()}</h1>
       <p>
         Curabitur quis facilisis sapien. Cras luctus elit in ante tincidunt aliquet. Praesent interdum euismod felis
         eget condimentum. Nam cursus pulvinar lacus at ultricies. Aliquam tempor consequat est, eu iaculis ipsum
@@ -43,10 +58,8 @@
         finibus leo non nisi hendrerit, non eleifend leo semper. Aenean et fringilla massa.
       </p>
 
-      <a data-sveltekit-prefetch href="/product/{productSlug}/checkout">
-        <Button text="Go to checkout" />
-      </a>
-      <h2>&#36;<span>{price}</span></h2>
+      <Button text="Add to cart" onClick={() => addToCart(product)} />
+      <h2><span>{product.price} NOK</span></h2>
     </div>
   {/await}
 </div>

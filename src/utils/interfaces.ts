@@ -2,8 +2,14 @@ export interface Product {
   id: string;
   name: string;
   description: string;
+  price: number;
+  priceId: string;
   stock: number;
   slug: string;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
 }
 
 export interface Cache {

@@ -1,26 +1,30 @@
 <script>
-  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
   import '/src/app.css';
-  import { Footer, Header, KeyprezName } from '$lib';
+  import { Cart, Footer, Header, KeyprezName } from '$lib';
 
-  let hideContent = true;
+  let contentHidden = $page.url.pathname.match(/localhost|deploy-preview/g);
+  let showCart = false;
 
-  onMount(() => (hideContent = !location.hostname.match(/localhost|deploy-preview/g)));
+  const toggleShowCart = () => (showCart = !showCart);
 </script>
 
-{#if hideContent}
-  <div style="text-align: center;">
+{#if contentHidden}
+  <div class="w-full h-screen flex flex-col justify-center items-center">
     <KeyprezName />
-    <h1>New keyboard shop in progress...</h1>
+    <h1 class="text-xl">New keyboard shop in progress...</h1>
   </div>
 {:else}
-  <Header />
-
-  <main
-    class="flex flex-col items-center justify-center box-border flex-1 min-h-[40vh] py-0 px-4 md:px-12 text-justify w-full"
-  >
-    <slot />
+  <main class="{showCart ? 'h-screen bg-black/50' : 'min-h-screen'} overflow-hidden">
+    {#if showCart}
+      <Cart on:hideCart={toggleShowCart} />
+    {/if}
+    <div class="transition-all ease-in-out duration-500 {showCart ? 'bg-black/50 opacity-20' : ''}">
+      <Header on:openCart={toggleShowCart} />
+      <div class="px-4 py-0 text-justify md:px-12">
+        <slot />
+      </div>
+      <Footer />
+    </div>
   </main>
-
-  <Footer />
 {/if}

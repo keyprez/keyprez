@@ -3,18 +3,14 @@
   import { createForm } from 'svelte-forms-lib';
   import * as yup from 'yup';
   import { debounce, startCase, upperFirst } from 'lodash';
+
+  import { cart } from '../../store';
   import { Button } from '$lib';
-  import {
-    createSessionId,
-    fetchShippingRate,
-    getCustomerStripeId,
-    redirectToCheckout,
-  } from '../../../../../src/utils';
+  import { createSessionId, fetchShippingRate, getCustomerStripeId, redirectToCheckout } from '../../../src/utils';
   import type { CheckoutFormValues, Country } from 'src/utils/interfaces';
 
-  export let data;
+  $: priceWithoutShipping = $cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const { name, priceId, price } = data;
   const countries: Country[] = [
     { label: 'Norway', value: 'NO' },
     { label: 'Sweden', value: 'SE' },
@@ -29,6 +25,9 @@
   let formRef: HTMLFormElement;
 
   const onSubmit = async (checkoutFormValues: CheckoutFormValues) => {
+    // Get priceId of the first item for now...
+    const { priceId } = $cart[0];
+
     try {
       loading = true;
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
@@ -85,7 +84,7 @@
 
     if (shippingRate) {
       shippingError = '';
-      total = parseFloat(price) + parseFloat(shippingRate);
+      total = parseFloat(priceWithoutShipping) + parseFloat(shippingRate);
     }
   }, 1000);
 
@@ -102,8 +101,7 @@
 </script>
 
 <div class="flex flex-col gap-4">
-  <SvelteSeo title={`Keyprez - ${upperFirst(name)}`} />
-  <img class="rounded-lg shadow-xl" src={`/${name.toLowerCase()}.jpg`} alt={name} />
+  <SvelteSeo title="Keyprez - Checkout" />
 
   <form bind:this={formRef} class="flex flex-col items-center w-full gap-4" on:submit={handleSubmit}>
     {#each Object.keys(initialValues) as value}
@@ -146,7 +144,7 @@
       </div>
     {/each}
     <div class="w-full">
-      <p class="flex justify-between">Price before shipping: <strong>{price} NOK</strong></p>
+      <p class="flex justify-between">Price before shipping: <strong>{priceWithoutShipping} NOK</strong></p>
       <p class="flex justify-between">
         Price total:
         {#if shippingError}

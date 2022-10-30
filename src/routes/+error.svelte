@@ -4,7 +4,7 @@
 
 <SvelteSeo title="Keyprez - Not found" />
 
-<div>
-  <img src="/404.png" alt="404 keycap" />
-  <h2><a href="/">Home</a></h2>
+<div class="text-center">
+  <img class="m-auto mb-4" src="/404.png" alt="404 keycap" />
+  <h2><a href="/">Go to homepage</a></h2>
 </div>
