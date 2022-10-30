@@ -10,12 +10,11 @@
   const productSlug = $page.url.pathname.replace('/product/', '');
 
   const addToCart = (product) => {
-    for (let item of $cart) {
-      if (item.id === product.id) {
-        item.quantity += 1;
-        $cart = $cart;
-        return;
-      }
+    const cartItem = $cart.find((item) => item.id === product.id);
+    if (cartItem) {
+      cartItem.quantity += 1;
+      $cart = $cart;
+      return;
     }
     $cart = [...$cart, { ...product, quantity: 1 }];
   };
@@ -27,7 +26,7 @@
   {:then product}
     <SvelteSeo title={`Keyprez - ${capitalize(product.name)}`} />
     <img
-      class="flex-[60%] object-cover w-full rounded-lg"
+      class="shadow-lg flex-[60%] object-cover w-full rounded-lg"
       src={`/${product.name.toLowerCase()}.jpg`}
       alt={product.name}
     />
