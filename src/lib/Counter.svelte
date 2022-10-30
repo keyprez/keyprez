@@ -8,10 +8,9 @@
   $: count = product.quantity;
 
   const displayedCount = spring();
+  const modulo = (n: number, m: number) => ((n % m) + m) % m;
   $: displayedCount.set(count);
   $: offset = modulo($displayedCount, 1);
-
-  const modulo = (n: number, m: number) => ((n % m) + m) % m;
 
   const increaseQuantity = () => {
     for (let item of $cart) {
