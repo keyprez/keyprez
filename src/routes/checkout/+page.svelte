@@ -100,10 +100,10 @@
   };
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 items-center">
   <SvelteSeo title="Keyprez - Checkout" />
 
-  <form bind:this={formRef} class="flex flex-col items-center w-full gap-4" on:submit={handleSubmit}>
+  <form bind:this={formRef} class="flex flex-col items-center w-full max-w-lg gap-4" on:submit={handleSubmit}>
     {#each Object.keys(initialValues) as value}
       <div class="relative flex flex-col w-full text-black">
         {#if value === 'country'}
