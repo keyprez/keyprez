@@ -25,9 +25,9 @@ export default async (): Promise<Product[]> => {
   const res = await fetch(`${endpoint}/products`);
   const data = await res.json();
 
-  if (data.error) throw new Error(data.error);
+  if (data.status !== 200) throw new Error(data.message);
 
-  products = data;
+  products = data.body;
   const json = { products, cacheTime: Math.floor(Date.now() / 1000) };
   localStorage.setItem('products', JSON.stringify(json));
   return products;

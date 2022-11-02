@@ -16,7 +16,7 @@
 </script>
 
 <header
-  class="text-xs md:text-lg bg-teal-800 dark:bg-transparent flex gap-2 justify-between mb-12 md:mb-28 p-4 sm:p-8 md:p-12"
+  class="shadow-lg text-xs md:text-lg bg-teal-800 dark:bg-transparent flex gap-2 justify-between mb-12 md:mb-28 p-4 sm:p-8 md:p-12"
 >
   <a data-sveltekit-prefetch href="/">
     <KeyprezLogo />

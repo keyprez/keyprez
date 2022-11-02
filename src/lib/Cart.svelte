@@ -18,7 +18,7 @@
 <div
   on:click|self={hideCart}
   transition:fly={{ x: 800, opacity: 1, duration, easing }}
-  class="absolute inset-0 z-50 flex justify-end w-full max-h-screen overflow-hidden"
+  class="absolute inset-0 z-50 flex justify-end w-full max-h-screen overflow-hidden shadow-xl"
 >
   <div class="relative z-50 w-full px-4 py-8 bg-teal-800 dark:bg-black md:w-1/2 lg:w-1/3">
     <div class="flex justify-center mb-6 md:mb-10">
