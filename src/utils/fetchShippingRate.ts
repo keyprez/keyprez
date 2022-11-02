@@ -5,7 +5,7 @@ export default async (req: ShippingRateRequest): Promise<{ shippingRate: string 
   const res = await fetchData(req, '/orders/shipping');
   const data = JSON.parse(res.body);
 
-  if (data.status !== 200) {
+  if (data.status && data.status !== 200) {
     return { shippingRate: null, error: data.message };
   }
 
