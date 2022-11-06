@@ -31,6 +31,7 @@
     try {
       loading = true;
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
+      console.log(customerStripeId)
       const sessionId = await createSessionId({ priceId, customerStripeId });
       await redirectToCheckout(sessionId);
     } catch (err) {

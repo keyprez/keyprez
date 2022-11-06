@@ -1,8 +1,9 @@
 import { fetchData } from './';
+import type { BackendResponse } from './fetchData';
 import type { ShippingRateRequest } from './interfaces';
 
 export default async (req: ShippingRateRequest): Promise<{ shippingRate: string | null; error: string | null }> => {
-  const res = await fetchData(req, '/orders/shipping');
+  const res = await fetchData<BackendResponse>(req, '/orders/shipping');
   const data = JSON.parse(res.body);
 
   if (data.status && data.status !== 200) {
