@@ -1,6 +1,7 @@
 <script>
-  import { page } from '$app/stores';
   import SvelteSeo from 'svelte-seo';
+
+  export let data;
 
   const {
     name,
@@ -8,7 +9,7 @@
     email,
     paymentId,
     product: { description },
-  } = $page.data;
+  } = data;
 </script>
 
 <SvelteSeo title="Keyprez - Success" />
