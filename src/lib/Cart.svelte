@@ -17,6 +17,7 @@
 
 <div
   on:click|self={hideCart}
+  on:keypress|self={hideCart}
   transition:fly={{ x: 800, opacity: 1, duration, easing }}
   class="absolute inset-0 z-50 flex justify-end w-full max-h-screen overflow-hidden shadow-xl"
 >
