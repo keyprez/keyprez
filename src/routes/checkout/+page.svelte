@@ -2,7 +2,9 @@
   import SvelteSeo from 'svelte-seo';
   import { createForm } from 'svelte-forms-lib';
   import * as yup from 'yup';
-  import { debounce, startCase, upperFirst } from 'lodash';
+  import pkg from 'lodash';
+
+  const { debounce, startCase, upperFirst } = pkg;
 
   import { cart } from '../../store';
   import { Button } from '$lib';
@@ -31,7 +33,6 @@
     try {
       loading = true;
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
-      console.log(customerStripeId)
       const sessionId = await createSessionId({ priceId, customerStripeId });
       await redirectToCheckout(sessionId);
     } catch (err) {
