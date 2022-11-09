@@ -1,14 +1,8 @@
 import { endpoint } from '../config';
-import type { CheckoutFormValues, SessionIdRequest, ShippingRateRequest } from './interfaces';
-
-export interface BackendResponse {
-  body: string,
-  message: string,
-  status: number
-}
+import type { CheckoutFormValues, SessionIdRequest, SessionRetrieveRequest, ShippingRateRequest } from './interfaces';
 
 export default async <T>(
-  req: CheckoutFormValues | SessionIdRequest | ShippingRateRequest,
+  req: CheckoutFormValues | SessionIdRequest | ShippingRateRequest | SessionRetrieveRequest,
   route: string,
 ): Promise<T> => {
   const res = await fetch(`${endpoint}${route}`, {
