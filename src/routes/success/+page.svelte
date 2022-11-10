@@ -1,5 +1,6 @@
 <script>
   import SvelteSeo from 'svelte-seo';
+  import { cart } from '../../store';
 
   export let data;
 
@@ -10,6 +11,8 @@
     paymentId,
     product: { description },
   } = data;
+
+  $cart = [];
 </script>
 
 <SvelteSeo title="Keyprez - Success" />
