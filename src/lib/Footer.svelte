@@ -1,8 +1,8 @@
 <script>
-  import { endpoint } from '../config';
   import { createForm } from 'svelte-forms-lib';
   import * as yup from 'yup';
   import { Button } from '$lib';
+  import { fetchData } from '../utils';
 
   let displayedEmail = '';
   let loading = false;
@@ -15,11 +15,7 @@
   const onSubmit = async ({ email }) => {
     loading = true;
 
-    const res = await fetch(`${endpoint}/newsletters`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
+    const res = await fetchData({ email }, '/newsletters');
 
     loading = false;
 
