@@ -14,7 +14,7 @@
 
   const increaseQuantity = () => {
     for (let item of $cart) {
-      if (item.id === product.id && item.stock > item.quantity) {
+      if (item.priceId === product.priceId && item.stock > item.quantity) {
         item.quantity += 1;
         $cart = $cart;
         return;
@@ -24,12 +24,12 @@
 
   const decreaseQuantity = () => {
     for (let item of $cart) {
-      if (item.id === product.id) {
+      if (item.priceId === product.priceId) {
         if (item.quantity > 1) {
           item.quantity -= 1;
           $cart = $cart;
         } else {
-          $cart = $cart.filter((i) => i.id != item.id);
+          $cart = $cart.filter((i) => i.priceId != item.priceId);
         }
         return;
       }
