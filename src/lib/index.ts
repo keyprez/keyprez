@@ -9,4 +9,5 @@ export { default as KeyprezLogo } from './KeyprezLogo.svelte';
 export { default as KeyprezName } from './KeyprezName.svelte';
 export { default as Loader } from './Loader.svelte';
 export { default as Product } from './Product.svelte';
+export { default as ProductSkeleton } from './ProductSkeleton.svelte';
 export { default as ThemeToggle } from './ThemeToggle.svelte';
