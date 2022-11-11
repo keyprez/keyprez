@@ -10,7 +10,7 @@
   const productSlug = $page.url.pathname.replace('/product/', '');
 
   const addToCart = (product) => {
-    const cartItem = $cart.find((item) => item.id === product.id);
+    const cartItem = $cart.find((item) => item.priceId === product.priceId);
     if (cartItem) {
       cartItem.quantity += 1;
       $cart = $cart;
