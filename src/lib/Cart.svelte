@@ -32,7 +32,7 @@
       </div>
       <button on:click={hideCart} class="absolute w-8 h-8 right-5 opacity-80 hover:opacity-100">x</button>
     </div>
-    {#each $cart as item, index (item.id)}
+    {#each $cart as item, index (item.priceId)}
       <div
         animate:flip={{ duration, easing }}
         in:fly={{ x: 1000, duration, delay: index * 300, easing }}
