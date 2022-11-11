@@ -9,9 +9,20 @@
 
   export let product: Product;
 
-  const addToCart = (product: Product) => {
+  let text = 'Add to cart';
+
+  const addToCart = () => {
     const cartItem = $cart.find((i) => i.priceId === product.priceId);
     if (cartItem) {
+      if (cartItem.quantity >= product.stock) {
+        text = 'Out of stock 🙁';
+        return;
+      }
+
+      text = 'Item added to cart ✅';
+
+      setTimeout(() => (text = 'Add to cart'), 1000);
+
       cartItem.quantity += 1;
       $cart = $cart;
       return;
@@ -32,6 +43,6 @@
     {product.description}
   </p>
 
-  <Button text="Add to cart" onClick={() => addToCart(product)} />
+  <Button {text} onClick={addToCart} />
   <h2><span>{product.price} NOK</span></h2>
 </div>
