@@ -9,6 +9,7 @@
 
   const cachedProducts: Product[] = cache.get('products');
   const fetchedProducts = fetchProducts();
+  let cachedProduct: Product;
 
   const slug = $page.url.pathname.replace('/product/', '');
 
@@ -18,7 +19,9 @@
     return product;
   };
 
-  const cachedProduct = getProduct(cachedProducts);
+  if (cachedProducts) {
+    cachedProduct = getProduct(cachedProducts);
+  }
 </script>
 
 <div class="flex flex-col xl:flex-row gap-4 md:gap-8 w-full">
