@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 24 24"
+   fill="none"
+   stroke="#2b7a78"
+   stroke-width="2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="reddit_logo.svg"
+   inkscape:version="1.0.2 (394de47547, 2021-03-26)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="35.916667"
+     inkscape:cx="12"
+     inkscape:cy="7.5452437"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4"
+     inkscape:document-rotation="0" />
+  <path
+     d="m 10.264986,8.1141884 c -1.9368915,0.080558 -3.9848353,1.2287597 -4.7666863,1.7927672 -1.134931,-0.7469735 -2.3455967,-0.6349297 -2.8752555,0 -1.2020427,1.4410204 -0.088245,2.8012054 0.5296697,3.2120914 -0.6430571,5.191636 5.7722281,6.892226 9.5333161,6.610959 5.905923,-0.441721 8.417494,-3.753698 8.095811,-6.349515 0.681028,-0.373444 1.710171,-1.465799 0.718803,-3.062649 C 20.781841,9.1599821 18.89029,9.3965252 18.247254,9.9069556 16.280044,8.77154 13.392279,8.1141774 12.19431,7.927434 l 1.437496,-4.4072956 3.754692,1.0177993 c 0.302189,-0.9657089 1.337719,-1.514739 2.315872,-1.2163372 0.978154,0.2984127 1.526038,1.323172 1.223847,2.2888809 -0.302299,0.965709 -1.340252,1.5066557 -2.318405,1.2082541 C 18.178534,6.6877717 17.832184,6.4169128 17.604109,6.0725328"
+     id="path2"
+     style="stroke-width:2.20255" />
+</svg>

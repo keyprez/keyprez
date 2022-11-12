@@ -1,0 +1,13 @@
+import{S as y,i as E,s as k,w as M,a as h,k as b,q as x,x as P,c as g,l as f,m as q,r as S,h as n,n as A,y as I,b as $,F as l,B as w,f as z,J as L,t as B,z as C,R as D}from"../../../chunks/index-f8865573.js";import{b as F}from"../../../chunks/index-1785cdb6.js";import{S as H}from"../../../chunks/SvelteSeo-233e266b.js";function J(N){let s,r,t,i,m,d,u,c,p,o;return s=new H({props:{title:"Keyprez - About us"}}),{c(){M(s.$$.fragment),r=h(),t=b("div"),i=b("h1"),m=x("About us"),d=h(),u=b("p"),c=x(`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum elit. Nullam blandit gravida vehicula.
+    Suspendisse pretium quam lectus, sed elementum dolor iaculis ac. Pellentesque vel tellus sed ante euismod maximus.
+    Suspendisse pharetra ornare ex eget pellentesque. Suspendisse tincidunt augue urna, quis facilisis quam bibendum
+    eget. Nulla at eros elementum, posuere mi a, suscipit dolor. Nullam lobortis vulputate dolor, quis laoreet neque
+    finibus at. Maecenas aliquam scelerisque leo, et bibendum nulla consequat vitae. Suspendisse lacus sapien, auctor
+    sed vestibulum at, maximus quis eros. Etiam rhoncus elementum tempor. Suspendisse porttitor nisl dolor, non euismod
+    risus malesuada sit amet. Integer id tempus risus.`),this.h()},l(e){P(s.$$.fragment,e),r=g(e),t=f(e,"DIV",{});var a=q(t);i=f(a,"H1",{class:!0});var v=q(i);m=S(v,"About us"),v.forEach(n),d=g(a),u=f(a,"P",{});var _=q(u);c=S(_,`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget bibendum elit. Nullam blandit gravida vehicula.
+    Suspendisse pretium quam lectus, sed elementum dolor iaculis ac. Pellentesque vel tellus sed ante euismod maximus.
+    Suspendisse pharetra ornare ex eget pellentesque. Suspendisse tincidunt augue urna, quis facilisis quam bibendum
+    eget. Nulla at eros elementum, posuere mi a, suscipit dolor. Nullam lobortis vulputate dolor, quis laoreet neque
+    finibus at. Maecenas aliquam scelerisque leo, et bibendum nulla consequat vitae. Suspendisse lacus sapien, auctor
+    sed vestibulum at, maximus quis eros. Etiam rhoncus elementum tempor. Suspendisse porttitor nisl dolor, non euismod
+    risus malesuada sit amet. Integer id tempus risus.`),_.forEach(n),a.forEach(n),this.h()},h(){A(i,"class","text-center text-2xl text-black dark:text-teal-800 mb-3")},m(e,a){I(s,e,a),$(e,r,a),$(e,t,a),l(t,i),l(i,m),l(t,d),l(t,u),l(u,c),o=!0},p:w,i(e){o||(z(s.$$.fragment,e),p||L(()=>{p=D(t,F,{}),p.start()}),o=!0)},o(e){B(s.$$.fragment,e),o=!1},d(e){C(s,e),e&&n(r),e&&n(t)}}}class j extends y{constructor(s){super(),E(this,s,null,J,k,{})}}export{j as default};
