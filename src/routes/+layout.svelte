@@ -3,14 +3,14 @@
   import '/src/app.css';
   import { Cart, Footer, Header, KeyprezName } from '$lib';
 
-  let contentHidden = $page.url.pathname.match(/localhost|deploy-preview/g);
+  let contentHidden = !$page.url.origin.match(/localhost|deploy-preview/g);
   let showCart = false;
 
   const toggleShowCart = () => (showCart = !showCart);
 </script>
 
 {#if contentHidden}
-  <div class="w-full h-screen flex flex-col justify-center items-center">
+  <div class="flex flex-col items-center justify-center w-full h-screen">
     <KeyprezName />
     <h1 class="text-xl">New keyboard shop in progress...</h1>
   </div>
