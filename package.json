@@ -19,7 +19,7 @@
     "trigger": "stripe trigger checkout.session.completed"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^1.0.0-next.48",
+    "@sveltejs/adapter-netlify": "^1.0.0-next.84",
     "@sveltejs/kit": "^1.0.0-next.539",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
