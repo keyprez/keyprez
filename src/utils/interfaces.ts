@@ -12,11 +12,6 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
-export interface Cache {
-  cacheTime: number;
-  products: Product[];
-}
-
 export type CountryLabel = 'Norway' | 'Sweden' | 'Denmark';
 
 export type CountryValue = 'NO' | 'SE' | 'DK';
@@ -64,6 +59,10 @@ export interface CreateSessionResponse extends BackendResponse {
 
 export interface GetCustomerStripeIdResponse extends BackendResponse {
   body: string;
+}
+
+export interface FetchProductsResponse extends BackendResponse {
+  body: Product[];
 }
 
 // FIXME: Modify backend code to skip JSON parsing on frontend

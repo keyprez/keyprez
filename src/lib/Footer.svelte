@@ -1,8 +1,8 @@
 <script>
-  import { endpoint } from '../config';
   import { createForm } from 'svelte-forms-lib';
   import * as yup from 'yup';
   import { Button } from '$lib';
+  import { fetchData } from '../utils';
 
   let displayedEmail = '';
   let loading = false;
@@ -15,11 +15,7 @@
   const onSubmit = async ({ email }) => {
     loading = true;
 
-    const res = await fetch(`${endpoint}/newsletters`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
+    const res = await fetchData({ email }, '/newsletters');
 
     loading = false;
 
@@ -47,13 +43,16 @@
   {#if showError}
     <h2 class="text-center text-2xl">There was an error ❌ Please try again later</h2>
   {:else if hasSubscription}
-    <h2 class="text-center text-2xl">
-      <strong>{displayedEmail}</strong> has been already subscribed to our newsletter 😊
+    <h2 class="text-center text-2xl ">
+      <strong class="text-black dark:text-teal-800">{displayedEmail}</strong> has been already subscribed to our newsletter
+      😊
     </h2>
   {:else if showSuccess}
     <h2 class="text-center text-2xl">Thank you for subscribing to our newsletter 🎉</h2>
   {:else}
-    <h2 class="text-center text-2xl"><strong>SUBSCRIBE</strong> to latest news and updates</h2>
+    <h2 class="text-center text-2xl">
+      <strong class="text-black dark:text-teal-800">SUBSCRIBE</strong> to latest news and updates
+    </h2>
   {/if}
   <form class="flex flex-col md:flex-row gap-2 justify-center" on:submit={handleSubmit}>
     <div class="relative flex w-full max-w-full md:max-w-sm">
