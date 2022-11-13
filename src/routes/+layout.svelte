@@ -3,7 +3,7 @@
   import '/src/app.css';
   import { Cart, Footer, Header, KeyprezName } from '$lib';
 
-  let contentHidden = !$page.url.origin.match(/localhost|deploy-preview/g);
+  let contentHidden = !$page.url.origin.match(/localhost|keyprez.netlify.app/g);
   let showCart = false;
 
   const toggleShowCart = () => (showCart = !showCart);
