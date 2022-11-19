@@ -37,8 +37,12 @@ export interface ShippingRateRequest {
   postalCode: string;
 }
 
-export interface SessionIdRequest {
+interface CartProduct {
   priceId: string;
+  quantity: number;
+}
+export interface SessionIdRequest {
+  cartProducts: CartProduct[];
   customerStripeId: string;
 }
 

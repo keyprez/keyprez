@@ -14,9 +14,7 @@ export const load: Load = async ({ url }) => {
       customer: { name, address },
       customer_details: { email },
       payment_intent: { id: paymentId },
-      line_items: {
-        data: [product],
-      },
+      line_items: { data: products },
     } = await res.body;
 
     return {
@@ -24,7 +22,7 @@ export const load: Load = async ({ url }) => {
       address,
       email,
       paymentId,
-      product,
+      products,
     };
   } catch (err) {
     console.error(`Error fetching checkout session: ${err}`);
