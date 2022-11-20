@@ -9,7 +9,7 @@
     address: { city, country, line1, line2, postal_code: postalCode, state },
     email,
     paymentId,
-    product: { description },
+    products,
   } = data;
 
   $cart = [];
@@ -19,7 +19,12 @@
 
 <div class="flex flex-col gap-4 items-center">
   <h1>Thank you for your purchase 😊</h1>
-  <img src={`/${description.toLocaleLowerCase()}.jpg`} alt={description} />
+  {#each products as product}
+    <img src={`/${product.description.toLocaleLowerCase()}.jpg`} alt={product.description} />
+    <h2>Item: {product.description}</h2>
+    <h2>Quantity: {product.quantity}</h2>
+    <h2>Total: {product.amount_total} {product.currency.toUpperCase()}</h2>
+  {/each}
   <h2 class="text-lg font-bold">Summary</h2>
   <div class="text-left">
     <h3>Order ID: <strong class="text-black dark:text-teal-800">{paymentId}</strong></h3>

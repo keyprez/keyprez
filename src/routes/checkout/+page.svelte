@@ -27,13 +27,12 @@
   let formRef: HTMLFormElement;
 
   const onSubmit = async (checkoutFormValues: CheckoutFormValues) => {
-    // Get priceId of the first item for now...
-    const { priceId } = $cart[0];
+    const cartProducts = $cart.map((p) => ({ priceId: p.priceId, quantity: p.quantity }));
 
     try {
       loading = true;
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
-      const sessionId = await createSessionId({ priceId, customerStripeId });
+      const sessionId = await createSessionId({ cartProducts, customerStripeId });
       await redirectToCheckout(sessionId);
     } catch (err) {
       submitError = true;
