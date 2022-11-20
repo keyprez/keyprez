@@ -13,15 +13,15 @@
 
   const addToCart = () => {
     const cartItem = $cart.find((i) => i.priceId === product.priceId);
+
+    text = 'Item added to cart ✅';
+    setTimeout(() => (text = 'Add to cart'), 1000);
+
     if (cartItem) {
       if (cartItem.quantity >= product.stock) {
         text = 'Out of stock 🙁';
         return;
       }
-
-      text = 'Item added to cart ✅';
-
-      setTimeout(() => (text = 'Add to cart'), 1000);
 
       cartItem.quantity += 1;
       $cart = $cart;
