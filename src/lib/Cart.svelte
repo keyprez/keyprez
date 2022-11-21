@@ -3,7 +3,7 @@
   import { createEventDispatcher } from 'svelte';
   import { fly, scale } from 'svelte/transition';
 
-  import { cart, total } from '../store';
+  import { cart, products, total } from '../store';
   import { Button, CartRow } from '$lib';
   import { flip } from 'svelte/animate';
 
@@ -13,6 +13,9 @@
   const duration = 800;
 
   $: $total = $cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  $: outOfStockIds = $cart
+    .filter((c) => $products.find((p) => p.priceId === c.priceId && p.stock < c.quantity))
+    .map((x) => x.priceId);
 </script>
 
 <div
@@ -38,21 +41,21 @@
         in:fly={{ x: 1000, duration, delay: index * 300, easing }}
         out:scale={{ easing }}
       >
-        <CartRow {item} />
+        <CartRow {item} goneOutOfStock={outOfStockIds.includes(item.priceId)} />
       </div>
     {/each}
     {#if $cart.length !== 0}
       <div class="absolute bottom-0 flex flex-col items-center w-full pb-8">
         <div class="my-8 text-center">
           <span
-            >Total: <strong class="text-lg inline-block w-12 text-black dark:text-teal-800"
+            >Total: <strong class="inline-block w-12 text-lg text-black dark:text-teal-800"
               >{Math.round($total)}
             </strong>NOK</span
           >
           <p class="text-xs">Proceed to checkout to calculate shipping</p>
         </div>
         <a data-sveltekit-prefetch href="/checkout">
-          <Button text="Go to Checkout" onClick={hideCart} />
+          <Button text="Go to Checkout" onClick={hideCart} disabled={outOfStockIds.length > 0} />
         </a>
       </div>
     {/if}
