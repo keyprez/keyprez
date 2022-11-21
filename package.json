@@ -15,7 +15,7 @@
     "prepare": "husky install",
     "preview": "vite preview --port 8080",
     "start": "npm run dev",
-    "listen": "stripe listen -f http://localhost:8090/.netlify/functions/orders/webhook?key=pk_test_51IzFveLwcEKoBoonzTPmtwFhbwqix42XQtnxeHPtDb2IutljsV75FQI9jVi9JOCxBHYxQLvy3eVwpTWXYpmVDplN00ZeSz3HSi",
+    "listen": "stripe listen -f http://localhost:3000/orders/webhook?key=pk_test_51IzFveLwcEKoBoonzTPmtwFhbwqix42XQtnxeHPtDb2IutljsV75FQI9jVi9JOCxBHYxQLvy3eVwpTWXYpmVDplN00ZeSz3HSi",
     "trigger": "stripe trigger checkout.session.completed"
   },
   "devDependencies": {
