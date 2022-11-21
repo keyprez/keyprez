@@ -5,12 +5,16 @@
   export let type;
   export let loading = false;
   export let onClick;
+  export let disabled = false;
 </script>
 
 <button
-  class="relative w-full md:max-w-xs flex justify-center bg-black dark:bg-teal-800 rounded-lg py-6 px-20 hover:bg-teal-900 dark:hover:bg-teal-900"
+  class="relative flex justify-center w-full px-20 py-6 bg-black {disabled
+    ? 'opacity-50'
+    : 'hover:bg-teal-900 dark:hover:bg-teal-900'} rounded-lg md:max-w-xs dark:bg-teal-800"
   {type}
   on:click={onClick}
+  {disabled}
 >
   {#if loading}
     <Loader />

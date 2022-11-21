@@ -8,14 +8,23 @@
   import type { Product } from '../../utils/interfaces';
 
   export let product: Product;
+  let addingToCart = false;
 
-  let text = 'Add to cart';
+  $: inCart = $cart.find((i) => i.priceId === product.priceId);
+  $: reachedStock = inCart ? inCart.quantity >= product.stock : false;
+  $: inStock = product.stock > 0 && !reachedStock;
+  $: text = inStock ? 'Add to cart' : 'Out of stock 🙁';
 
   const addToCart = () => {
-    const cartItem = $cart.find((i) => i.priceId === product.priceId);
-
+    addingToCart = true;
     text = 'Item added to cart ✅';
-    setTimeout(() => (text = 'Add to cart'), 1000);
+
+    setTimeout(() => {
+      if (inStock) text = 'Add to cart';
+      addingToCart = false;
+    }, 1000);
+
+    let cartItem = $cart.find((i) => i.priceId === product.priceId);
 
     if (cartItem) {
       if (cartItem.quantity >= product.stock) {
@@ -38,11 +47,11 @@
   alt={product.name}
 />
 <div class="flex flex-col gap-4 items-center flex-[40%]">
-  <h1 class="flex text-black text-2xl">{product.name.toUpperCase()}</h1>
+  <h1 class="flex text-2xl text-black">{product.name.toUpperCase()}</h1>
   <p>
     {product.description}
   </p>
 
-  <Button {text} onClick={addToCart} />
+  <Button {text} onClick={addToCart} disabled={!inStock || addingToCart} />
   <h2><span>{product.price} NOK</span></h2>
 </div>
