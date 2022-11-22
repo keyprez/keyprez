@@ -7,6 +7,7 @@
 
   export let item: CartItem;
   export let goneOutOfStock = false;
+  export let onChange;
 
   const removeItem = (item: CartItem) => ($cart = $cart.filter((i) => i != item));
 
@@ -24,12 +25,15 @@
       <small class="bottom-0 text-red-500 ">Please lower the quantity</small>
     {/if}
   </div>
-  <Counter product={item} />
+  <Counter product={item} {onChange} />
   <div class="flex items-center justify-end gap-1">
     <span>{Math.round($displayedTotal)} NOK</span>
     <button
       class="flex items-center justify-center transition-all ease-in-out border-2 border-transparent rounded-md h-7 w-7 dark:border-red-800/60 bg-white/0 text-white/30 hover:text-white dark:hover:bg-red-800"
-      on:click={() => removeItem(item)}>x</button
+      on:click={() => {
+        removeItem(item);
+        onChange();
+      }}>x</button
     >
   </div>
 </div>
