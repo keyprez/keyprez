@@ -53,5 +53,11 @@
   </p>
 
   <Button {text} onClick={addToCart} disabled={!inStock || addingToCart} />
+  {#if $cart.length > 0}
+    <a class="w-full" data-sveltekit-prefetch href="/checkout">
+      <Button extraClassNames="m-auto" text="Go to checkout" onClick={addToCart} />
+    </a>
+  {/if}
+
   <h2><span>{product.price} NOK</span></h2>
 </div>
