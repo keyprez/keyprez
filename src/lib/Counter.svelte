@@ -16,7 +16,7 @@
 
   const increaseQuantity = () => {
     for (let item of $cart) {
-      if (item.priceId === product.priceId && item.stock > item.quantity) {
+      if (item.priceId === product.priceId && product.stock > item.quantity) {
         item.quantity += 1;
         $cart = $cart;
         return;

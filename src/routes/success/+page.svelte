@@ -1,6 +1,7 @@
 <script>
   import SvelteSeo from 'svelte-seo';
   import { cart } from '../../store';
+  import AccentText from '../../lib/AccentText.svelte';
 
   export let data;
 
@@ -17,29 +18,35 @@
 
 <SvelteSeo title="Keyprez - Success" />
 
-<div class="flex flex-col gap-4 items-center">
-  <h1>Thank you for your purchase 😊</h1>
+<div class="w-full lg:w-1/3 m-auto text-left">
+  <h1 class="text-2xl font-bold text-center mb-8">Thank you for your purchase 😊</h1>
   {#each products as product}
-    <img src={`/${product.description.toLocaleLowerCase()}.jpg`} alt={product.description} />
-    <h2>Item: {product.description}</h2>
-    <h2>Quantity: {product.quantity}</h2>
-    <h2>Total: {product.amount_total} {product.currency.toUpperCase()}</h2>
+    <div class="flex gap-4 my-4">
+      <img
+        class="rounded-lg w-40 md:w-60"
+        src={`/${product.description.toLocaleLowerCase()}.jpg`}
+        alt={product.description}
+      />
+      <div>
+        <h2>Item: <AccentText text={product.description} /></h2>
+        <h2>Quantity: <AccentText text={product.quantity} /></h2>
+        <h2>Total: <AccentText text={`${product.amount_total / 100} ${product.currency.toUpperCase()}`} /></h2>
+      </div>
+    </div>
   {/each}
-  <h2 class="text-lg font-bold">Summary</h2>
-  <div class="text-left">
-    <h3>Order ID: <strong class="text-black dark:text-teal-800">{paymentId}</strong></h3>
-    <h3>Name: <strong class="text-black dark:text-teal-800">{name}</strong></h3>
-    <h3>City: <strong class="text-black dark:text-teal-800">{city}</strong></h3>
-    <h3>Country: <strong class="text-black dark:text-teal-800">{country}</strong></h3>
-    <h3>Line1: <strong class="text-black dark:text-teal-800">{line1}</strong></h3>
-    {#if line2}
-      <h3>Line2: <strong class="text-black dark:text-teal-800">{name}</strong></h3>
-    {/if}
-    <h3>Postal Code: <strong class="text-black dark:text-teal-800">{postalCode}</strong></h3>
-    {#if state}
-      <h3>State: <strong class="text-black dark:text-teal-800">{state}</strong></h3>
-    {/if}
-    <br />
-    <h3>Confirmation email has been sent to <strong class="text-black dark:text-teal-800">{email}</strong></h3>
-  </div>
+  <hr class="border-teal-800 my-4" />
+  <h3>Order ID: <AccentText text={paymentId} /></h3>
+  <h3>Name: <AccentText text={name} /></h3>
+  <h3>City: <AccentText text={city} /></h3>
+  <h3>Country: <AccentText text={country} /></h3>
+  <h3>Line1: <AccentText text={line1} /></h3>
+  {#if line2}
+    <h3>Line2: <AccentText text={name} /></h3>
+  {/if}
+  <h3>Postal Code: <AccentText text={postalCode} /></h3>
+  {#if state}
+    <h3>State: <AccentText text={state} /></h3>
+  {/if}
+  <hr class="border-teal-800 my-4" />
+  <h3>Confirmation email has been sent to <AccentText text={email} /></h3>
 </div>
