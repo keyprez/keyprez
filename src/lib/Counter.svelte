@@ -4,6 +4,7 @@
   import type { CartItem } from '../utils/interfaces';
 
   export let product: CartItem;
+  export let onChange;
 
   $: count = product.quantity;
   $: stock = $products.find((i) => i.priceId === product.priceId)?.stock;
@@ -15,6 +16,7 @@
   $: offset = modulo($displayedCount, 1);
 
   const increaseQuantity = () => {
+    onChange();
     for (let item of $cart) {
       if (item.priceId === product.priceId && product.stock > item.quantity) {
         item.quantity += 1;
@@ -25,6 +27,7 @@
   };
 
   const decreaseQuantity = () => {
+    onChange();
     for (let item of $cart) {
       if (item.priceId === product.priceId) {
         if (item.quantity > 1) {

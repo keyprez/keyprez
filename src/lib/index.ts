@@ -1,6 +1,7 @@
 export { default as Button } from './Button.svelte';
 export { default as Cart } from './Cart.svelte';
 export { default as CartRow } from './CartRow.svelte';
+export { default as CartRows } from './CartRows.svelte';
 export { default as Counter } from './Counter.svelte';
 export { default as Checkbox } from './Checkbox.svelte';
 export { default as Footer } from './Footer.svelte';
