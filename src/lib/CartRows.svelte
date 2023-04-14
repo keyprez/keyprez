@@ -6,7 +6,7 @@
   import { CartRow } from '$lib';
   import { cubicInOut } from 'svelte/easing';
 
-  export let onChange;
+  export let onChange = () => {}; // eslint-disable-line
 
   const duration = 800;
   const easing = cubicInOut;
