@@ -14,6 +14,8 @@
   $: $total = $cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 </script>
 
+<svelte:window on:keydown={(e) => e.key == 'Escape' && hideCart()} />
+
 <div
   on:click|self={hideCart}
   on:keypress|self={hideCart}
