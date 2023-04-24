@@ -53,6 +53,6 @@
     "svelte-checkbox": "^1.0.1",
     "svelte-forms-lib": "^2.0.1",
     "svelte-seo": "^1.4.1",
-    "yup": "^0.32.11"
+    "yup": "^1.1.1"
   }
 }
