@@ -1,8 +1,11 @@
 <script>
+  import { onMount } from 'svelte';
   import { createForm } from 'svelte-forms-lib';
   import * as yup from 'yup';
   import { Button } from '$lib';
-  import { fetchData } from '../utils';
+
+  import { products, productError } from '../store';
+  import { fetchData, fetchProducts } from '../utils';
 
   let displayedEmail = '';
   let loading = false;
@@ -11,6 +14,12 @@
   let hasSubscription = false;
   let inputRef;
   let focus = () => (!$form.email || $errors.email) && inputRef.focus();
+
+  onMount(async () => {
+    const { error, data } = await fetchProducts();
+    if (error) $productError = error;
+    if (data) $products = data;
+  });
 
   const onSubmit = async ({ email }) => {
     loading = true;

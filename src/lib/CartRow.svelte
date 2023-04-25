@@ -6,7 +6,8 @@
   import type { CartItem } from '../utils/interfaces';
 
   export let item: CartItem;
-  export let goneOutOfStock = false;
+  export let stockChanged = false;
+  export let inactive = false;
   export let onChange;
 
   const removeItem = (item: CartItem) => ($cart = $cart.filter((i) => i != item));
@@ -21,8 +22,11 @@
   <div class="flex flex-col">
     <span class="font-bold">{item.name}</span>
     <span class="text-xs">{item.description}</span>
-    {#if goneOutOfStock}
-      <small class="bottom-0 text-red-500 ">Please lower the quantity</small>
+    {#if stockChanged}
+      <small class="bottom-0 text-red-500 ">Stock has changed. Please lower the quantity</small>
+    {/if}
+    {#if inactive}
+      <small class="bottom-0 text-red-500 ">This product is inactive. Please remove it from your cart</small>
     {/if}
   </div>
   <Counter product={item} {onChange} />

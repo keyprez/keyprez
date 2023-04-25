@@ -6,6 +6,7 @@ export interface Product {
   priceId: string;
   stock: number;
   slug: string;
+  active: boolean;
 }
 
 export interface CartItem extends Product {

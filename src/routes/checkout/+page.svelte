@@ -4,7 +4,7 @@
   import { debounce, startCase, upperFirst } from 'lodash';
   import * as yup from 'yup';
 
-  import { cart } from '../../store';
+  import { cart, isValidCart } from '../../store';
   import { CartRows, Button } from '$lib';
   import { createSessionId, fetchShippingRate, getCustomerStripeId, redirectToCheckout } from '../../../src/utils';
   import type { CheckoutFormValues, Country } from 'src/utils/interfaces';
@@ -165,7 +165,13 @@
           {/if}
         </p>
       </div>
-      <Button type="submit" text={submitError ? 'ERROR 😞' : 'BUY'} {loading} onClick={focus} disabled={!total} />
+      <Button
+        type="submit"
+        text={submitError ? 'ERROR 😞' : 'BUY'}
+        {loading}
+        onClick={focus}
+        disabled={!total || !$isValidCart}
+      />
     </form>
   </div>
 {/if}
