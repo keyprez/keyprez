@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import SvelteSeo from 'svelte-seo';
   import { createForm } from 'svelte-forms-lib';
   import { debounce, startCase, upperFirst } from 'lodash';
@@ -6,16 +7,16 @@
 
   import { cart } from '../../store';
   import { CartRows, Button } from '$lib';
-  import { createSessionId, fetchShippingRate, getCustomerStripeId, redirectToCheckout } from '../../../src/utils';
+  import {
+    createSessionId,
+    fetchCountries,
+    fetchShippingRate,
+    getCustomerStripeId,
+    redirectToCheckout,
+  } from '../../../src/utils';
   import type { CheckoutFormValues, Country } from 'src/utils/interfaces';
 
   $: priceWithoutShipping = $cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  const countries: Country[] = [
-    { label: 'Norway', value: 'NO' },
-    { label: 'Sweden', value: 'SE' },
-    { label: 'Denmark', value: 'DK' },
-  ];
 
   let loading = false;
   let submitError = false;
@@ -32,9 +33,8 @@
       const customerStripeId = await getCustomerStripeId(checkoutFormValues);
       const sessionId = await createSessionId({ cartProducts, customerStripeId });
       await redirectToCheckout(sessionId);
-    } catch (err) {
+    } catch {
       submitError = true;
-      console.error(err);
     } finally {
       loading = false;
     }
@@ -57,10 +57,7 @@
       email: yup.string().email().required(),
       name: yup.string().required().min(2),
       city: yup.string().required(),
-      country: yup
-        .string()
-        .required()
-        .oneOf(countries.map(({ value }) => value)),
+      country: yup.string().required().min(2),
       line1: yup.string().required(),
       line2: yup.string(),
       postalCode: yup.string().required(),
@@ -125,10 +122,18 @@
                 handleShippment();
               }}
             >
-              <option value="" disabled>{startCase(value)}</option>
-              {#each countries as country}
-                <option value={country.value}>{country.label}</option>
-              {/each}
+              {#if !$errors.country}
+                <option value="" disabled>{startCase(value)}</option>
+              {/if}
+              {#await fetchCountries() then { error, data }}
+                {#if error}
+                  {($errors.country = error)}
+                {:else if data}
+                  {#each data as country}
+                    <option value={country.code}>{country.name}</option>
+                  {/each}
+                {/if}
+              {/await}
             </select>
           {:else}
             <input
@@ -155,13 +160,13 @@
         <p class="flex justify-between">
           Price total:
           {#if shippingError}
-            <small class="border-red-500">{shippingError}</small>
+            <p class="text-red-700 font-bold tracking-wider">{shippingError}</p>
           {:else if total}
             <strong>
               {`${total} NOK`}
             </strong>
           {:else}
-            <small>Select Country & Postal Code</small>
+            <p>Select Country & Postal Code</p>
           {/if}
         </p>
       </div>
