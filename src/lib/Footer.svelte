@@ -23,6 +23,7 @@
       showSuccess = true;
       displayedEmail = email;
       hasSubscription = res.status === 200;
+      $form.email = '';
       return setTimeout(() => (showSuccess = false), 5000);
     } else {
       showError = true;
@@ -37,6 +38,8 @@
     }),
     onSubmit,
   });
+
+  const onChange = (e) => (e.target.value ? handleChange(e) : ($errors = {}));
 </script>
 
 <footer class="flex flex-col gap-8 justify-center px-4 md:px-12 py-12 md:py-40">
@@ -65,8 +68,8 @@
         name="email"
         placeholder="Type your email"
         bind:value={$form.email}
-        on:keyup={handleChange}
-        on:blur={handleChange}
+        on:keyup={onChange}
+        on:blur={onChange}
       />
       <small class="absolute right-2 bottom-1 text-red-500 {$errors.email ? 'block' : 'hidden'}">{$errors.email}</small>
     </div>
