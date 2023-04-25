@@ -23,6 +23,7 @@
       showSuccess = true;
       displayedEmail = email;
       hasSubscription = res.status === 200;
+      $form.email = '';
       return setTimeout(() => (showSuccess = false), 5000);
     } else {
       showError = true;
