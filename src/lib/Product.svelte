@@ -6,7 +6,7 @@
   export let index: number;
   export let shouldAnimate: boolean;
 
-  $: ({ name, description, price, slug } = product);
+  $: ({ name, description, price, slug, active } = product);
 </script>
 
 <div
@@ -19,10 +19,15 @@
     href={`/product/${slug.toLowerCase()}`}
   >
     <img
-      class="object-cover opacity-100 w-full rounded-lg shadow-xl ease-linear duration-300 group-hover:opacity-20"
+      class="object-cover {active
+        ? 'opacity-100'
+        : 'opacity-50'} w-full rounded-lg shadow-xl ease-linear duration-300 group-hover:opacity-20"
       src={`${name.toLowerCase()}.jpg`}
       alt={name}
     />
+    {#if !active}
+      <span class="absolute ease-linear duration-300 group-hover:opacity-0 text-3xl tracking-wider">Coming soon</span>
+    {/if}
     <span class="opacity-0 absolute ease-linear duration-300 group-hover:opacity-100"
       ><img class="max-w-[15rem] min-w-[13rem] max-h-[10rem]" src={`/${name.toLowerCase()}.svg`} alt={name} /></span
     >

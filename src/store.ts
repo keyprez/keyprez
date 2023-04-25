@@ -12,7 +12,9 @@ if (browser) {
 }
 
 export const products: Writable<Product[]> = writable([]);
+export const productError: Writable<string> = writable('');
 export const cart: Writable<CartItem[]> = writable(parsedCart);
+export const isValidCart: Writable<boolean> = writable(false);
 export const total: Tweened<number> = tweened(0);
 
 if (browser) {

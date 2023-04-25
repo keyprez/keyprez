@@ -41,21 +41,23 @@
 </script>
 
 <SvelteSeo title={`Keyprez - ${capitalize(product.name)}`} />
-<img
-  class="shadow-lg flex-[60%] object-cover w-full rounded-lg"
-  src={`/${product.name.toLowerCase()}.jpg`}
-  alt={product.name}
-/>
+<div class="flex justify-center items-center flex-[60%]">
+  <img class="shadow-lg object-cover w-full rounded-lg" src={`/${product.name.toLowerCase()}.jpg`} alt={product.name} />
+  {#if !product.active}
+    <span class="absolute text-5xl tracking-widest opacity-50">Coming soon</span>
+  {/if}
+</div>
+
 <div class="flex flex-col gap-4 items-center flex-[40%]">
   <h1 class="flex text-2xl text-black">{product.name.toUpperCase()}</h1>
   <p>
     {product.description}
   </p>
 
-  <Button {text} onClick={addToCart} disabled={!inStock || addingToCart} />
+  <Button {text} onClick={addToCart} disabled={!inStock || !product.active || addingToCart} />
   {#if $cart.length > 0}
     <a class="w-full" data-sveltekit-prefetch href="/checkout">
-      <Button extraClassNames="m-auto" text="Go to checkout" onClick={addToCart} />
+      <Button extraClassNames="m-auto" text="Go to checkout" />
     </a>
   {/if}
 
