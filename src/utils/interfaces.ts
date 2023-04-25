@@ -12,20 +12,18 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
-export type CountryLabel = 'Norway' | 'Sweden' | 'Denmark';
-
-export type CountryValue = 'NO' | 'SE' | 'DK';
-
 export interface Country {
-  label: CountryLabel;
-  value: CountryValue;
+  name: string;
+  code: string;
+  region: string;
+  active: boolean;
 }
 
 export interface CheckoutFormValues {
   email: string;
   name: string;
   city: string;
-  country: CountryValue;
+  country: Country['code'];
   line1: string;
   line2: string;
   postalCode: string;
@@ -33,7 +31,7 @@ export interface CheckoutFormValues {
 }
 
 export interface ShippingRateRequest {
-  country: CountryValue;
+  country: Country['code'];
   postalCode: string;
 }
 
@@ -69,6 +67,10 @@ export interface FetchProductsResponse extends BackendResponse {
   body: Product[];
 }
 
+export interface FetchCountriesResponse extends BackendResponse {
+  body: Country[];
+}
+
 // FIXME: Modify backend code to skip JSON parsing on frontend
 export interface FetchShippingRateResponse extends BackendResponse {
   body: string;
@@ -92,6 +94,11 @@ export interface Bring {
               };
             };
           };
+          errors: [
+            {
+              description: string;
+            },
+          ];
         },
       ];
     },

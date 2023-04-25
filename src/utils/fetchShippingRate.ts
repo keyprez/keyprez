@@ -13,7 +13,9 @@ export default async (req: ShippingRateRequest): Promise<{ shippingRate: string 
   if (data.fieldErrors) {
     return { shippingRate: null, error: data.fieldErrors[0].message };
   }
-
+  if (data.consignments[0].products[0].errors) {
+    return { shippingRate: null, error: data.consignments[0].products[0].errors[0].description };
+  }
   const {
     consignments: [
       {

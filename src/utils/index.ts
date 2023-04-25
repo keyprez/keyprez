@@ -1,5 +1,6 @@
 export { default as createSessionId } from './createSessionId';
 export { default as fetchData } from './fetchData';
+export { default as fetchCountries } from './fetchCountries';
 export { default as fetchProducts } from './fetchProducts';
 export { default as fetchShippingRate } from './fetchShippingRate';
 export { default as getCustomerStripeId } from './getCustomerStripeId';
