@@ -25,19 +25,22 @@
   <nav class="flex items-center justify-end gap-4 md:gap-8 font-black">
     {#each navItems as { label, route }}
       <a
-        class="hover:text-black dark:hover:text-teal-800 no-underline uppercase {$page.url.pathname === route
+        class="h-full px-4 flex items-center hover:text-black dark:hover:text-teal-800 no-underline uppercase {$page.url
+          .pathname === route
           ? 'text-black dark:text-teal-800'
           : ''}"
         data-sveltekit-prefetch
         href={route}>{label}</a
       >
     {/each}
-    <button class="relative" on:click={openCart}>
-      <span
-        class="absolute -top-4 -right-1 bg-black dark:bg-teal-800 rounded-full w-5 h-5 md:w-6 md:h-6 p-2 flex justify-center items-center text-xs"
-        >{$cart.reduce((sum, item) => sum + item.quantity, 0)}</span
-      >
-      <img class="w-6" src="/shopping_cart.svg" alt="cart" />
+    <button class="h-full px-4 flex items-center" on:click={openCart}>
+      <div class="relative">
+        <span
+          class="absolute -top-4 -right-1 bg-black dark:bg-teal-800 rounded-full w-5 h-5 md:w-6 md:h-6 p-2 flex justify-center items-center text-xs"
+          >{$cart.reduce((sum, item) => sum + item.quantity, 0)}</span
+        >
+        <img class="w-6" src="/shopping_cart.svg" alt="cart" />
+      </div>
     </button>
     <ThemeToggle />
   </nav>
